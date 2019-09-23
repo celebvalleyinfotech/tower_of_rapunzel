@@ -1,9 +1,13 @@
 #!/usr/bin/env python3
 # encoding: utf-8
 
+from collections import namedtuple
 import fractions
 import itertools
+import pprint
 import random
+import statistics
+import sys
 
 strategy = "BFWHGFBC"
 
@@ -16,10 +20,12 @@ length = 12
 cut = 1
 delta = 1
 
-health_drop = fractions.Fraction(length / health_max)
+health_drop = fractions.Fraction(health_max / length)
 coin_for_hair = 1  # per metre
 coin_for_health = fractions.Fraction(1, 40)
-growth_for_coin = fractions.Fraction(1, 400)
+growth_for_coin = fractions.Fraction(1, 800)
+
+State = namedtuple("State", ["location", "hair_m", "chop_m", "coins_n", "health_n"])
 
 def pathway(n_cycles=int(playtime_s / 9 / len(strategy))):
     return itertools.chain.from_iterable(itertools.repeat(strategy, n_cycles))
@@ -33,7 +39,10 @@ def operate(coins=coins, cut=cut, growth=growth, health=health_max, length=lengt
             cut = max(0, cut + choice)
             length = max(0, length - cut)
         elif locn == "F":
-            health = max(0, health - max(0, health_drop * (tower - length)))
+            damage = health_drop * (tower - length)
+            health = max(0, health - max(0, damage))
+            if health == 0:
+                return
         elif locn == "W":
             coins += coin_for_hair * cut
         elif locn == "H":
@@ -47,7 +56,20 @@ def operate(coins=coins, cut=cut, growth=growth, health=health_max, length=lengt
             growth += cost * growth_for_coin
 
         length += length * growth
-        yield (n, locn, int(length), coins, int(health), cut)
+        yield State(locn, int(length), cut, coins, int(health))
 
 if __name__ == "__main__":
-    print(*operate(), sep="\n")
+    n_runs = 5000
+    runs = [list(operate()) for i in range(n_runs)]
+    ranking = sorted(runs, key=lambda x: x[-1].coins_n, reverse=True)
+    outcomes = [i[-1].coins_n for i in ranking]
+    pprint.pprint(ranking[0])
+    try:
+        print(
+            *statistics.quantiles(outcomes, n=n_runs // 4, method="inclusive"),
+            sep="\n",
+            file=sys.stderr
+        )
+    except AttributeError:
+        pass
+    # Bronze: 15, Silver: 20: Gold: 25
