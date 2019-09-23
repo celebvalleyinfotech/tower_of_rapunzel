@@ -55,46 +55,46 @@ growth_for_coin = fractions.Fraction(1, 800)
 
 State = namedtuple(
     "State",
-    ["location", "hair_m", "hair_d", "cut_m", "coins_n", "health_n"]
+    ["area", "hair_m", "hair_d", "cut_m", "coins_n", "health_n"]
 )
 
-def call_rules(folder, index, entities, **kwargs):
-    location = folder.metadata["location"]
-    rv = folder.metadata.copy()
-    length = kwargs.get("hair_m", 12)
-    growth = kwargs.get("hair_d", fractions.Fraction(1, 80))
-    coins = kwargs.get("coins_n", 0)
-    health = kwargs.get("health_n", 100)
-    if location == "C":
-        # Rapunzel's hair is ?m long. How much do you want to cut?
-        # NB: Waiting allows it to grow.
+def call_rules(folder, index, entities, state):
+    area = folder.metadata["area"]
+    if area == "C":
         choice = random.choice([delta, 0 , -delta])
-        cut = max(0, kwargs.get("cut", 1) + choice)
-        length = max(0, length - cut)
-    elif location == "F":
-        damage = health_drop * (tower - kwargs.get("hair_m", tower))
-        health = max(0, kwargs.get("health_n", 100) - max(0, damage))
-        if health == 0:
-            return
-    elif location == "W":
-        coins += coin_for_hair * kwargs.get("cut_m", 1)
-    elif location == "H":
-        cost = min(
-            kwargs.get("coins", 0),
-            int((health_max - kwargs.get("health_n", 100)) * coin_for_health)
+        cut = max(0, state.cut_m + choice)
+        state = state._replace(hair_m=max(0, state.hair_m - cut))
+    elif area == "F":
+        damage = health_drop * (tower - state.hair_m)
+        state = state._replace(health_n=max(0, state.health_n - max(0, damage)))
+        if state.health_n == 0:
+            return {}
+    elif area == "W":
+        state = state._replace(
+            coins_n=state.coins_n + coin_for_hair * state.cut_m
         )
-        coins -= cost
-        health += cost / coin_for_health
-    elif location == "G":
+    elif area == "H":
+        cost = min(
+            state.coins_n,
+            int((health_max - state.health_n) * coin_for_health)
+        )
+        state = state._replace(
+            coins_n=state.coins_n - cost,
+            health_n=int(state.health_n + cost / coin_for_health)
+        )
+    elif area == "G":
         choice = random.choice([i * coin_for_hair for i in (0, 1, 2, 5)])
-        cost = min(coins, choice)
-        coins -= cost
-        growth += cost * growth_for_coin
-    elif location == "f":
+        cost = min(state.coins_n, choice)
+        state = state._replace(
+            coins_n=state.coins_n - cost,
+            hair_d=state.hair_d + cost * growth_for_coin
+        )
+    elif area == "f":
         # Game will check it's possible to get back up.
         pass
 
-    return rv
+    state = state._replace(hair_m=state.hair_m + state.hair_m * state.hair_d)
+    return state._asdict()
 
 def operate(folders, coins=coins, cut=cut, growth=growth, health=health_max, length=length):
     for n, folder in enumerate(pathway(folders)):

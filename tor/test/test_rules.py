@@ -54,24 +54,36 @@ class RulesTests(unittest.TestCase):
             SceneScript.Folder(
                 pkg="tor",
                 description="",
-                metadata={"location": locn},
+                metadata={"area": locn},
                 paths=[],
                 interludes=itertools.repeat(call_rules)
             ) for locn in "BFWHGfBC"
         ]
 
-    def test_single(self):
-        matcher = Matcher(self.folders)
-        folder = next(matcher.options(self.folders[0].metadata))
+    def simulate(self, folders, n_cycles=1):
+        matcher = Matcher(folders)
         state = State(
-            folder.metadata["location"],
+            folders[0].metadata["area"],
             self.length, self.growth, self.cut,
             self.coins, self.health_max
         )
-        for metadata in [i.metadata for i in self.folders]:
-            folder = next(matcher.options(metadata))
-            interlude = next(folder.interludes)
+        folder = folders[0]
+        for f in self.pathway(folders, n_cycles):
             metadata = state._asdict()
-            metadata.update(interlude(folder, None, [], **state._asdict()))
+            interlude = next(folder.interludes)
+            metadata.update(interlude(folder, None, [], state))
+            metadata["area"] = f.metadata["area"]
+            folder = next(matcher.options(metadata))
             state = State(**metadata)
-            print(state)
+            yield state
+
+    def test_single(self):
+        states = list(self.simulate(self.folders))
+        self.assertEqual("B", states[0].area)
+        self.assertEqual("C", states[-1].area)
+
+    def test_many(self):
+        runs = [list(self.simulate(self.folders, 16)) for i in range(5000)]
+        ranking = sorted(runs, key=lambda x: x[-1].coins_n, reverse=True)
+        print(ranking[0])
+
