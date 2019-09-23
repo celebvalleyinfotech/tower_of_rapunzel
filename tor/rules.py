@@ -58,12 +58,15 @@ State = namedtuple(
     ["area", "hair_m", "hair_d", "cut_m", "coins_n", "health_n"]
 )
 
-def call_rules(folder, index, entities, state):
+def apply_rules(folder, index, entities, state, choice=None):
     area = folder.metadata["area"]
     if area == "C":
-        choice = random.choice([delta, 0 , -delta])
+        choice = (
+            choice if choice is not None
+            else random.choice([delta, 0 , -delta])
+        )
         cut = max(0, state.cut_m + choice)
-        state = state._replace(hair_m=max(0, state.hair_m - cut))
+        state = state._replace(cut_m=cut, hair_m=max(0, state.hair_m - cut))
     elif area == "F":
         damage = health_drop * (tower - state.hair_m)
         state = state._replace(health_n=max(0, state.health_n - max(0, damage)))
@@ -83,7 +86,10 @@ def call_rules(folder, index, entities, state):
             health_n=int(state.health_n + cost / coin_for_health)
         )
     elif area == "G":
-        choice = random.choice([i * coin_for_hair for i in (0, 1, 2, 5)])
+        choice = (
+            choice if choice is not None
+            else random.choice([i * coin_for_hair for i in (0, 1, 2, 5)])
+        )
         cost = min(state.coins_n, choice)
         state = state._replace(
             coins_n=state.coins_n - cost,
@@ -95,51 +101,3 @@ def call_rules(folder, index, entities, state):
 
     state = state._replace(hair_m=state.hair_m + state.hair_m * state.hair_d)
     return state._asdict()
-
-def operate(folders, coins=coins, cut=cut, growth=growth, health=health_max, length=length):
-    for n, folder in enumerate(pathway(folders)):
-        locn = folder.metadata["location"]
-        if locn == "C":
-            # Rapunzel's hair is ?m long. How much do you want to cut?
-            # NB: Waiting allows it to grow.
-            choice = random.choice([delta, 0 , -delta])
-            cut = max(0, cut + choice)
-            length = max(0, length - cut)
-        elif locn == "F":
-            damage = health_drop * (tower - length)
-            health = max(0, health - max(0, damage))
-            if health == 0:
-                return
-        elif locn == "W":
-            coins += coin_for_hair * cut
-        elif locn == "H":
-            cost = min(coins, int((health_max - health) * coin_for_health))
-            coins -= cost
-            health += cost / coin_for_health
-        elif locn == "G":
-            choice = random.choice([i * coin_for_hair for i in (0, 1, 2, 5)])
-            cost = min(coins, choice)
-            coins -= cost
-            growth += cost * growth_for_coin
-        elif locn == "f":
-            # Game will check it's possible to get back up.
-            pass
-
-        length += length * growth
-        yield State(locn, int(length), cut, coins, int(health))
-
-if __name__ == "__main__":
-    n_runs = 5000
-    runs = [list(operate(folders)) for i in range(n_runs)]
-    ranking = sorted(runs, key=lambda x: x[-1].coins_n, reverse=True)
-    outcomes = [i[-1].coins_n for i in ranking]
-    pprint.pprint(ranking[0])
-    try:
-        print(
-            *statistics.quantiles(outcomes, n=n_runs // 4, method="inclusive"),
-            sep="\n",
-            file=sys.stderr
-        )
-    except AttributeError:
-        pass
-    # Bronze: 20, Silver: 25: Gold: 30

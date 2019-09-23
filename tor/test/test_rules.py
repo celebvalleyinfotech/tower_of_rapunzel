@@ -23,7 +23,7 @@ import unittest
 from turberfield.dialogue.matcher import Matcher
 from turberfield.dialogue.model import SceneScript
 
-from tor.rules import call_rules
+from tor.rules import apply_rules
 from tor.rules import State
 
 
@@ -56,7 +56,7 @@ class RulesTests(unittest.TestCase):
                 description="",
                 metadata={"area": locn},
                 paths=[],
-                interludes=itertools.repeat(call_rules)
+                interludes=itertools.repeat(apply_rules)
             ) for locn in "BFWHGfBC"
         ]
 
@@ -71,19 +71,25 @@ class RulesTests(unittest.TestCase):
         for f in self.pathway(folders, n_cycles):
             metadata = state._asdict()
             interlude = next(folder.interludes)
-            metadata.update(interlude(folder, None, [], state))
+            rv = interlude(folder, None, [], state)
+            if rv:
+                metadata.update(rv)
+            else:
+                continue
             metadata["area"] = f.metadata["area"]
             folder = next(matcher.options(metadata))
             state = State(**metadata)
             yield state
 
-    def test_single(self):
+    def test_single_cycle(self):
         states = list(self.simulate(self.folders))
         self.assertEqual("B", states[0].area)
         self.assertEqual("C", states[-1].area)
 
-    def test_many(self):
-        runs = [list(self.simulate(self.folders, 16)) for i in range(5000)]
+    def test_competition(self):
+        # Bronze: 20, Silver: 25: Gold: 30
+        runs = [list(self.simulate(self.folders, 16)) for i in range(1000)]
         ranking = sorted(runs, key=lambda x: x[-1].coins_n, reverse=True)
-        print(ranking[0])
+        self.assertGreater(ranking[0][-1].coins_n, 25)
+        self.assertLess(ranking[0][-1].coins_n, 40)
 
