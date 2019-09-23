@@ -27,7 +27,7 @@ import random
 import statistics
 import sys
 
-strategy = "BFWHGFBC"
+strategy = "BFWHGfBC"
 
 tower = 12
 playtime_s = 20 * 60
@@ -57,9 +57,8 @@ def operate(coins=coins, cut=cut, growth=growth, health=health_max, length=lengt
             cut = max(0, cut + choice)
             length = max(0, length - cut)
         elif locn == "F":
-            if n == 1:
-                damage = health_drop * (tower - length)
-                health = max(0, health - max(0, damage))
+            damage = health_drop * (tower - length)
+            health = max(0, health - max(0, damage))
             if health == 0:
                 return
         elif locn == "W":
@@ -73,6 +72,9 @@ def operate(coins=coins, cut=cut, growth=growth, health=health_max, length=lengt
             cost = min(coins, choice)
             coins -= cost
             growth += cost * growth_for_coin
+        elif locn == "f":
+            # Game will check it's possible to get back up.
+            pass
 
         length += length * growth
         yield State(locn, int(length), cut, coins, int(health))
@@ -91,4 +93,4 @@ if __name__ == "__main__":
         )
     except AttributeError:
         pass
-    # Bronze: 15, Silver: 20: Gold: 25
+    # Bronze: 20, Silver: 25: Gold: 30
