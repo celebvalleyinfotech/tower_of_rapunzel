@@ -27,7 +27,17 @@ import random
 import statistics
 import sys
 
-strategy = "BFWHGfBC"
+from turberfield.dialogue.model import SceneScript
+
+folders = [
+    SceneScript.Folder(
+        pkg="tor",
+        description="",
+        metadata={"location": locn},
+        paths=[],
+        interludes=None
+    ) for locn in "BFWHGfBC"
+]
 
 tower = 12
 playtime_s = 20 * 60
@@ -43,13 +53,52 @@ coin_for_hair = 1  # per metre
 coin_for_health = fractions.Fraction(1, 40)
 growth_for_coin = fractions.Fraction(1, 800)
 
-State = namedtuple("State", ["location", "hair_m", "chop_m", "coins_n", "health_n"])
+State = namedtuple(
+    "State",
+    ["location", "hair_m", "hair_d", "cut_m", "coins_n", "health_n"]
+)
 
-def pathway(n_cycles=int(playtime_s / 9 / len(strategy))):
-    return itertools.chain.from_iterable(itertools.repeat(strategy, n_cycles))
+def call_rules(folder, index, entities, **kwargs):
+    location = folder.metadata["location"]
+    rv = folder.metadata.copy()
+    length = kwargs.get("hair_m", 12)
+    growth = kwargs.get("hair_d", fractions.Fraction(1, 80))
+    coins = kwargs.get("coins_n", 0)
+    health = kwargs.get("health_n", 100)
+    if location == "C":
+        # Rapunzel's hair is ?m long. How much do you want to cut?
+        # NB: Waiting allows it to grow.
+        choice = random.choice([delta, 0 , -delta])
+        cut = max(0, kwargs.get("cut", 1) + choice)
+        length = max(0, length - cut)
+    elif location == "F":
+        damage = health_drop * (tower - kwargs.get("hair_m", tower))
+        health = max(0, kwargs.get("health_n", 100) - max(0, damage))
+        if health == 0:
+            return
+    elif location == "W":
+        coins += coin_for_hair * kwargs.get("cut_m", 1)
+    elif location == "H":
+        cost = min(
+            kwargs.get("coins", 0),
+            int((health_max - kwargs.get("health_n", 100)) * coin_for_health)
+        )
+        coins -= cost
+        health += cost / coin_for_health
+    elif location == "G":
+        choice = random.choice([i * coin_for_hair for i in (0, 1, 2, 5)])
+        cost = min(coins, choice)
+        coins -= cost
+        growth += cost * growth_for_coin
+    elif location == "f":
+        # Game will check it's possible to get back up.
+        pass
 
-def operate(coins=coins, cut=cut, growth=growth, health=health_max, length=length):
-    for n, locn in enumerate(pathway()):
+    return rv
+
+def operate(folders, coins=coins, cut=cut, growth=growth, health=health_max, length=length):
+    for n, folder in enumerate(pathway(folders)):
+        locn = folder.metadata["location"]
         if locn == "C":
             # Rapunzel's hair is ?m long. How much do you want to cut?
             # NB: Waiting allows it to grow.
@@ -81,7 +130,7 @@ def operate(coins=coins, cut=cut, growth=growth, health=health_max, length=lengt
 
 if __name__ == "__main__":
     n_runs = 5000
-    runs = [list(operate()) for i in range(n_runs)]
+    runs = [list(operate(folders)) for i in range(n_runs)]
     ranking = sorted(runs, key=lambda x: x[-1].coins_n, reverse=True)
     outcomes = [i[-1].coins_n for i in ranking]
     pprint.pprint(ranking[0])
