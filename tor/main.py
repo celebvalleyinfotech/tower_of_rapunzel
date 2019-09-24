@@ -28,6 +28,7 @@ from aiohttp import web
 import pkg_resources
 
 import tor
+import tor.rules
 
 
 async def get_frame(request):
@@ -42,24 +43,29 @@ async def get_frame(request):
 </head>
 <body>
 Boo!
+<form role="form" action="/1234" method="post" name="choice" >
+    <button type="submit">Choose 1234</button>
+</form>
 </body>
 </html>""",
         content_type="text/html"
     )
 
 async def post_choice(request):
-    data = await request.post()
-    choice = data["choice"]
-    if not Handler.validation["name"].match(choice):
-        raise web.HTTPUnauthorized(reason="User input invalid name.")
+    choice = request.match_info["choice"]
+    print(choice, file=sys.stderr)
+    if not tor.rules.choice_validator.match(choice):
+        raise web.HTTPUnauthorized(reason="User input invalid choice.")
 
-    raise web.HTTPFound("/".format(session))
+    raise web.HTTPFound("/")
 
 
 def build_app(args):
     app = web.Application()
     app.add_routes([
         web.get("/", get_frame),
+        web.post("/{choice}", post_choice),
+        #web.post("/{{choice:{0}}}".format(tor.rules.choice_validator.pattern), post_choice),
     ])
     app.router.add_static(
         "/css/",
@@ -73,6 +79,7 @@ def main(args):
     loop = asyncio.get_event_loop()
     asyncio.set_event_loop(loop)
     handler = app.make_handler()
+    #runner = web.AppRunner(app)
     f = loop.create_server(handler, args.host, args.port)
     srv = loop.run_until_complete(f)
 
