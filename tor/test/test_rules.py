@@ -108,3 +108,13 @@ class RulesTests(unittest.TestCase):
                 self.assertIn("chemist", list(options) + [location])
                 self.assertIn("stylist", list(options) + [location])
                 self.assertIn("inbound", list(options) + [location])
+
+    def test_validation(self):
+        validator = tor.rules.choice_validator
+        self.assertTrue(validator.match("0"))
+        self.assertTrue(validator.match("001"))
+        self.assertTrue(validator.match("101"))
+        self.assertFalse(validator.match("a"))
+        self.assertFalse(validator.match("1a1"))
+        self.assertFalse(validator.match("0x11"))
+        self.assertFalse(validator.match(""))

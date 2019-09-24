@@ -18,10 +18,13 @@
 
 from collections import namedtuple
 import fractions
-import itertools
 import random
+import re
 
 from turberfield.dialogue.model import SceneScript
+
+choice_validator = re.compile("^\d+$")
+
 
 class Settings:
     COINS_N = 0

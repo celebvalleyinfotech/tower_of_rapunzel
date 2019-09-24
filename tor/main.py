@@ -47,6 +47,14 @@ Boo!
         content_type="text/html"
     )
 
+async def post_choice(request):
+    data = await request.post()
+    choice = data["choice"]
+    if not Handler.validation["name"].match(choice):
+        raise web.HTTPUnauthorized(reason="User input invalid name.")
+
+    raise web.HTTPFound("/".format(session))
+
 
 def build_app(args):
     app = web.Application()
