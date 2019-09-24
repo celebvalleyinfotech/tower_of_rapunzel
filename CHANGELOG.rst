@@ -33,3 +33,17 @@ Next steps are:
 
     * build out the game rules from my simulation
     * put in the framework for web interaction
+
+2019-09-24
+----------
+
+This evening I took the game rule simulation and rewrote it so
+it can be operated from within the app. Also put in the web
+framework.
+
+Everything is very much more solid now. But I can't say I feel
+like I've made enough progress yet.
+
+I need to allow two clear days to create music and content. Not
+sure I'm going to get that at this rate.
+
