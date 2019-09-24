@@ -32,9 +32,9 @@ class Settings:
     HAIR_D_C = fractions.Fraction(1, 800)
     HAIR_M = 12
     HEALTH_C = fractions.Fraction(1, 40)
-    HEALTH_D = fractions.Fraction(HEALTH_MAX / TOWER_M)
     HEALTH_MAX = 100
     TOWER_M = 12
+    HEALTH_D = fractions.Fraction(HEALTH_MAX / TOWER_M)
 
 State = namedtuple(
     "State",
