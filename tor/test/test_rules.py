@@ -85,5 +85,26 @@ class RulesTests(unittest.TestCase):
         ]
         ranking = sorted(runs, key=lambda x: x[-1].coins_n, reverse=True)
         self.assertGreater(ranking[0][-1].coins_n, 25)
-        self.assertLess(ranking[0][-1].coins_n, 40)
+        self.assertLess(ranking[0][-1].coins_n, 42)
 
+    def test_topology(self):
+        for location, options in tor.rules.topology.items():
+            if location == "chamber":
+                self.assertIn("balcony", options)
+            elif location == "balcony":
+                self.assertIn("chamber", options)
+                self.assertIn("outward", options)
+            elif location == "outward":
+                self.assertIn("balcony", options)
+                self.assertIn("stylist", options)
+                self.assertIn("chemist", options)
+                self.assertIn("butcher", options)
+                self.assertIn("broomer", options)
+            elif location in (
+                "broomer", "butcher", "chemist", "stylist"
+            ):
+                self.assertIn("broomer", list(options) + [location])
+                self.assertIn("butcher", list(options) + [location])
+                self.assertIn("chemist", list(options) + [location])
+                self.assertIn("stylist", list(options) + [location])
+                self.assertIn("inbound", list(options) + [location])

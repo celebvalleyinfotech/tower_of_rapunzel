@@ -36,6 +36,17 @@ class Settings:
     TOWER_M = 12
     HEALTH_D = fractions.Fraction(HEALTH_MAX / TOWER_M)
 
+topology = {
+    "balcony": ("chamber", "outward"),
+    "broomer": ("butcher", "chemist", "inbound", "stylist"),
+    "butcher": ("broomer", "chemist", "inbound", "stylist"),
+    "chamber": ("balcony"),
+    "chemist": ("broomer", "butcher", "inbound", "stylist"),
+    "inbound": ("balcony", "broomer", "butcher", "chemist", "stylist"),
+    "outward": ("balcony", "broomer", "butcher", "chemist", "stylist"),
+    "stylist": ("broomer", "butcher", "chemist", "inbound"),
+}
+
 State = namedtuple(
     "State",
     ["area", "hair_m", "hair_d", "cut_m", "coins_n", "health_n"]
