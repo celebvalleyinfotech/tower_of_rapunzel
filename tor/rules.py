@@ -23,7 +23,7 @@ import re
 
 from turberfield.dialogue.model import SceneScript
 
-choice_validator = re.compile("^\d+$")
+choice_validator = re.compile("\d+$")
 
 
 class Settings:

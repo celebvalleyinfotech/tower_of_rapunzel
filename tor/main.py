@@ -64,8 +64,7 @@ def build_app(args):
     app = web.Application()
     app.add_routes([
         web.get("/", get_frame),
-        web.post("/{choice}", post_choice),
-        #web.post("/{{choice:{0}}}".format(tor.rules.choice_validator.pattern), post_choice),
+        web.post("/{{choice:{0}}}".format(tor.rules.choice_validator.pattern), post_choice),
     ])
     app.router.add_static(
         "/css/",
