@@ -23,9 +23,24 @@ from turberfield.dialogue.matcher import Matcher
 from turberfield.dialogue.model import SceneScript
 
 import tor.rules
+import tor.story
 
 
 class RulesTests(unittest.TestCase):
+
+    folders = [
+        next(
+            i for i in tor.story.episodes
+            if i.metadata["area"] == a
+        )
+        for a in (
+            "balcony", "outward",
+            "stylist", "chemist", "butcher", "broomer",
+            "inbound", "balcony", "chamber"
+        )
+    ]
+
+    settings = tor.rules.Settings
 
     @staticmethod
     def pathway(folders, n_cycles):
@@ -37,14 +52,17 @@ class RulesTests(unittest.TestCase):
         matcher = Matcher(folders)
         state = tor.rules.State(
             folders[0].metadata["area"],
-            tor.rules.length, tor.rules.growth, tor.rules.cut,
-            tor.rules.coins, tor.rules.health_max
+            self.settings.HAIR_M,
+            self.settings.HAIR_D,
+            self.settings.CUT_M,
+            self.settings.COINS_N,
+            self.settings.HEALTH_MAX
         )
         folder = folders[0]
         for f in self.pathway(folders, n_cycles):
             metadata = state._asdict()
             interlude = next(folder.interludes)
-            rv = interlude(folder, None, [], state)
+            rv = interlude(folder, None, [], self.settings, state)
             if rv:
                 metadata.update(rv)
             else:
@@ -55,14 +73,14 @@ class RulesTests(unittest.TestCase):
             yield state
 
     def test_single_cycle(self):
-        states = list(self.simulate(tor.rules.folders))
-        self.assertEqual("B", states[0].area)
-        self.assertEqual("C", states[-1].area)
+        states = list(self.simulate(self.folders))
+        self.assertEqual("balcony", states[0].area)
+        self.assertEqual("chamber", states[-1].area)
 
     def test_competition(self):
         # Bronze: 20, Silver: 25: Gold: 30
         runs = [
-            list(self.simulate(tor.rules.folders, 16))
+            list(self.simulate(self.folders, 16))
             for i in range(1000)
         ]
         ranking = sorted(runs, key=lambda x: x[-1].coins_n, reverse=True)

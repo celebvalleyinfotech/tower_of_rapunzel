@@ -23,74 +23,67 @@ import random
 
 from turberfield.dialogue.model import SceneScript
 
-tower = 12
-playtime_s = 20 * 60
-health_max = 100
-coins = 0
-growth = fractions.Fraction(1, 80)
-length = 12
-cut = 1
-delta = 1
-
-health_drop = fractions.Fraction(health_max / length)
-coin_for_hair = 1  # per metre
-coin_for_health = fractions.Fraction(1, 40)
-growth_for_coin = fractions.Fraction(1, 800)
+class Settings:
+    COINS_N = 0
+    CUT_D = 1
+    CUT_M = 1
+    HAIR_C = 1
+    HAIR_D = fractions.Fraction(1, 80)
+    HAIR_D_C = fractions.Fraction(1, 800)
+    HAIR_M = 12
+    HEALTH_C = fractions.Fraction(1, 40)
+    HEALTH_D = fractions.Fraction(HEALTH_MAX / TOWER_M)
+    HEALTH_MAX = 100
+    TOWER_M = 12
 
 State = namedtuple(
     "State",
     ["area", "hair_m", "hair_d", "cut_m", "coins_n", "health_n"]
 )
 
-def apply_rules(folder, index, entities, state, choice=None):
-    if state.area == "C":
+def apply_rules(
+    folder, index, entities, settings, state, choice=None
+):
+    if state.area == "chamber":
         choice = (
             choice if choice is not None
-            else random.choice([delta, 0 , -delta])
+            else random.choice([settings.CUT_D, 0 , -settings.CUT_D])
         )
         cut = max(0, state.cut_m + choice)
         state = state._replace(cut_m=cut, hair_m=max(0, state.hair_m - cut))
-    elif state.area == "F":
-        damage = health_drop * (tower - state.hair_m)
+    elif state.area == "outward":
+        damage = settings.HEALTH_D * (settings.TOWER_M - state.hair_m)
         state = state._replace(health_n=max(0, state.health_n - max(0, damage)))
         if state.health_n == 0:
             return {}
-    elif state.area == "W":
+    elif state.area == "stylist":
         state = state._replace(
-            coins_n=state.coins_n + coin_for_hair * state.cut_m
+            coins_n=state.coins_n + settings.HAIR_C * state.cut_m
         )
-    elif state.area == "H":
+    elif state.area == "chemist":
         cost = min(
             state.coins_n,
-            int((health_max - state.health_n) * coin_for_health)
+            int((settings.HEALTH_MAX - state.health_n) * settings.HEALTH_C)
         )
         state = state._replace(
             coins_n=state.coins_n - cost,
-            health_n=int(state.health_n + cost / coin_for_health)
+            health_n=int(state.health_n + cost / settings.HEALTH_C)
         )
-    elif state.area == "G":
+    elif state.area == "butcher":
         choice = (
             choice if choice is not None
-            else random.choice([i * coin_for_hair for i in (0, 1, 2, 5)])
+            else random.choice(
+                [i * settings.HAIR_C for i in (0, 1, 2, 5)]
+            )
         )
         cost = min(state.coins_n, choice)
         state = state._replace(
             coins_n=state.coins_n - cost,
-            hair_d=state.hair_d + cost * growth_for_coin
+            hair_d=state.hair_d + cost * settings.HAIR_D_C
         )
-    elif state.area == "f":
+    elif state.area == "inbound":
         # Game will check it's possible to get back up.
         pass
 
     state = state._replace(hair_m=state.hair_m + state.hair_m * state.hair_d)
     return state._asdict()
-
-folders = [
-    SceneScript.Folder(
-        pkg="tor",
-        description="",
-        metadata={"area": locn},
-        paths=[],
-        interludes=itertools.repeat(apply_rules)
-    ) for locn in "BFWHGfBC"
-]
