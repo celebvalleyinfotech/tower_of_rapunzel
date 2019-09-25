@@ -47,3 +47,23 @@ like I've made enough progress yet.
 I need to allow two clear days to create music and content. Not
 sure I'm going to get that at this rate.
 
+2019-09-25
+----------
+
+Good news and bad news.
+
+Firstly, styling. I always knew I wouldn't have time for much.
+Luckily, my minimal styling looks OK.
+
+Now the bad news. I took too long to achieve even that. I have to move
+away from the technical stuff. If the game's going to be worth the play,
+I need to engage my creative side. I need to inject a sense of fun.
+
+I know I can do that, but I need to put myself in a different space.
+Away from the code. Into the story. Fantasy time.
+
+I should be going to bed in an hour. I've got to go to work in the morning.
+Instead I need to conjure up enough playful energy to knock out 1200
+words of interesting dialogue.
+
+Wish me luck!
