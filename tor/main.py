@@ -129,6 +129,17 @@ class Presentation:
                 game["state"] = tor.rules.State(**rv)
             yield element
 
+    @staticmethod
+    def refresh(frame, min_val=8):
+        try:
+            return max(
+                [min_val] +
+                [i.offset + i.duration for i in frame if i.duration]
+            )
+        except ValueError:
+            return None
+
+
 async def get_frame(request):
     game = request.app.game
     location = game["state"].area
@@ -143,18 +154,12 @@ async def get_frame(request):
     print(elements, file=sys.stderr)
     return web.Response(
         text = tor.render.base_to_html(refresh=6).format(
-"""
-<main class="grid-front">
-Boo!
-</main>
-<nav class="grid-steer">
-<form role="form" action="/1234" method="post" name="choice" >
-    <button type="submit">Choose 1234</button>
-</form>
-</nav>
-<section class="grid-dash">
-</section>
-"""),
+            tor.render.body_to_html(location=location, frame=frame).format(
+                "\n".join(
+                    tor.render.element_as_list_item(element) for element in frame
+                )
+            )
+        ),
         content_type="text/html"
     )
 
