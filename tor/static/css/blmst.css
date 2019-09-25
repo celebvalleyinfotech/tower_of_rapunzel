@@ -1,4 +1,12 @@
 /*  Base    */
+:root {
+  --emperor: hsl(260, 24%, 14%, 1.0);
+  --walnut: hsl(11, 50%, 17%, 1.0);
+  --font-family-serif: "Palatino Linotype", "Book Antiqua", Palatino, serif;
+  --font-family-sans-serif: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  --font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+}
+
 * {
 box-sizing: border-box;
 padding: 0;
@@ -10,8 +18,72 @@ background-color: hsl(11, 50%, 17%, 1.0);
 color: linen;
 }
 
+button, input, select, textarea {
+  font-family : inherit;
+  font-size   : 100%;
+}
 /*  Layout  */
 /*  prefix: grid-   */
+
+.grid-dash {
+grid-area: dash;
+}
+
+.grid-front {
+grid-area: front;
+}
+
+.grid-roof {
+grid-area: roof;
+}
+
+.grid-steer {
+grid-area: steer;
+}
+
+.grid-wing {
+grid-area: wing;
+}
+
+@media (orientation: portrait) {
+body {
+display: grid;
+grid-template-areas:
+"front"
+"front"
+"front"
+"front"
+"steer"
+"steer"
+"dash";
+justify-items: center;
+}
+
+.grid-roof {
+display: none;
+}
+
+.grid-wing {
+display: none;
+}
+
+}
+
+@media (orientation: landscape) {
+
+body {
+display: grid;
+grid-template-columns: 2fr 3fr 1fr 2fr;
+grid-template-areas:
+"roof   front   steer   wing"
+"roof   front   steer   wing"
+"roof   front   steer   wing"
+"roof   front   steer   wing"
+"roof   front   steer   wing"
+"dash   dash    dash    dash";
+}
+
+}
 
 /*  Module  */
 /*  prefix: mod-    */

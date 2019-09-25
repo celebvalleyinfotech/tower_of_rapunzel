@@ -29,25 +29,24 @@ import pkg_resources
 
 import tor
 import tor.rules
+import tor.render
 
 
 async def get_frame(request):
     return web.Response(
-        text="""<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta http-equiv="X-UA-Compatible" content="ie=edge">
-<link rel="stylesheet" href="/css/blmst.css" />
-</head>
-<body>
+        text = tor.render.base_to_html(refresh=6).format(
+"""
+<main class="grid-front">
 Boo!
+</main>
+<nav class="grid-steer">
 <form role="form" action="/1234" method="post" name="choice" >
     <button type="submit">Choose 1234</button>
 </form>
-</body>
-</html>""",
+</nav>
+<section class="grid-dash">
+</section>
+"""),
         content_type="text/html"
     )
 
@@ -55,9 +54,9 @@ async def post_choice(request):
     choice = request.match_info["choice"]
     print(choice, file=sys.stderr)
     if not tor.rules.choice_validator.match(choice):
-        raise web.HTTPUnauthorized(reason="User input invalid choice.")
-
-    raise web.HTTPFound("/")
+        raise web.HTTPUnauthorized(reason="User sent invalid choice.")
+    else:
+        raise web.HTTPFound("/")
 
 
 def build_app(args):
