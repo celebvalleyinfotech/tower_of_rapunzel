@@ -1,4 +1,23 @@
+#!/usr/bin/env python3
+# encoding: utf-8
+
+# This file is part of Tower of Rapunzel.
+#
+# Tower of Rapunzel is free software: you can redistribute it and/or modify it
+# under the terms of the GNU Affero General Public License as published
+# by the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# Tower of Rapunzel is distributed in the hope that it will be useful, but
+# WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with Tower of Rapunzel.  If not, see <http://www.gnu.org/licenses/>.
+
 import functools
+
 
 def element_as_list_item(element):
     if hasattr(element.dialogue, "persona"):
@@ -23,16 +42,38 @@ if hasattr(element.dialogue.persona, "name") else ""}
     else:
         return ""
 
+
 def option_as_list_item(n, option):
+    labels = {
+        "balcony": "Onto the Balcony",
+        "broomer": "Broom shop",
+        "butcher": "Go round the Butcher's",
+        "chamber": "Into the Chamber",
+        "chemist": "Pop to the Chemist",
+        "inbound": "Foot of the Tower",
+        "outward": "Climb down",
+        "stylist": "Visit the Stylist",
+    }
     return f"""
 <form role="form" action="/{n}" method="post" name="choice" >
-    <button type="submit">{option.capitalize()}</button>
+    <button type="submit">{labels[option]}</button>
 </form>"""
 
+
 def body_to_html(location="", frame=[], options=[]):
+    labels = {
+        "balcony": "On the Balcony",
+        "broomer": "At the Broom shop",
+        "butcher": "In the Butcher's",
+        "chamber": "The Chamber",
+        "chemist": "The Chemist",
+        "inbound": "Foot of the Tower",
+        "outward": "Foot of the Tower",
+        "stylist": "At the Stylist",
+    }
     return f"""
 <main class="grid-front">
-<h1>{location.capitalize()}</h1>
+<h1>{labels[location]}</h1>
 <ul class="mod-dialogue">
 {{0}}
 </ul>

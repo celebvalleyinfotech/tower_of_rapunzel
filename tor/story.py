@@ -31,9 +31,11 @@ version = tor.__version__
 
 class Narrator(Stateful): pass
 class Character(Stateful, Persona): pass
+class Butcher(Character): pass
 
 ensemble = [
     Narrator(),
+    Butcher(name="Mr Ricky Butcher"),
 ]
 
 episodes = [

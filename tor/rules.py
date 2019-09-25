@@ -39,6 +39,7 @@ class Settings:
     TOWER_M = 12
     HEALTH_D = fractions.Fraction(HEALTH_MAX / TOWER_M)
 
+
 topology = {
     "balcony": ("chamber", "outward"),
     "broomer": ("butcher", "chemist", "inbound", "stylist"),
@@ -50,10 +51,12 @@ topology = {
     "stylist": ("broomer", "butcher", "chemist", "inbound"),
 }
 
+
 State = namedtuple(
     "State",
     ["area", "hair_m", "hair_d", "cut_m", "coins_n", "health_n"]
 )
+
 
 def apply_rules(
     folder, index, entities, settings, state, choice=None

@@ -95,7 +95,9 @@ class Presentation:
             matcher = Matcher(tor.story.episodes)
             folders = list(matcher.options(game["metadata"]))
             performer = Performer(folders, entities)
-            folder, index, script, selection, interlude = performer.next(folders, entities)
+            folder, index, script, selection, interlude = performer.next(
+                folders, entities
+            )
             scene = performer.run(react=False)
             frames = list(Presentation.build_frames(
                 folder.paths[index], scene,
@@ -166,6 +168,7 @@ async def get_frame(request):
         content_type="text/html"
     )
 
+
 async def post_choice(request):
     choice = request.match_info["choice"]
     if not tor.rules.choice_validator.match(choice):
@@ -175,8 +178,9 @@ async def post_choice(request):
         game = request.app.game
         location = game["state"].area
         destination = tor.rules.topology[location][choice]
+        game["metadata"]["area"] = destination
         game["state"] = game["state"]._replace(area=destination)
-        request.app.game["choice"] = choice
+        game["frames"].clear()
         raise web.HTTPFound("/")
 
 
