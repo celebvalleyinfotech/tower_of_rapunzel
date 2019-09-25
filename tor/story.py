@@ -16,7 +16,7 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with Tower of Rapunzel.  If not, see <http://www.gnu.org/licenses/>.
 
-
+import enum
 import itertools
 
 from turberfield.dialogue.model import SceneScript
@@ -28,6 +28,28 @@ import tor.rules
 
 version = tor.__version__
 
+
+class Progress(enum.Enum):
+    a = 0
+    b = 1
+    c = 2
+    d = 5
+    e = 10
+    f = 15
+    g = 20
+    h = 25
+    i = 30
+    j = 35
+    k = 40
+
+class Theme(enum.Enum):
+    brooms = 0
+    comedy = 1
+    injuries = 2
+    money = 3
+    progress = 4
+    rapunzel = 5
+    witches = 6
 
 class Narrator(Stateful): pass
 class Character(Stateful, Persona): pass
