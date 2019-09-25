@@ -3,7 +3,7 @@
     Scene ~~
     Shot --
 
-.. |VERSION| property:: tor.logic.version
+.. |VERSION| property:: tor.story.version
 
 :author: D Haynes
 :date: 2019-09-24
@@ -11,7 +11,7 @@
 :version: |VERSION|
 
 .. entity:: NARRATOR
-   :types: tor.logic.Narrator
+   :types: tor.story.Narrator
 
 rapunzel
 ~~~~~~~~

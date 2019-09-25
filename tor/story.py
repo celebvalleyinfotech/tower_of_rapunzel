@@ -20,8 +20,21 @@
 import itertools
 
 from turberfield.dialogue.model import SceneScript
+from turberfield.dialogue.types import Persona
+from turberfield.dialogue.types import Stateful
 
+import tor
 import tor.rules
+
+version = tor.__version__
+
+
+class Narrator(Stateful): pass
+class Character(Stateful, Persona): pass
+
+ensemble = [
+    Narrator(),
+]
 
 episodes = [
 

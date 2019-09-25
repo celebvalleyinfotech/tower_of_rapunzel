@@ -22,12 +22,17 @@ A text-based web game for PyWeek 28.
 """
 import argparse
 import asyncio
+from collections import deque
+from collections import namedtuple
+import functools
 import sys
 
 from aiohttp import web
 import pkg_resources
 
 from turberfield.dialogue.matcher import Matcher
+from turberfield.dialogue.model import Model
+from turberfield.dialogue.performer import Performer
 
 import tor
 import tor.rules
@@ -35,19 +40,107 @@ import tor.story
 import tor.render
 
 
+class Presentation:
+
+    Element = namedtuple(
+        "Element",
+        ["source", "dialogue", "shot", "offset", "duration"]
+    )
+
+    @staticmethod
+    def build_frames(source, seq, dwell, pause):
+        """Generate a new Frame on each Shot and FX item"""
+        shot = None
+        frame = []
+        offset = 0
+        for item in seq:
+            if isinstance(item, (Model.Audio, Model.Shot)):
+                if frame and shot and shot != item:
+                    yield frame
+                    frame = []
+                    offset = 0
+
+                if isinstance(item, Model.Shot):
+                    shot = item
+                else:
+                    frame.append(Presentation.Element(
+                        source, item, shot,
+                        item.offset / 1000,
+                        item.duration / 1000
+                    ))
+
+            elif isinstance(item, Model.Line):
+                durn = pause + dwell * item.text.count(" ")
+                frame.append(Presentation.Element(
+                    source, item, shot, offset, durn
+                ))
+                offset += durn
+            elif not isinstance(item, Model.Condition):
+                frame.append(Presentation.Element(
+                    source, item, shot, offset, 0
+                ))
+        else:
+            if any(
+                isinstance(
+                    i.dialogue, (Model.Audio, Model.Line)
+                )
+                for i in frame
+            ):
+                yield frame
+
+    @staticmethod
+    def next_frame(game, entities, dwell=0.3, pause=1):
+        while not game["frames"]:
+            location = game["state"].area
+            matcher = Matcher(tor.story.episodes)
+            folders = list(matcher.options(game["metadata"]))
+            performer = Performer(folders, entities)
+            folder, index, script, selection, interlude = performer.next(folders, entities)
+            scene = performer.run(react=False)
+            frames = list(Presentation.build_frames(
+                folder.paths[index], scene,
+                dwell=dwell, pause=pause
+            ))
+            if frames and interlude:
+                frames[-1].append(Presentation.Element(
+                    None,
+                    functools.partial(
+                        interlude, folder, index, entities,
+                        tor.rules.Settings
+                    ),
+                    None, None, None
+                ))
+            game["frames"].extend(frames)
+
+        return game["frames"].popleft()
+
+    @staticmethod
+    def react(game, frame):
+        for element in frame:
+            event = element.dialogue
+            if (
+                isinstance(event, Model.Property) and
+                event.object is not None
+            ):
+                setattr(event.object, event.attr, event.val)
+            elif callable(event):
+                state = game["state"]
+                rv = event(state)
+                game["state"] = tor.rules.State(**rv)
+            yield element
+
 async def get_frame(request):
     game = request.app.game
-    matcher = Matcher(tor.story.episodes)
-    folder = next(matcher.options(game["metadata"]))
-    print(folder, file=sys.stderr)
     location = game["state"].area
+    entities = [
+        i for i in tor.story.ensemble
+        if getattr(i, "area", location) == location
+    ]
+    frame = Presentation.next_frame(game, entities)
     destinations = tor.rules.topology[location]
     print(destinations, file=sys.stderr)
-    interlude = next(folder.interludes)
-    state = game["state"]
-    rv = interlude(folder, None, [], tor.rules.Settings, state)
-    print(rv, file=sys.stderr)
-    game["state"] = tor.rules.State(**rv)
+    elements = list(Presentation.react(game, frame))
+    print(elements, file=sys.stderr)
     return web.Response(
         text = tor.render.base_to_html(refresh=6).format(
 """
@@ -93,33 +186,15 @@ def build_app(args):
             tor.rules.Settings.CUT_M,
             tor.rules.Settings.COINS_N,
             tor.rules.Settings.HEALTH_MAX
-        )
+        ),
+        "frames": deque([])
     }
     return app
 
 
 def main(args):
     app = build_app(args)
-    loop = asyncio.get_event_loop()
-    asyncio.set_event_loop(loop)
-    handler = app.make_handler()
-    #runner = web.AppRunner(app)
-    f = loop.create_server(handler, args.host, args.port)
-    srv = loop.run_until_complete(f)
-
-    print(
-        "Serving on {0[0]}:{0[1]}".format(srv.sockets[0].getsockname()),
-        file=sys.stderr
-    )
-    try:
-        loop.run_forever()
-    except KeyboardInterrupt:
-        pass
-    finally:
-        srv.close()
-        loop.run_until_complete(srv.wait_closed())
-    loop.close()
-
+    return web.run_app(app, host=args.host, port=args.port)
 
 def parser(description=__doc__):
     rv = argparse.ArgumentParser(description)
