@@ -27,12 +27,27 @@ import sys
 from aiohttp import web
 import pkg_resources
 
+from turberfield.dialogue.matcher import Matcher
+
 import tor
 import tor.rules
+import tor.story
 import tor.render
 
 
 async def get_frame(request):
+    game = request.app.game
+    matcher = Matcher(tor.story.episodes)
+    folder = next(matcher.options(game["metadata"]))
+    print(folder, file=sys.stderr)
+    location = game["state"].area
+    destinations = tor.rules.topology[location]
+    print(destinations, file=sys.stderr)
+    interlude = next(folder.interludes)
+    state = game["state"]
+    rv = interlude(folder, None, [], tor.rules.Settings, state)
+    print(rv, file=sys.stderr)
+    game["state"] = tor.rules.State(**rv)
     return web.Response(
         text = tor.render.base_to_html(refresh=6).format(
 """
@@ -52,10 +67,10 @@ Boo!
 
 async def post_choice(request):
     choice = request.match_info["choice"]
-    print(choice, file=sys.stderr)
     if not tor.rules.choice_validator.match(choice):
         raise web.HTTPUnauthorized(reason="User sent invalid choice.")
     else:
+        request.app.game["choice"] = int(choice)
         raise web.HTTPFound("/")
 
 
@@ -69,6 +84,17 @@ def build_app(args):
         "/css/",
         pkg_resources.resource_filename("tor", "static/css")
     )
+    app.game = {
+        "metadata": {"area": "balcony"},
+        "state": tor.rules.State(
+            "balcony",
+            tor.rules.Settings.HAIR_M,
+            tor.rules.Settings.HAIR_D,
+            tor.rules.Settings.CUT_M,
+            tor.rules.Settings.COINS_N,
+            tor.rules.Settings.HEALTH_MAX
+        )
+    }
     return app
 
 
