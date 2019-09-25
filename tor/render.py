@@ -19,13 +19,17 @@ if hasattr(element.dialogue.persona, "name") else ""}
     autoplay="autoplay" preload="auto"
 >
 </audio>
-</li>
-        """.format(element)
+</li>""".format(element)
     else:
         return ""
 
+def option_as_list_item(n, option):
+    return f"""
+<form role="form" action="/{n}" method="post" name="choice" >
+    <button type="submit">{option.capitalize()}</button>
+</form>"""
 
-def body_to_html(location="", frame=[], sep="\n"):
+def body_to_html(location="", frame=[], options=[]):
     return f"""
 <main class="grid-front">
 <h1>{location.capitalize()}</h1>
@@ -34,9 +38,7 @@ def body_to_html(location="", frame=[], sep="\n"):
 </ul>
 </main>
 <nav class="grid-steer">
-<form role="form" action="/1234" method="post" name="choice" >
-    <button type="submit">Choose 1234</button>
-</form>
+{{1}}
 </nav>
 <section class="grid-dash">
 </section>"""

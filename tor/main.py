@@ -149,14 +149,17 @@ async def get_frame(request):
     ]
     frame = Presentation.next_frame(game, entities)
     destinations = tor.rules.topology[location]
-    print(destinations, file=sys.stderr)
     elements = list(Presentation.react(game, frame))
-    print(elements, file=sys.stderr)
     return web.Response(
         text = tor.render.base_to_html(refresh=6).format(
             tor.render.body_to_html(location=location, frame=frame).format(
                 "\n".join(
-                    tor.render.element_as_list_item(element) for element in frame
+                    tor.render.element_as_list_item(element)
+                    for element in frame
+                ),
+                "\n".join(
+                    tor.render.option_as_list_item(n, option)
+                    for n, option in enumerate(destinations)
                 )
             )
         ),
@@ -168,7 +171,12 @@ async def post_choice(request):
     if not tor.rules.choice_validator.match(choice):
         raise web.HTTPUnauthorized(reason="User sent invalid choice.")
     else:
-        request.app.game["choice"] = int(choice)
+        choice = int(choice)
+        game = request.app.game
+        location = game["state"].area
+        destination = tor.rules.topology[location][choice]
+        game["state"] = game["state"]._replace(area=destination)
+        request.app.game["choice"] = choice
         raise web.HTTPFound("/")
 
 
