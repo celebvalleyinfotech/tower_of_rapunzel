@@ -69,6 +69,7 @@ class Narrator:
 class Character(Stateful, Persona): pass
 class Butcher(Character): pass
 class Broomer(Character): pass
+class Stylist(Character): pass
 class Rapunzel(Character): pass
 
 ensemble = [
@@ -77,6 +78,7 @@ ensemble = [
     Rapunzel(name="Rapunzel"),
     Broomer(name="Hickory McFly"),
     Butcher(name="Ricky Butcher"),
+    Stylist(name="Wigmore Watkins"),
 ]
 
 episodes = [
@@ -143,7 +145,7 @@ episodes = [
 
     SceneScript.Folder(
         pkg="tor",
-        description="Dialogue on the balcony.",
+        description="Dialogue at the chemist.",
         metadata={
             "area": "chemist",
         },
@@ -202,13 +204,7 @@ episodes = [
             "area": "stylist",
         },
         paths=[
-            "dialogue/stylist/brooms.rst",
-            "dialogue/stylist/rapunzel.rst",
-            "dialogue/stylist/money.rst",
-            "dialogue/stylist/witches.rst",
-            "dialogue/stylist/comedy.rst",
-            "dialogue/stylist/progress.rst",
-            "dialogue/stylist/injuries.rst"
+            "dialogue/stylist/wigs.rst",
         ],
         interludes=itertools.repeat(None)
     ),

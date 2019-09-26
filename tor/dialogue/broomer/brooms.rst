@@ -19,13 +19,6 @@
 Brooms
 ~~~~~~
 
-Flag
-----
-
-[NARRATOR]_
-
-    Hello from Brooms.
-
 Chat 0
 ------
 
