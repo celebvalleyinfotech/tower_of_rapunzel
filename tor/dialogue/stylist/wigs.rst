@@ -109,3 +109,13 @@ Chat 8
 
     Oh, this will be lovely to work with. You know, I never need
     my hand lotion when I've been handling the best Rapunzel.
+
+Chat 9
+------
+
+.. condition:: STYLIST.state 9
+
+[STYLIST]_
+
+    Candidly, what are you feeding her on?
+

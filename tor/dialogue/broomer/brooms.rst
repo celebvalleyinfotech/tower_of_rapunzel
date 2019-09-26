@@ -77,12 +77,12 @@ Chat 5
 
 [BROOMER]_
 
-    This is our most pupular model. A modern construction means it's
+    This is our most popular model. A modern construction means it's
     inexpensive.
 
 [BROOMER]_
 
-    Yet it has a bronze name tag on the handle. We can engrave that
+    Yet it has a Bronze name tag on the handle. We can engrave that
     for you for a small extra charge. Only 25 coins.
 
 Chat 6
@@ -126,4 +126,12 @@ Chat 8
 
     Depending on the options.
 
-    Would you mind stepping back a little?
+Chat 9
+------
+
+.. condition:: BROOMER.state 9
+
+[BROOMER]_
+
+    Do you think you might be ready to buy something?
+

@@ -69,6 +69,7 @@ class Narrator:
 class Character(Stateful, Persona): pass
 class Butcher(Character): pass
 class Broomer(Character): pass
+class Chemist(Character): pass
 class Stylist(Character): pass
 class Rapunzel(Character): pass
 
@@ -78,6 +79,7 @@ ensemble = [
     Rapunzel(name="Rapunzel"),
     Broomer(name="Hickory McFly"),
     Butcher(name="Ricky Butcher"),
+    Chemist(name="Poppy Pills"),
     Stylist(name="Wigmore Watkins"),
 ]
 
@@ -150,13 +152,7 @@ episodes = [
             "area": "chemist",
         },
         paths=[
-            "dialogue/chemist/brooms.rst",
-            "dialogue/chemist/rapunzel.rst",
-            "dialogue/chemist/money.rst",
-            "dialogue/chemist/witches.rst",
-            "dialogue/chemist/comedy.rst",
-            "dialogue/chemist/progress.rst",
-            "dialogue/chemist/injuries.rst"
+            "dialogue/chemist/pills.rst",
         ],
         interludes=itertools.repeat(None)
     ),

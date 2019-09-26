@@ -161,7 +161,7 @@ async def get_frame(request):
     narrator = next(i for i in entities if isinstance(i, Narrator))
     narrator.state = game["state"]
     for character in (i for i in entities if isinstance(i, Character)):
-        character.set_state(random.randrange(9))
+        character.set_state(random.randrange(10))
 
     frame = Presentation.next_frame(game, entities)
     buys = ["Spend 1c", "Spend 2c", "Spend 3c"] if location == "butcher" else []

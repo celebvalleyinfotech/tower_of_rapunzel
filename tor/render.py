@@ -90,8 +90,6 @@ def body_to_html(state, frame=[], options=[]):
 <dd>{int(state.health_n)}</dd>
 <dt>Coins</dt>
 <dd>{state.coins_n}</dd>
-<dt>Area</dt>
-<dd>{state.area}</dd>
 </dl>
 </section>"""
 

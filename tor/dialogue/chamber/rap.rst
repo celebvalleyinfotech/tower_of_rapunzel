@@ -150,6 +150,21 @@ Rap 8
 
     Rapunzel in the club is a party completer.
 
+Rap 9
+-----
+
+.. condition:: RAPUNZEL.state 9
+
+[RAPUNZEL]_
+
+    Did anybody tell you where your best friend went?
+
+    She's hanging with my crew 'cos we're the more intelligent.
+
+    And when we're at the gig we are the loudest in the tent.
+
+    Rapunzel the original the 100%.
+
 Status
 ------
 
