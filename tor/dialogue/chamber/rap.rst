@@ -120,6 +120,36 @@ Rap 6
 
     There ain't no MC can fake this sound.
 
+Rap 7
+-----
+
+.. condition:: RAPUNZEL.state 7
+
+[RAPUNZEL]_
+
+    You took all the money.
+
+    You went and bought a bunny.
+
+    You baked it in a pie.
+
+    And it hurt my tummy.
+
+Rap 8
+-----
+
+.. condition:: RAPUNZEL.state 8
+
+[RAPUNZEL]_
+
+    I get no stress from Trick or Treaters.
+
+    And when I drink my juice I drink by litres.
+
+    And when I brush my curls I brush by metres.
+
+    Rapunzel in the club is a party completer.
+
 Status
 ------
 
@@ -129,7 +159,7 @@ Status
 
 [NARRATOR]_
 
-    Rapunzels hair is |HAIR_M| metres long.
+    Rapunzel's hair is |HAIR_M| metres long.
 
 .. |COINS_N| property:: NARRATOR.coins_n
 .. |HAIR_M| property:: NARRATOR.hair_m
