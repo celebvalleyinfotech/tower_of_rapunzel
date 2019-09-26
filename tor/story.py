@@ -33,14 +33,16 @@ class Progress(enum.Enum):
     a = 0
     b = 1
     c = 2
-    d = 5
-    e = 10
-    f = 15
-    g = 20
-    h = 25
-    i = 30
-    j = 35
-    k = 40
+    d = 3
+    e = 5
+    f = 10
+    g = 12
+    h = 15
+    i = 20
+    j = 25
+    k = 30
+    l = 35
+    m = 40
 
 class Theme(enum.Enum):
     brooms = 0
@@ -51,12 +53,12 @@ class Theme(enum.Enum):
     rapunzel = 5
     witches = 6
 
-class Narrator(Stateful): pass
 class Character(Stateful, Persona): pass
+class Narrator(Stateful): pass
 class Butcher(Character): pass
 
 ensemble = [
-    Narrator(),
+    Narrator().set_state(Theme.brooms).set_state(Progress.a),
     Butcher(name="Mr Ricky Butcher"),
 ]
 

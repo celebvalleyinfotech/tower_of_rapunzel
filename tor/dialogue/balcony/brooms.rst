@@ -12,15 +12,21 @@
 
 .. entity:: NARRATOR
    :types: tor.story.Narrator
+   :states: tor.story.Theme.brooms
 
 brooms
 ~~~~~~
 
-Shot
-----
+Progress.a
+----------
 
 [NARRATOR]_
 
-    This is the 'brooms' dialogue.
-    It's in the file '/home/boss/src/tower_of_rapunzel/tor/dialogue/balcony/brooms.rst'.
+    This is the only place I get any peace and quiet.
+
+.. condition:: NARRATOR.state tor.story.Progress.a
+
+[NARRATOR]_
+
+    You know, I remember not so long ago, we used to make our own brooms.
 

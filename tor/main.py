@@ -25,6 +25,7 @@ import asyncio
 from collections import deque
 from collections import namedtuple
 import functools
+import random
 import sys
 
 from aiohttp import web
@@ -37,6 +38,9 @@ from turberfield.dialogue.performer import Performer
 import tor
 import tor.rules
 import tor.story
+from tor.story import Narrator
+from tor.story import Progress
+from tor.story import Theme
 import tor.render
 
 
@@ -90,6 +94,19 @@ class Presentation:
 
     @staticmethod
     def next_frame(game, entities, dwell=0.3, pause=1):
+        narrator = next(i for i in entities if isinstance(i, Narrator))
+        narrator.set_state(
+            list(Progress)[
+                (list(Progress).index(narrator.get_state(Progress)) + 1) %
+                len(Progress)
+            ]
+        )
+        narrator.set_state(
+            list(Theme)[
+                (list(Theme).index(narrator.get_state(Theme)) + 1) %
+                len(Theme)
+            ]
+        )
         while not game["frames"]:
             location = game["state"].area
             matcher = Matcher(tor.story.episodes)
