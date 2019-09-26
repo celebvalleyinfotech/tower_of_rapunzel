@@ -121,15 +121,6 @@ class Presentation:
                 folder.paths[index], scene,
                 dwell=dwell, pause=pause
             ))
-            if frames and interlude:
-                frames[-1].append(Presentation.Element(
-                    None,
-                    functools.partial(
-                        interlude, folder, index, entities,
-                        tor.rules.Settings
-                    ),
-                    None, None, None
-                ))
             game["frames"].extend(frames)
 
         return game["frames"].popleft()
@@ -143,10 +134,7 @@ class Presentation:
                 event.object is not None
             ):
                 setattr(event.object, event.attr, event.val)
-            elif callable(event):
-                state = game["state"]
-                rv = event(state)
-                game["state"] = tor.rules.State(**rv)
+
             yield element
 
     @staticmethod
@@ -162,13 +150,16 @@ class Presentation:
 
 async def get_frame(request):
     game = request.app.game
+    print(game["state"])
     location = game["state"].area
     entities = [
         i for i in tor.story.ensemble
         if getattr(i, "area", location) == location
     ]
     frame = Presentation.next_frame(game, entities)
-    destinations = tor.rules.topology[location]
+    buys = ["Spend 1c", "Spend 2c", "Spend 3c"] if location == "butcher" else []
+    cuts = []
+    hops = tor.rules.topology[location]
     elements = list(Presentation.react(game, frame))
     return web.Response(
         text = tor.render.base_to_html(
@@ -180,16 +171,38 @@ async def get_frame(request):
                     for element in frame
                 ),
                 "\n".join(
-                    tor.render.option_as_list_item(n, option)
-                    for n, option in enumerate(destinations)
-                )
+                    tor.render.option_as_list_item(n, option, path="/hop/")
+                    for n, option in enumerate(hops)
+                ),
+                "\n".join(
+                    tor.render.option_as_list_item(n + 1, option, path="/buy/")
+                    for n, option in enumerate(buys)
+                ),
+                "\n".join(
+                    tor.render.option_as_list_item(n, option, path="/cut/")
+                    for n, option in enumerate(cuts)
+                ),
             )
         ),
         content_type="text/html"
     )
 
 
-async def post_choice(request):
+async def post_buy(request):
+    buy = request.match_info["buy"]
+    if not tor.rules.choice_validator.match(buy):
+        raise web.HTTPUnauthorized(reason="User sent invalid buy code.")
+    else:
+        game = request.app.game
+        game["frames"].clear()
+        rv = tor.rules.apply_rules(
+            None, None, None, tor.rules.Settings, game["state"], buy=int(buy)
+        )
+        game["state"] = tor.rules.State(**rv)
+        raise web.HTTPFound("/")
+
+
+async def post_cut(request):
     choice = request.match_info["choice"]
     if not tor.rules.choice_validator.match(choice):
         raise web.HTTPUnauthorized(reason="User sent invalid choice.")
@@ -204,11 +217,33 @@ async def post_choice(request):
         raise web.HTTPFound("/")
 
 
+async def post_hop(request):
+    hop = request.match_info["hop"]
+    if not tor.rules.choice_validator.match(hop):
+        raise web.HTTPUnauthorized(reason="User sent invalid hop.")
+    else:
+        index = int(hop)
+        game = request.app.game
+        location = game["state"].area
+        destination = tor.rules.topology[location][index]
+        game["metadata"]["area"] = destination
+        game["state"] = game["state"]._replace(area=destination)
+        game["frames"].clear()
+        if destination not in ("butcher", "chamber"):
+            rv = tor.rules.apply_rules(
+                None, None, None, tor.rules.Settings, game["state"]
+            )
+            game["state"] = tor.rules.State(**rv)
+        raise web.HTTPFound("/")
+
+
 def build_app(args):
     app = web.Application()
     app.add_routes([
         web.get("/", get_frame),
-        web.post("/{{choice:{0}}}".format(tor.rules.choice_validator.pattern), post_choice),
+        web.post("/buy/{{buy:{0}}}".format(tor.rules.choice_validator.pattern), post_buy),
+        web.post("/cut/{{cut:{0}}}".format(tor.rules.choice_validator.pattern), post_cut),
+        web.post("/hop/{{hop:{0}}}".format(tor.rules.choice_validator.pattern), post_hop),
     ])
     app.router.add_static(
         "/css/",

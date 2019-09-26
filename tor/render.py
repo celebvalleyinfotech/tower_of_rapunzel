@@ -43,7 +43,7 @@ if hasattr(element.dialogue.persona, "name") else ""}
         return ""
 
 
-def option_as_list_item(n, option):
+def option_as_list_item(n, option, path="/"):
     labels = {
         "balcony": "Onto the Balcony",
         "broomer": "Broom shop",
@@ -55,8 +55,8 @@ def option_as_list_item(n, option):
         "stylist": "Visit the Stylist",
     }
     return f"""
-<form role="form" action="/{n}" method="post" name="choice" >
-    <button type="submit">{labels[option]}</button>
+<form role="form" action="{path}{n}" method="post" name="choice" >
+    <button type="submit">{labels.get(option, option)}</button>
 </form>"""
 
 
@@ -80,11 +80,13 @@ def body_to_html(state, frame=[], options=[]):
 </main>
 <nav class="grid-steer">
 {{1}}
+{{2}}
+{{3}}
 </nav>
 <section class="grid-dash">
 <dl class="mod-stats">
-<dt>Heath</dt>
-<dd>{state.health_n}</dd>
+<dt>Health</dt>
+<dd>{int(state.health_n)}</dd>
 <dt>Coins</dt>
 <dd>{state.coins_n}</dd>
 <dt>Area</dt>

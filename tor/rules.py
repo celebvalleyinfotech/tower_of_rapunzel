@@ -59,11 +59,11 @@ State = namedtuple(
 
 
 def apply_rules(
-    folder, index, entities, settings, state, choice=None
+    folder, index, entities, settings, state, buy=None, cut=None,
 ):
     if state.area == "chamber":
         choice = (
-            choice if choice is not None
+            cut if cut is not None
             else random.choice([settings.CUT_D, 0 , -settings.CUT_D])
         )
         cut = max(0, state.cut_m + choice)
@@ -88,9 +88,9 @@ def apply_rules(
         )
     elif state.area == "butcher":
         choice = (
-            choice if choice is not None
+            buy if buy is not None
             else random.choice(
-                [i * settings.HAIR_C for i in (0, 1, 2, 5)]
+                [i * settings.HAIR_C for i in (0, 1, 2, 3)]
             )
         )
         cost = min(state.coins_n, choice)
