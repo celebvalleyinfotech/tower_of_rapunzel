@@ -170,7 +170,8 @@ async def get_frame(request):
     elements = list(Presentation.react(game, frame))
     return web.Response(
         text = tor.render.base_to_html(
-            refresh=math.ceil(Presentation.refresh(frame))
+            #refresh=math.ceil(Presentation.refresh(frame))
+            refresh=None
         ).format(
             tor.render.body_to_html(game["state"], frame=frame).format(
                 "\n".join(

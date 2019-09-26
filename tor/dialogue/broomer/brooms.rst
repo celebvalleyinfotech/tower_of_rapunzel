@@ -55,7 +55,7 @@ Chat 3
 
 [BROOMER]_
 
-    The trouble with selling to witches is they really know how to expoit
+    The trouble with selling to witches is they really know how to exploit
     a situation.
 
 Chat 4
@@ -77,13 +77,16 @@ Chat 5
 
 [BROOMER]_
 
-    This is our most popular model. A modern construction means it's
-    inexpensive.
+    This is our most popular model.
+
+    A modern construction means it's inexpensive.
 
 [BROOMER]_
 
-    Yet it has a Bronze name tag on the handle. We can engrave that
-    for you for a small extra charge. Only 25 coins.
+    Even so, it has a Bronze name tag on the handle. We can engrave that
+    for you for a small extra charge.
+
+    Only 25 coins.
 
 Chat 6
 ------
@@ -108,7 +111,7 @@ Chat 7
 [BROOMER]_
 
     Ah, I see you are admiring the Excelsior. This is the only model
-    with real Gold detailling.
+    with real Gold detailing.
 
     Would you mind stepping back a little?
 
@@ -122,9 +125,9 @@ Chat 8
     If you're considering a purchase of the Excelsior, I recommend
     you speak to my colleague in finance.
 
-    For a cash sale, we'd be lookig at north of 40 coins I think.
+    For a cash sale, we'd be looking north of 40 coins I think.
 
-    Depending on the options.
+    Depending on the options of course.
 
 Chat 9
 ------
