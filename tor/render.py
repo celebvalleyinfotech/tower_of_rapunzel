@@ -60,7 +60,7 @@ def option_as_list_item(n, option):
 </form>"""
 
 
-def body_to_html(location="", frame=[], options=[]):
+def body_to_html(state, frame=[], options=[]):
     labels = {
         "balcony": "On the Balcony",
         "broomer": "At the Broom shop",
@@ -73,7 +73,7 @@ def body_to_html(location="", frame=[], options=[]):
     }
     return f"""
 <main class="grid-front">
-<h1>{labels[location]}</h1>
+<h1>{labels[state.area]}</h1>
 <ul class="mod-dialogue">
 {{0}}
 </ul>
@@ -82,6 +82,14 @@ def body_to_html(location="", frame=[], options=[]):
 {{1}}
 </nav>
 <section class="grid-dash">
+<dl class="mod-stats">
+<dt>Heath</dt>
+<dd>{state.health_n}</dd>
+<dt>Coins</dt>
+<dd>{state.coins_n}</dd>
+<dt>Area</dt>
+<dd>{state.area}</dd>
+</dl>
 </section>"""
 
 

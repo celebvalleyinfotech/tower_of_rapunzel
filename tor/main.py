@@ -25,6 +25,7 @@ import asyncio
 from collections import deque
 from collections import namedtuple
 import functools
+import math
 import random
 import sys
 
@@ -170,8 +171,10 @@ async def get_frame(request):
     destinations = tor.rules.topology[location]
     elements = list(Presentation.react(game, frame))
     return web.Response(
-        text = tor.render.base_to_html(refresh=6).format(
-            tor.render.body_to_html(location=location, frame=frame).format(
+        text = tor.render.base_to_html(
+            refresh=math.ceil(Presentation.refresh(frame))
+        ).format(
+            tor.render.body_to_html(game["state"], frame=frame).format(
                 "\n".join(
                     tor.render.element_as_list_item(element)
                     for element in frame
