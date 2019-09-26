@@ -158,7 +158,7 @@ async def get_frame(request):
     ]
     frame = Presentation.next_frame(game, entities)
     buys = ["Spend 1c", "Spend 2c", "Spend 3c"] if location == "butcher" else []
-    cuts = []
+    cuts = ["Cut less", "Cut same", "Cut more"] if location == "chamber" else []
     hops = tor.rules.topology[location]
     elements = list(Presentation.react(game, frame))
     return web.Response(
@@ -203,17 +203,22 @@ async def post_buy(request):
 
 
 async def post_cut(request):
-    choice = request.match_info["choice"]
-    if not tor.rules.choice_validator.match(choice):
-        raise web.HTTPUnauthorized(reason="User sent invalid choice.")
+    cut = request.match_info["cut"]
+    if not tor.rules.choice_validator.match(cut):
+        raise web.HTTPUnauthorized(reason="User sent invalid cut code.")
     else:
-        choice = int(choice)
         game = request.app.game
-        location = game["state"].area
-        destination = tor.rules.topology[location][choice]
-        game["metadata"]["area"] = destination
-        game["state"] = game["state"]._replace(area=destination)
         game["frames"].clear()
+        cut_d = {
+            0: -tor.rules.Settings.CUT_D,
+            1: 0,
+            2: tor.rules.Settings.CUT_D,
+        }.get(int(cut), tor.rules.Settings.CUT_D)
+
+        rv = tor.rules.apply_rules(
+            None, None, None, tor.rules.Settings, game["state"], cut=cut_d
+        )
+        game["state"] = tor.rules.State(**rv)
         raise web.HTTPFound("/")
 
 

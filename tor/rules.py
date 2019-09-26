@@ -20,6 +20,7 @@ from collections import namedtuple
 import fractions
 import random
 import re
+import sys
 
 from turberfield.dialogue.model import SceneScript
 
@@ -78,14 +79,17 @@ def apply_rules(
             coins_n=state.coins_n + settings.HAIR_C * state.cut_m
         )
     elif state.area == "chemist":
+        print("At the chemist", file=sys.stderr)
         cost = min(
             state.coins_n,
             int((settings.HEALTH_MAX - state.health_n) * settings.HEALTH_C)
         )
+        print(cost, file=sys.stderr)
         state = state._replace(
             coins_n=state.coins_n - cost,
             health_n=int(state.health_n + cost / settings.HEALTH_C)
         )
+        print(state, file=sys.stderr)
     elif state.area == "butcher":
         choice = (
             buy if buy is not None

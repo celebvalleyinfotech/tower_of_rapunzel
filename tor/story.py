@@ -79,7 +79,7 @@ episodes = [
             "dialogue/balcony/progress.rst",
             "dialogue/balcony/injuries.rst"
         ],
-        interludes=itertools.repeat(tor.rules.apply_rules)
+        interludes=itertools.repeat(None)
     ),
 
     SceneScript.Folder(
@@ -97,7 +97,7 @@ episodes = [
             "dialogue/broomer/progress.rst",
             "dialogue/broomer/injuries.rst"
         ],
-        interludes=itertools.repeat(tor.rules.apply_rules)
+        interludes=itertools.repeat(None)
     ),
 
     SceneScript.Folder(
@@ -115,7 +115,7 @@ episodes = [
             "dialogue/butcher/progress.rst",
             "dialogue/butcher/injuries.rst"
         ],
-        interludes=itertools.repeat(tor.rules.apply_rules)
+        interludes=itertools.repeat(None)
     ),
 
     SceneScript.Folder(
@@ -133,7 +133,7 @@ episodes = [
             "dialogue/chamber/progress.rst",
             "dialogue/chamber/injuries.rst"
         ],
-        interludes=itertools.repeat(tor.rules.apply_rules)
+        interludes=itertools.repeat(None)
     ),
 
     SceneScript.Folder(
@@ -151,7 +151,7 @@ episodes = [
             "dialogue/chemist/progress.rst",
             "dialogue/chemist/injuries.rst"
         ],
-        interludes=itertools.repeat(tor.rules.apply_rules)
+        interludes=itertools.repeat(None)
     ),
 
     SceneScript.Folder(
@@ -169,7 +169,7 @@ episodes = [
             "dialogue/inbound/progress.rst",
             "dialogue/inbound/injuries.rst"
         ],
-        interludes=itertools.repeat(tor.rules.apply_rules)
+        interludes=itertools.repeat(None)
     ),
 
     SceneScript.Folder(
@@ -187,7 +187,7 @@ episodes = [
             "dialogue/outward/progress.rst",
             "dialogue/outward/injuries.rst"
         ],
-        interludes=itertools.repeat(tor.rules.apply_rules)
+        interludes=itertools.repeat(None)
     ),
 
     SceneScript.Folder(
@@ -205,6 +205,6 @@ episodes = [
             "dialogue/stylist/progress.rst",
             "dialogue/stylist/injuries.rst"
         ],
-        interludes=itertools.repeat(tor.rules.apply_rules)
+        interludes=itertools.repeat(None)
     ),
 ]
