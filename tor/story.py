@@ -20,6 +20,7 @@ import enum
 import itertools
 
 from turberfield.dialogue.model import SceneScript
+from turberfield.dialogue.types import DataObject
 from turberfield.dialogue.types import Persona
 from turberfield.dialogue.types import Stateful
 
@@ -53,12 +54,26 @@ class Theme(enum.Enum):
     rapunzel = 5
     witches = 6
 
+class Narrator:
+
+    state = None
+
+    @property
+    def coins_n(self):
+        return format(self.state.coins_n)
+
+    @property
+    def hair_m(self):
+        return "{0:.1f}".format(float(self.state.hair_m))
+
 class Character(Stateful, Persona): pass
-class Narrator(Stateful): pass
 class Butcher(Character): pass
+class Rapunzel(Character): pass
 
 ensemble = [
-    Narrator().set_state(Theme.brooms).set_state(Progress.a),
+    #Narrator().set_state(Theme.brooms).set_state(Progress.a),
+    Narrator(),
+    Rapunzel(name="Rapunzel"),
     Butcher(name="Mr Ricky Butcher"),
 ]
 

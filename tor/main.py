@@ -39,6 +39,7 @@ from turberfield.dialogue.performer import Performer
 import tor
 import tor.rules
 import tor.story
+from tor.story import Character
 from tor.story import Narrator
 from tor.story import Progress
 from tor.story import Theme
@@ -95,6 +96,7 @@ class Presentation:
 
     @staticmethod
     def next_frame(game, entities, dwell=0.3, pause=1):
+        """
         narrator = next(i for i in entities if isinstance(i, Narrator))
         narrator.set_state(
             list(Progress)[
@@ -108,6 +110,7 @@ class Presentation:
                 len(Theme)
             ]
         )
+        """
         while not game["frames"]:
             location = game["state"].area
             matcher = Matcher(tor.story.episodes)
@@ -150,12 +153,17 @@ class Presentation:
 
 async def get_frame(request):
     game = request.app.game
-    print(game["state"])
     location = game["state"].area
     entities = [
         i for i in tor.story.ensemble
         if getattr(i, "area", location) == location
     ]
+    narrator = next(i for i in entities if isinstance(i, Narrator))
+    narrator.state = game["state"]
+    for character in (i for i in entities if isinstance(i, Character)):
+        character.set_state(random.randrange(12))
+        character.set_state(random.randrange(7))
+
     frame = Presentation.next_frame(game, entities)
     buys = ["Spend 1c", "Spend 2c", "Spend 3c"] if location == "butcher" else []
     cuts = ["Cut less", "Cut same", "Cut more"] if location == "chamber" else []

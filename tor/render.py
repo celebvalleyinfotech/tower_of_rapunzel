@@ -24,8 +24,9 @@ def element_as_list_item(element):
         return f"""
 <li style="animation-duration: {element.duration}s; animation-delay: {element.offset}s">
 <blockquote class="line">
-{'<header class="persona"> {{ 0.dialogue.persona.name.firstname }} {{ 0.dialogue.persona.name.surname }} </header>'.format(element)
-if hasattr(element.dialogue.persona, "name") else ""}
+<header class="{'persona' if hasattr(element.dialogue.persona, '_name') else ''}">
+{ element.dialogue.persona._name if hasattr(element.dialogue.persona, '_name') else ''}
+</header>
 <p class="speech">{ element.dialogue.text }</p>
 </blockquote>
 </li>
