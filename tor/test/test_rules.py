@@ -61,8 +61,7 @@ class RulesTests(unittest.TestCase):
         folder = folders[0]
         for f in self.pathway(folders, n_cycles):
             metadata = state._asdict()
-            interlude = next(folder.interludes)
-            rv = interlude(folder, None, [], self.settings, state)
+            rv = tor.rules.apply_rules(folder, None, [], self.settings, state)
             if rv:
                 metadata.update(rv)
             else:
@@ -84,6 +83,8 @@ class RulesTests(unittest.TestCase):
             for i in range(1000)
         ]
         ranking = sorted(runs, key=lambda x: x[-1].coins_n, reverse=True)
+        self.assertGreaterEqual(ranking[-1][-1].coins_n, 0)
+        self.assertLess(ranking[-1][-1].coins_n, 2)
         self.assertGreater(ranking[0][-1].coins_n, 25)
         self.assertLess(ranking[0][-1].coins_n, 42)
 

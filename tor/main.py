@@ -238,6 +238,9 @@ async def post_hop(request):
             rv = tor.rules.apply_rules(
                 None, None, None, tor.rules.Settings, game["state"]
             )
+            if not rv:
+                print("Game Over", file=sys.stderr)
+                print(game["state"], file=sys.stderr)
             game["state"] = tor.rules.State(**rv)
         raise web.HTTPFound("/")
 
