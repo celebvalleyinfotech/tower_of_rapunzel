@@ -175,13 +175,7 @@ episodes = [
             "area": "outward",
         },
         paths=[
-            "dialogue/outward/brooms.rst",
-            "dialogue/outward/rapunzel.rst",
-            "dialogue/outward/money.rst",
-            "dialogue/outward/witches.rst",
-            "dialogue/outward/comedy.rst",
-            "dialogue/outward/progress.rst",
-            "dialogue/outward/injuries.rst"
+            "dialogue/outward/fall.rst",
         ],
         interludes=itertools.repeat(None)
     ),
