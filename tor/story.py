@@ -68,13 +68,15 @@ class Narrator:
 
 class Character(Stateful, Persona): pass
 class Butcher(Character): pass
+class Broomer(Character): pass
 class Rapunzel(Character): pass
 
 ensemble = [
     #Narrator().set_state(Theme.brooms).set_state(Progress.a),
     Narrator(),
     Rapunzel(name="Rapunzel"),
-    Butcher(name="Mr Ricky Butcher"),
+    Broomer(name="Hickory McFly"),
+    Butcher(name="Ricky Butcher"),
 ]
 
 episodes = [
@@ -105,12 +107,6 @@ episodes = [
         },
         paths=[
             "dialogue/broomer/brooms.rst",
-            "dialogue/broomer/rapunzel.rst",
-            "dialogue/broomer/money.rst",
-            "dialogue/broomer/witches.rst",
-            "dialogue/broomer/comedy.rst",
-            "dialogue/broomer/progress.rst",
-            "dialogue/broomer/injuries.rst"
         ],
         interludes=itertools.repeat(None)
     ),
@@ -140,13 +136,7 @@ episodes = [
             "area": "chamber",
         },
         paths=[
-            "dialogue/chamber/brooms.rst",
-            "dialogue/chamber/rapunzel.rst",
-            "dialogue/chamber/money.rst",
-            "dialogue/chamber/witches.rst",
-            "dialogue/chamber/comedy.rst",
-            "dialogue/chamber/progress.rst",
-            "dialogue/chamber/injuries.rst"
+            "dialogue/chamber/rap.rst",
         ],
         interludes=itertools.repeat(None)
     ),

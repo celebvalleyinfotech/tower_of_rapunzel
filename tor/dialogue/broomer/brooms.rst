@@ -13,14 +13,24 @@
 .. entity:: NARRATOR
    :types: tor.story.Narrator
 
-brooms
+.. entity:: BROOMER
+   :types: tor.story.Broomer
+
+Brooms
 ~~~~~~
 
-Shot
-----
+Chat 0
+------
 
-[NARRATOR]_
+.. condition:: BROOMER.state 0
 
-    This is the 'brooms' dialogue.
-    It's in the file '/home/boss/src/tower_of_rapunzel/tor/dialogue/broomer/brooms.rst'.
+[BROOMER]_
 
+    Ah, hello again, how are we now?
+
+Chat 1
+------
+
+[BROOMER]_
+
+    Ah, hello again, how are we now?

@@ -16,8 +16,8 @@
 .. entity:: RAPUNZEL
    :types: tor.story.Rapunzel
 
-brooms
-~~~~~~
+Rap
+~~~
 
 Rap 0
 -----
@@ -125,9 +125,11 @@ Status
 
 [NARRATOR]_
 
-    Rapunzel's hair is |HAIR_M| metres long.
-
     You have |COINS_N| coins.
+
+[NARRATOR]_
+
+    Rapunzels hair is |HAIR_M| metres long.
 
 .. |COINS_N| property:: NARRATOR.coins_n
 .. |HAIR_M| property:: NARRATOR.hair_m
