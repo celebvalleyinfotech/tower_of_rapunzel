@@ -30,29 +30,10 @@ import tor.rules
 version = tor.__version__
 
 
-class Progress(enum.Enum):
-    a = 0
-    b = 1
-    c = 2
-    d = 3
-    e = 5
-    f = 10
-    g = 12
-    h = 15
-    i = 20
-    j = 25
-    k = 30
-    l = 35
-    m = 40
+class At(enum.Enum):
+    crib = 0
+    club = 1
 
-class Theme(enum.Enum):
-    brooms = 0
-    comedy = 1
-    injuries = 2
-    money = 3
-    progress = 4
-    rapunzel = 5
-    witches = 6
 
 class Narrator:
 
@@ -66,6 +47,7 @@ class Narrator:
     def hair_m(self):
         return "{0:.1f}".format(float(self.state.hair_m))
 
+
 class Character(Stateful, Persona): pass
 class Butcher(Character): pass
 class Broomer(Character): pass
@@ -75,7 +57,7 @@ class Rapunzel(Character): pass
 
 ensemble = [
     Narrator(),
-    Rapunzel(name="Rapunzel"),
+    Rapunzel(name="Rapunzel").set_state(At.crib),
     Broomer(name="Hickory McFly"),
     Butcher(name="Ricky Butcher"),
     Chemist(name="Poppy Pills"),
@@ -91,13 +73,7 @@ episodes = [
             "area": "balcony",
         },
         paths=[
-            "dialogue/balcony/brooms.rst",
-            "dialogue/balcony/rapunzel.rst",
-            "dialogue/balcony/money.rst",
-            "dialogue/balcony/witches.rst",
-            "dialogue/balcony/comedy.rst",
-            "dialogue/balcony/progress.rst",
-            "dialogue/balcony/injuries.rst"
+            "dialogue/balcony/view.rst",
         ],
         interludes=itertools.repeat(None)
     ),
@@ -176,6 +152,7 @@ episodes = [
         },
         paths=[
             "dialogue/outward/fall.rst",
+            "dialogue/outward/death.rst",
         ],
         interludes=itertools.repeat(None)
     ),

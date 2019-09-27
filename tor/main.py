@@ -39,10 +39,10 @@ from turberfield.dialogue.performer import Performer
 import tor
 import tor.rules
 import tor.story
+from tor.story import At
 from tor.story import Character
 from tor.story import Narrator
-from tor.story import Progress
-from tor.story import Theme
+from tor.story import Rapunzel
 import tor.render
 
 
@@ -96,21 +96,6 @@ class Presentation:
 
     @staticmethod
     def next_frame(game, entities, dwell=0.3, pause=1):
-        """
-        narrator = next(i for i in entities if isinstance(i, Narrator))
-        narrator.set_state(
-            list(Progress)[
-                (list(Progress).index(narrator.get_state(Progress)) + 1) %
-                len(Progress)
-            ]
-        )
-        narrator.set_state(
-            list(Theme)[
-                (list(Theme).index(narrator.get_state(Theme)) + 1) %
-                len(Theme)
-            ]
-        )
-        """
         while not game["frames"]:
             location = game["state"].area
             matcher = Matcher(tor.story.episodes)
@@ -248,8 +233,13 @@ async def post_hop(request):
             )
             if not rv:
                 print("Game Over", file=sys.stderr)
-                print(game["state"], file=sys.stderr)
-            game["state"] = tor.rules.State(**rv)
+                rapunzel = next(
+                    i for i in tor.story.ensemble
+                    if isinstance(i, Rapunzel)
+                )
+                rapunzel.set_state(At.club)
+            else:
+                game["state"] = tor.rules.State(**rv)
         raise web.HTTPFound("/")
 
 

@@ -13,14 +13,17 @@
 .. entity:: NARRATOR
    :types: tor.story.Narrator
 
-witches
-~~~~~~~
+View
+~~~~
 
-Shot
-----
+Progress.a
+----------
 
 [NARRATOR]_
 
-    This is the 'witches' dialogue.
-    It's in the file '/home/boss/src/tower_of_rapunzel/tor/dialogue/balcony/witches.rst'.
+    This is the only place I get any peace and quiet.
+
+[NARRATOR]_
+
+    You know, I remember not so long ago, we used to make our own brooms.
 

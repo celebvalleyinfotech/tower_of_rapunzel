@@ -15,6 +15,7 @@
 
 .. entity:: RAPUNZEL
    :types: tor.story.Rapunzel
+   :states: tor.story.At.crib
 
 .. This dialogue uses Rapunzel's random state to select lines.
    It should be aligned to player health instead.
