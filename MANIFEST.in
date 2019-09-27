@@ -1,0 +1,2 @@
+recursive-include . *.css
+recursive-include . *.rst
