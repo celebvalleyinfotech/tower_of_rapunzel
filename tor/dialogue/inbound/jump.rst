@@ -21,6 +21,6 @@ Shot
 
 [NARRATOR]_
 
-    This is the 'brooms' dialogue.
-    It's in the file '/home/boss/src/tower_of_rapunzel/tor/dialogue/inbound/brooms.rst'.
+    This is the 'jump' dialogue.
+    It's in the file '/home/boss/src/tower_of_rapunzel/tor/dialogue/inbound/jump.rst'.
 

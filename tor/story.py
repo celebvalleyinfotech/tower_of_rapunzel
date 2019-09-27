@@ -133,13 +133,7 @@ episodes = [
             "area": "inbound",
         },
         paths=[
-            "dialogue/inbound/brooms.rst",
-            "dialogue/inbound/rapunzel.rst",
-            "dialogue/inbound/money.rst",
-            "dialogue/inbound/witches.rst",
-            "dialogue/inbound/comedy.rst",
-            "dialogue/inbound/progress.rst",
-            "dialogue/inbound/injuries.rst"
+            "dialogue/inbound/jump.rst",
         ],
         interludes=itertools.repeat(None)
     ),
