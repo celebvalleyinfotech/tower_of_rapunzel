@@ -18,6 +18,7 @@
 
 import enum
 import itertools
+import math
 
 from turberfield.dialogue.model import SceneScript
 from turberfield.dialogue.types import DataObject
@@ -35,17 +36,30 @@ class At(enum.Enum):
     club = 1
 
 
-class Narrator:
+class Narrator(DataObject):
 
     state = None
+    settings = None
 
     @property
     def coins_n(self):
         return format(self.state.coins_n)
 
     @property
+    def damage_bars(self):
+        damage = max(0, (
+            self.settings.TOWER_M - self.state.hair_m
+        ) * self.settings.HEALTH_D)
+        bars = 10 * damage / self.settings.HEALTH_MAX
+        return round(bars)
+
+    @property
     def hair_m(self):
         return "{0:.1f}".format(float(self.state.hair_m))
+
+    @property
+    def health_n(self):
+        return "{0:.1f}".format(float(self.state.health_n))
 
 
 class Character(Stateful, Persona): pass
@@ -56,7 +70,7 @@ class Stylist(Character): pass
 class Rapunzel(Character): pass
 
 ensemble = [
-    Narrator(),
+    Narrator(settings=tor.rules.Settings),
     Rapunzel(name="Rapunzel").set_state(At.crib),
     Broomer(name="Hickory McFly"),
     Butcher(name="Ricky Butcher"),

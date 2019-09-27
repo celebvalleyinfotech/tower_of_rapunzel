@@ -8,9 +8,9 @@ Create a Python virtual environment (version 3.7 or above)::
 
     python3 -m venv torvenv
 
-Install the game (the version number will vary)::
+Install the game (the version number may differ)::
 
-    torvenv/bin/pip install tower_of_rapunzel-0.4.0.tar.gz
+    torvenv/bin/pip install tower_of_rapunzel-0.5.0.tar.gz
 
 Play
 ----
