@@ -67,3 +67,39 @@ Instead I need to conjure up enough playful energy to knock out 1200
 words of interesting dialogue.
 
 Wish me luck!
+
+2019-09-27
+----------
+
+Well, the last 32 hours have been nuts.
+
+After writing the preceding diary entry, I decided I'd take the next day
+off work, or I'd never make it in time.
+
+I went in to a cafe early and kept topping up on coffee while getting down
+literally all the dialogue for the game on paper. It took about two hours.
+I was blocked to begin with on Rapunzel's rhymes but by the end the words
+seemed to arrive quite easily.
+
+But I had made some false assumptions about how to organise the dialogue.
+I had the speech separated out into themes. I thought I would change the
+context at different points in the game, and all the characters would
+switch in the same way to their appropriate phrases. But that was way too
+complicated and required a lot greater wordage than I had time to make.
+
+So when I got back I rejigged all that. There were also some bugs to fix,
+in code I thought I could trust. So my perception of progress was never
+reliable enough for me to feel confident.
+
+The good news was that having all the words on paper made creating script
+files a low-risk process. And in the background I started setting my
+drum machine going, to find some beats I could use as a backing track.
+
+By bedtime nearly all the script files were done. Sadly, I never hit on
+any sounds that I felt would fit as a backing track. So it looks like
+the game will have no music, which is a shame.
+
+Still, it plays better than some of my other efforts. I've just fixed
+the death screen. Python packaging is in place. A bit more dialogue
+required here and there.
+
