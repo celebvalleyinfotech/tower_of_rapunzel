@@ -73,7 +73,7 @@ Chat 5
 
 [STYLIST]_
 
-    Rapunzel's hair is quite the finest I've seen.
+    Rapunzel's hair is quite the finest I know of.
 
     It's a very lustrous colour. It'll carry any dye, and yet it has
     a beautiful sheen all its own.

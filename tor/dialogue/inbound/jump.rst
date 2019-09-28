@@ -27,7 +27,7 @@ Chat 0
 
 [NARRATOR]_
 
-    It always seems less risk climbing back up
+    It always seems less risky climbing back up
     for some reason.
 
 Chat 1

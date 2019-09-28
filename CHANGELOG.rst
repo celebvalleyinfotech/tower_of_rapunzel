@@ -103,3 +103,21 @@ Still, it plays better than some of my other efforts. I've just fixed
 the death screen. Python packaging is in place. A bit more dialogue
 required here and there.
 
+2019-09-28
+----------
+
+Grabbed an hour this morning (Saturday) to tweak some dialogue.
+
+I took a screenshot which does a good job of showing the tone of the piece.
+
+Although it would be nice to get some music in there, I'm starting to feel
+some fatigue. I don't want to spoil this one with any hasty last minute
+changes.
+
+So I think I might leave it at that. This will be version `0.6.0`.
+That's likely to be the version I submit for judging, unless I spot any
+glaring issues.
+
+I think in terms of effort the thinking, writing, coding, packaging and
+testing took about 24 hours in total.
+

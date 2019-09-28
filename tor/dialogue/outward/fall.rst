@@ -17,9 +17,6 @@
    :types: tor.story.Rapunzel
    :states: tor.story.At.crib
 
-.. This dialogue uses Rapunzel's random state to select lines.
-   It should be aligned to player health instead.
-
 Fall
 ~~~~
 
@@ -39,7 +36,7 @@ Splat 1
 
 [NARRATOR]_
 
-    You have taken a fall.
+    We have taken a slight fall.
 
 Splat 2
 -------
@@ -48,7 +45,7 @@ Splat 2
 
 [NARRATOR]_
 
-    Must remember not to cut off so much next time.
+    A bit of rope burn. Could be worse.
 
 Splat 3
 -------
@@ -57,7 +54,8 @@ Splat 3
 
 [NARRATOR]_
 
-    A bit of rope burn. Could be worse.
+    After the initial shock of the landing
+    we discover several significant abrasions.
 
 Splat 4
 -------
@@ -66,7 +64,9 @@ Splat 4
 
 [NARRATOR]_
 
-    Luckily, you landed on a small animal.
+    That was a fair drop.
+
+    Our mobility has been somewhat impaired.
 
 Splat 5
 -------
@@ -75,8 +75,11 @@ Splat 5
 
 [NARRATOR]_
 
-    After the initial shock of the landing, you are happy
-    to discover only minor abrasions.
+    It has taken a moment to get to our feet.
+
+    And several seconds for the ringing in our ears to die down.
+
+    We have yet to identify familiar objects.
 
 Splat 6
 -------
@@ -85,7 +88,9 @@ Splat 6
 
 [NARRATOR]_
 
-    Your mobility has been somewhat impaired.
+    Breathing has become difficult.
+
+    We thought we heard some cracked ribs.
 
 Splat 7
 -------
@@ -94,9 +99,8 @@ Splat 7
 
 [NARRATOR]_
 
-    It's difficult, despite your natural optimism, to
-    ignore a suspicion that you might have internal
-    bleeding.
+    It has become impossible, despite our natural optimism, to
+    ignore a suspicion that we might have severe internal bleeding.
 
 Splat 8
 -------
@@ -114,6 +118,6 @@ Splat 9
 
 [NARRATOR]_
 
-    One of your shoes has come off.
+    One of our shoes has come off.
 
-    It still has your foot in it.
+    It still has a foot in it.

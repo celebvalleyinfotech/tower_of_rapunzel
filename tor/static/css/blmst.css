@@ -152,6 +152,10 @@ margin: 1rem;
 
 /*  Theme   */
 
+main {
+    padding: 0.5rem;
+}
+
 .persona {
 color: grey;
 font-family: var(--font-family-sans-serif);

@@ -45,6 +45,7 @@ setup(
             "data/*.cfg",
             "dialogue/*/*.rst",
             "static/css/*.css",
+            "static/img/*.png",
         ]
     },
     install_requires=[
