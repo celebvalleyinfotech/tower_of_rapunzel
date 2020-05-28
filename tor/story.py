@@ -31,9 +31,17 @@ import tor.rules
 version = tor.__version__
 
 
-class At(enum.Enum):
+class Hanging(enum.Enum):
     crib = 0
     club = 1
+
+
+class Occupation(enum.Enum):
+    butcher = enum.auto()
+    broomer = enum.auto()
+    chemist = enum.auto()
+    stylist = enum.auto()
+    teenager = enum.auto()
 
 
 class Narrator(DataObject):
@@ -63,19 +71,14 @@ class Narrator(DataObject):
 
 
 class Character(Stateful, Persona): pass
-class Butcher(Character): pass
-class Broomer(Character): pass
-class Chemist(Character): pass
-class Stylist(Character): pass
-class Rapunzel(Character): pass
 
 ensemble = [
     Narrator(settings=tor.rules.Settings),
-    Rapunzel(name="Rapunzel").set_state(At.crib),
-    Broomer(name="Hickory McFly"),
-    Butcher(name="Ricky Butcher"),
-    Chemist(name="Poppy Pills"),
-    Stylist(name="Wigmore Watkins"),
+    Character(name="Rapunzel").set_state(Occupation.teenager, Hanging.crib),
+    Character(name="Hickory McFly").set_state(Occupation.broomer),
+    Character(name="Ricky Butcher").set_state(Occupation.butcher),
+    Character(name="Poppy Pills").set_state(Occupation.chemist),
+    Character(name="Wigmore Watkins").set_state(Occupation.stylist),
 ]
 
 episodes = [

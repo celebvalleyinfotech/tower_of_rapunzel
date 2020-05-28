@@ -11,11 +11,12 @@
 :version: |VERSION|
 
 .. entity:: NARRATOR
-   :types: tor.story.Narrator
+   :types:  tor.story.Narrator
 
 .. entity:: RAPUNZEL
-   :types: tor.story.Rapunzel
-   :states: tor.story.At.crib
+   :types:  tor.story.Character
+   :states: tor.story.Occupation.teenager
+            tor.story.Hanging.crib
 
 View
 ~~~~

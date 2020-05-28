@@ -14,7 +14,8 @@
    :types: tor.story.Narrator
 
 .. entity:: RAPUNZEL
-   :types: tor.story.Rapunzel
+   :types:  tor.story.Character
+   :states: tor.story.Occupation.teenager
    :states: tor.story.At.crib
 
 Fall
