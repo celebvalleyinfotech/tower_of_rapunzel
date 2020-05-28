@@ -132,3 +132,12 @@ glaring issues.
 I think in terms of effort the thinking, writing, coding, packaging and
 testing took about 24 hours in total.
 
+2020-05-28
+----------
+
+Decided to join the NarraScope Jam.
+Objectives:
+
+    * Fold in fixes and practices from Blue Monday 78
+    * Rework the rendering and styling
+    * Add audio FX
