@@ -9,6 +9,7 @@ Versions
 
 * Moved away from one special class for each character.
   Now using Occupation states to select entities.
+* Presenter is now the main object for holding game state.
 
 0.6.0
 -----

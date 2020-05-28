@@ -48,28 +48,28 @@ from tor.story import Occupation
 
 
 async def get_frame(request):
-    game = request.app.game
-    location = game["state"].area
+    presenter = request.app["presenter"]
+    location = presenter.game["state"].area
     entities = [
         i for i in tor.story.ensemble
         if getattr(i, "area", location) == location
     ]
     narrator = next(i for i in entities if isinstance(i, Narrator))
-    narrator.state = game["state"]
+    narrator.state = presenter.game["state"]
     for character in (i for i in entities if isinstance(i, Character)):
         character.set_state(random.randrange(10))
 
-    frame = Presenter.next_frame(game, entities)
+    frame = presenter.next_frame(entities)
     buys = ["Spend 1c", "Spend 2c", "Spend 3c"] if location == "butcher" else []
     cuts = ["Cut less", "Cut same", "Cut more"] if location == "chamber" else []
     hops = tor.rules.topology[location]
-    elements = list(Presenter.react(game, frame))
+    elements = list(Presenter.react(presenter.game, frame))
     return web.Response(
         text = tor.render.base_to_html(
             #refresh=math.ceil(Presenter.refresh(frame))
             refresh=None
         ).format(
-            tor.render.body_to_html(game["state"], frame=frame).format(
+            tor.render.body_to_html(presenter.game["state"], frame=frame).format(
                 "\n".join(
                     tor.render.element_as_list_item(element)
                     for element in frame
@@ -97,12 +97,12 @@ async def post_buy(request):
     if not tor.rules.choice_validator.match(buy):
         raise web.HTTPUnauthorized(reason="User sent invalid buy code.")
     else:
-        game = request.app.game
-        game["frames"].clear()
+        presenter = request.app["presenter"]
+        presenter.frames.clear()
         rv = tor.rules.apply_rules(
-            None, None, None, tor.rules.Settings, game["state"], buy=int(buy)
+            None, None, None, tor.rules.Settings, presenter.game["state"], buy=int(buy)
         )
-        game["state"] = tor.rules.State(**rv)
+        presenter.game["state"] = tor.rules.State(**rv)
         raise web.HTTPFound("/")
 
 
@@ -111,8 +111,8 @@ async def post_cut(request):
     if not tor.rules.choice_validator.match(cut):
         raise web.HTTPUnauthorized(reason="User sent invalid cut code.")
     else:
-        game = request.app.game
-        game["frames"].clear()
+        presenter = request.app["presenter"]
+        presenter.frames.clear()
         cut_d = {
             0: -tor.rules.Settings.CUT_D,
             1: 0,
@@ -120,9 +120,9 @@ async def post_cut(request):
         }.get(int(cut), tor.rules.Settings.CUT_D)
 
         rv = tor.rules.apply_rules(
-            None, None, None, tor.rules.Settings, game["state"], cut=cut_d
+            None, None, None, tor.rules.Settings, presenter.game["state"], cut=cut_d
         )
-        game["state"] = tor.rules.State(**rv)
+        presenter.game["state"] = tor.rules.State(**rv)
         raise web.HTTPFound("/")
 
 
@@ -132,15 +132,15 @@ async def post_hop(request):
         raise web.HTTPUnauthorized(reason="User sent invalid hop.")
     else:
         index = int(hop)
-        game = request.app.game
-        location = game["state"].area
+        presenter = request.app["presenter"]
+        location = presenter.game["state"].area
         destination = tor.rules.topology[location][index]
-        game["metadata"]["area"] = destination
-        game["state"] = game["state"]._replace(area=destination)
-        game["frames"].clear()
+        presenter.game["metadata"]["area"] = destination
+        presenter.game["state"] = presenter.game["state"]._replace(area=destination)
+        presenter.frames.clear()
         if destination not in ("butcher", "chamber"):
             rv = tor.rules.apply_rules(
-                None, None, None, tor.rules.Settings, game["state"]
+                None, None, None, tor.rules.Settings, presenter.game["state"]
             )
             if not rv:
                 print("Game Over", file=sys.stderr)
@@ -150,7 +150,7 @@ async def post_hop(request):
                 )
                 rapunzel.set_state(Hanging.club)
             else:
-                game["state"] = tor.rules.State(**rv)
+                presenter.game["state"] = tor.rules.State(**rv)
         raise web.HTTPFound("/")
 
 
@@ -166,7 +166,7 @@ def build_app(args):
         "/css/",
         pkg_resources.resource_filename("tor", "static/css")
     )
-    app.game = {
+    game = {
         "metadata": {"area": "balcony"},
         "state": tor.rules.State(
             "balcony",
@@ -176,8 +176,8 @@ def build_app(args):
             tor.rules.Settings.COINS_N,
             tor.rules.Settings.HEALTH_MAX
         ),
-        "frames": deque([])
     }
+    app["presenter"] = Presenter(game)
     return app
 
 

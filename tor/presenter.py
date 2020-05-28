@@ -20,6 +20,7 @@
 A text-based web game for PyWeek 28.
 
 """
+from collections import deque
 from collections import namedtuple
 
 from turberfield.dialogue.matcher import Matcher
@@ -78,12 +79,11 @@ class Presenter:
             ):
                 yield frame
 
-    @staticmethod
-    def next_frame(game, entities, dwell=0.3, pause=1):
-        while not game["frames"]:
-            location = game["state"].area
+    def next_frame(self, entities, dwell=0.3, pause=1):
+        while not self.frames:
+            location = self.game["state"].area
             matcher = Matcher(tor.story.episodes)
-            folders = list(matcher.options(game["metadata"]))
+            folders = list(matcher.options(self.game["metadata"]))
             performer = Performer(folders, entities)
             folder, index, script, selection, interlude = performer.next(
                 folders, entities
@@ -93,9 +93,9 @@ class Presenter:
                 folder.paths[index], scene,
                 dwell=dwell, pause=pause
             ))
-            game["frames"].extend(frames)
+            self.frames.extend(frames)
 
-        return game["frames"].popleft()
+        return self.frames.popleft()
 
     @staticmethod
     def react(game, frame):
@@ -118,3 +118,7 @@ class Presenter:
             )
         except ValueError:
             return None
+
+    def __init__(self, game, frames=None):
+        self.game = game
+        self.frames = frames if frames is not None else deque([])

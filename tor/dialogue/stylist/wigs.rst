@@ -45,7 +45,7 @@ Chat 2
 
 [STYLIST]_
 
-    Candidly, what are you feeding her on?
+    Come on, you can tell me; what are you feeding her?
 
 Chat 3
 ------
