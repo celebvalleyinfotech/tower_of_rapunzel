@@ -11,10 +11,11 @@
 :version: |VERSION|
 
 .. entity:: NARRATOR
-   :types: tor.story.Narrator
+   :types:  tor.story.Narrator
 
 .. entity:: CHEMIST
-   :types: tor.story.Chemist
+   :types:  tor.story.Character
+   :states: tor.story.Occupation.chemist
 
 Pills
 ~~~~~

@@ -11,12 +11,12 @@
 :version: |VERSION|
 
 .. entity:: NARRATOR
-   :types: tor.story.Narrator
+   :types:  tor.story.Narrator
 
 .. entity:: RAPUNZEL
    :types:  tor.story.Character
    :states: tor.story.Occupation.teenager
-   :states: tor.story.At.crib
+            tor.story.Hanging.crib
 
 Jump
 ~~~~

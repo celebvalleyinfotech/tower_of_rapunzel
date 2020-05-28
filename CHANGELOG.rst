@@ -4,6 +4,16 @@ Change Log
 Versions
 ========
 
+0.7.0
+-----
+
+* Moved away from one special class for each character.
+  Now using Occupation states to select entities.
+
+0.6.0
+-----
+
+As submitted to PyWeek 28.
 
 Diary
 =====

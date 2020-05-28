@@ -11,10 +11,11 @@
 :version: |VERSION|
 
 .. entity:: NARRATOR
-   :types: tor.story.Narrator
+   :types:  tor.story.Narrator
 
 .. entity:: STYLIST
-   :types: tor.story.Stylist
+   :types:  tor.story.Character
+   :states: tor.story.Occupation.stylist
 
 Wigs
 ~~~~

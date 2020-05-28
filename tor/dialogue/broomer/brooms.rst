@@ -11,10 +11,11 @@
 :version: |VERSION|
 
 .. entity:: NARRATOR
-   :types: tor.story.Narrator
+   :types:  tor.story.Narrator
 
 .. entity:: BROOMER
-   :types: tor.story.Broomer
+   :types:  tor.story.Character
+   :states: tor.story.Occupation.broomer
 
 Brooms
 ~~~~~~

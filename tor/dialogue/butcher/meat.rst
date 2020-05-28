@@ -14,7 +14,8 @@
    :types: tor.story.Narrator
 
 .. entity:: BUTCHER
-   :types: tor.story.Butcher
+   :types:  tor.story.Character
+   :states: tor.story.Occupation.butcher
 
 Meat
 ~~~~

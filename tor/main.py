@@ -38,13 +38,13 @@ from turberfield.dialogue.performer import Performer
 
 import tor
 from tor.presenter import Presenter
+import tor.render
 import tor.rules
 import tor.story
-from tor.story import At
 from tor.story import Character
+from tor.story import Hanging
 from tor.story import Narrator
-from tor.story import Rapunzel
-import tor.render
+from tor.story import Occupation
 
 
 async def get_frame(request):
@@ -146,9 +146,9 @@ async def post_hop(request):
                 print("Game Over", file=sys.stderr)
                 rapunzel = next(
                     i for i in tor.story.ensemble
-                    if isinstance(i, Rapunzel)
+                    if isinstance(i, Character) and i.get_state(Occupation) == Occupation.teenager
                 )
-                rapunzel.set_state(At.club)
+                rapunzel.set_state(Hanging.club)
             else:
                 game["state"] = tor.rules.State(**rv)
         raise web.HTTPFound("/")

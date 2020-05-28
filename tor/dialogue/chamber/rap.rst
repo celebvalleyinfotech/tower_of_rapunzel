@@ -11,7 +11,7 @@
 :version: |VERSION|
 
 .. entity:: NARRATOR
-   :types: tor.story.Narrator
+   :types:  tor.story.Narrator
 
 .. entity:: RAPUNZEL
    :types:  tor.story.Character
