@@ -19,6 +19,7 @@
 import enum
 import itertools
 import math
+import pprint
 
 from turberfield.dialogue.model import SceneScript
 from turberfield.dialogue.types import DataObject
@@ -32,8 +33,8 @@ version = tor.__version__
 
 
 class Hanging(enum.Enum):
-    crib = 0
-    club = 1
+    crib = enum.auto()
+    club = enum.auto()
 
 
 class Occupation(enum.Enum):
@@ -70,7 +71,9 @@ class Narrator(DataObject):
         return "{0:.1f}".format(float(self.state.health_n))
 
 
-class Character(Stateful, Persona): pass
+class Character(Stateful, Persona):
+    pass
+
 
 ensemble = [
     Narrator(settings=tor.rules.Settings),
@@ -81,7 +84,8 @@ ensemble = [
     Character(name="Wigmore Watkins").set_state(Occupation.stylist),
 ]
 
-episodes = [
+
+folders = [
 
     SceneScript.Folder(
         pkg="tor",
@@ -92,7 +96,7 @@ episodes = [
         paths=[
             "dialogue/balcony/view.rst",
         ],
-        interludes=itertools.repeat(None)
+        interludes=None
     ),
 
     SceneScript.Folder(
@@ -104,7 +108,7 @@ episodes = [
         paths=[
             "dialogue/broomer/brooms.rst",
         ],
-        interludes=itertools.repeat(None)
+        interludes=None
     ),
 
     SceneScript.Folder(
@@ -116,7 +120,7 @@ episodes = [
         paths=[
             "dialogue/butcher/meat.rst",
         ],
-        interludes=itertools.repeat(None)
+        interludes=None
     ),
 
     SceneScript.Folder(
@@ -128,7 +132,7 @@ episodes = [
         paths=[
             "dialogue/chamber/rap.rst",
         ],
-        interludes=itertools.repeat(None)
+        interludes=None
     ),
 
     SceneScript.Folder(
@@ -140,7 +144,7 @@ episodes = [
         paths=[
             "dialogue/chemist/pills.rst",
         ],
-        interludes=itertools.repeat(None)
+        interludes=None
     ),
 
     SceneScript.Folder(
@@ -152,7 +156,7 @@ episodes = [
         paths=[
             "dialogue/inbound/jump.rst",
         ],
-        interludes=itertools.repeat(None)
+        interludes=None
     ),
 
     SceneScript.Folder(
@@ -165,7 +169,7 @@ episodes = [
             "dialogue/outward/fall.rst",
             "dialogue/outward/death.rst",
         ],
-        interludes=itertools.repeat(None)
+        interludes=None
     ),
 
     SceneScript.Folder(
@@ -177,6 +181,9 @@ episodes = [
         paths=[
             "dialogue/stylist/wigs.rst",
         ],
-        interludes=itertools.repeat(None)
+        interludes=None
     ),
 ]
+
+if __name__ == "__main__":
+    pprint.pprint(folders)

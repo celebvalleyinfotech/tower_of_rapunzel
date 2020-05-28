@@ -30,7 +30,7 @@ class RulesTests(unittest.TestCase):
 
     folders = [
         next(
-            i for i in tor.story.episodes
+            i for i in tor.story.folders
             if i.metadata["area"] == a
         )
         for a in (

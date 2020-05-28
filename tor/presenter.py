@@ -16,10 +16,6 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with Tower of Rapunzel.  If not, see <http://www.gnu.org/licenses/>.
 
-"""
-A text-based web game for PyWeek 28.
-
-"""
 from collections import deque
 from collections import namedtuple
 
@@ -79,24 +75,6 @@ class Presenter:
             ):
                 yield frame
 
-    def next_frame(self, entities, dwell=0.3, pause=1):
-        while not self.frames:
-            location = self.game["state"].area
-            matcher = Matcher(tor.story.episodes)
-            folders = list(matcher.options(self.game["metadata"]))
-            performer = Performer(folders, entities)
-            folder, index, script, selection, interlude = performer.next(
-                folders, entities
-            )
-            scene = performer.run(react=False)
-            frames = list(Presenter.build_frames(
-                folder.paths[index], scene,
-                dwell=dwell, pause=pause
-            ))
-            self.frames.extend(frames)
-
-        return self.frames.popleft()
-
     @staticmethod
     def react(game, frame):
         for element in frame:
@@ -122,3 +100,21 @@ class Presenter:
     def __init__(self, game, frames=None):
         self.game = game
         self.frames = frames if frames is not None else deque([])
+
+    def next_frame(self, entities, dwell=0.3, pause=1):
+        while not self.frames:
+            location = self.game["state"].area
+            matcher = Matcher(tor.story.folders)
+            folders = list(matcher.options(self.game["metadata"]))
+            performer = Performer(folders, entities)
+            folder, index, script, selection, interlude = performer.next(
+                folders, entities
+            )
+            scene = performer.run(react=False)
+            frames = list(Presenter.build_frames(
+                folder.paths[index], scene,
+                dwell=dwell, pause=pause
+            ))
+            self.frames.extend(frames)
+
+        return self.frames.popleft()
