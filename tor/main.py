@@ -37,6 +37,7 @@ from turberfield.dialogue.model import Model
 from turberfield.dialogue.performer import Performer
 
 import tor
+from tor.presenter import Presenter
 import tor.rules
 import tor.story
 from tor.story import At
@@ -44,96 +45,6 @@ from tor.story import Character
 from tor.story import Narrator
 from tor.story import Rapunzel
 import tor.render
-
-
-class Presentation:
-
-    Element = namedtuple(
-        "Element",
-        ["source", "dialogue", "shot", "offset", "duration"]
-    )
-
-    @staticmethod
-    def build_frames(source, seq, dwell, pause):
-        """Generate a new Frame on each Shot and FX item"""
-        shot = None
-        frame = []
-        offset = 0
-        for item in seq:
-            if isinstance(item, (Model.Audio, Model.Shot)):
-                if frame and shot and shot != item:
-                    yield frame
-                    frame = []
-                    offset = 0
-
-                if isinstance(item, Model.Shot):
-                    shot = item
-                else:
-                    frame.append(Presentation.Element(
-                        source, item, shot,
-                        item.offset / 1000,
-                        item.duration / 1000
-                    ))
-
-            elif isinstance(item, Model.Line):
-                durn = pause + dwell * item.text.count(" ")
-                frame.append(Presentation.Element(
-                    source, item, shot, offset, durn
-                ))
-                offset += durn
-            elif not isinstance(item, Model.Condition):
-                frame.append(Presentation.Element(
-                    source, item, shot, offset, 0
-                ))
-        else:
-            if any(
-                isinstance(
-                    i.dialogue, (Model.Audio, Model.Line)
-                )
-                for i in frame
-            ):
-                yield frame
-
-    @staticmethod
-    def next_frame(game, entities, dwell=0.3, pause=1):
-        while not game["frames"]:
-            location = game["state"].area
-            matcher = Matcher(tor.story.episodes)
-            folders = list(matcher.options(game["metadata"]))
-            performer = Performer(folders, entities)
-            folder, index, script, selection, interlude = performer.next(
-                folders, entities
-            )
-            scene = performer.run(react=False)
-            frames = list(Presentation.build_frames(
-                folder.paths[index], scene,
-                dwell=dwell, pause=pause
-            ))
-            game["frames"].extend(frames)
-
-        return game["frames"].popleft()
-
-    @staticmethod
-    def react(game, frame):
-        for element in frame:
-            event = element.dialogue
-            if (
-                isinstance(event, Model.Property) and
-                event.object is not None
-            ):
-                setattr(event.object, event.attr, event.val)
-
-            yield element
-
-    @staticmethod
-    def refresh(frame, min_val=8):
-        try:
-            return max(
-                [min_val] +
-                [i.offset + i.duration for i in frame if i.duration]
-            )
-        except ValueError:
-            return None
 
 
 async def get_frame(request):
@@ -148,14 +59,14 @@ async def get_frame(request):
     for character in (i for i in entities if isinstance(i, Character)):
         character.set_state(random.randrange(10))
 
-    frame = Presentation.next_frame(game, entities)
+    frame = Presenter.next_frame(game, entities)
     buys = ["Spend 1c", "Spend 2c", "Spend 3c"] if location == "butcher" else []
     cuts = ["Cut less", "Cut same", "Cut more"] if location == "chamber" else []
     hops = tor.rules.topology[location]
-    elements = list(Presentation.react(game, frame))
+    elements = list(Presenter.react(game, frame))
     return web.Response(
         text = tor.render.base_to_html(
-            #refresh=math.ceil(Presentation.refresh(frame))
+            #refresh=math.ceil(Presenter.refresh(frame))
             refresh=None
         ).format(
             tor.render.body_to_html(game["state"], frame=frame).format(
