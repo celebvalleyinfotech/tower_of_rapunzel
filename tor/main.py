@@ -99,15 +99,25 @@ async def post_buy(request):
     buy = request.match_info["buy"]
     if not tor.rules.choice_validator.match(buy):
         raise web.HTTPUnauthorized(reason="User sent invalid buy code.")
+
+    presenter = request.app["presenter"]
+    presenter.frames.clear()
+
+    if presenter.narrator.state.area == "broomer":
+        # Detect win condition
+        stylist = next(
+            i for i in presenter.ensemble
+            if isinstance(i, Character) and i.get_state(Occupation) == Occupation.stylist
+        )
+        stylist.set_state(int(buy) * 10)
+        print(stylist, file=sys.stderr)
     else:
-        presenter = request.app["presenter"]
-        presenter.frames.clear()
-        # TODO: Detect win condition
         rv = tor.rules.apply_rules(
             None, None, None, tor.rules.Settings, presenter.narrator.state, buy=int(buy)
         )
         presenter.narrator.state = tor.rules.State(**rv)
-        raise web.HTTPFound("/")
+
+    raise web.HTTPFound("/")
 
 
 async def post_cut(request):
