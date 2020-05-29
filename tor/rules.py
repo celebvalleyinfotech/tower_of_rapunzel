@@ -56,7 +56,7 @@ topology = {
 
 State = namedtuple(
     "State",
-    ["area", "hair_m", "hair_d", "cut_m", "coins_n", "health_n"]
+    ["area", "hair_m", "hair_d", "cut_m", "lock_m", "coins_n", "health_n"]
 )
 
 
@@ -69,7 +69,7 @@ def apply_rules(
             else random.choice([settings.CUT_D, 0 , -settings.CUT_D])
         )
         cut = max(0, state.cut_m + choice)
-        state = state._replace(cut_m=cut, hair_m=max(0, state.hair_m - cut))
+        state = state._replace(cut_m=cut, hair_m=max(0, state.hair_m - cut), lock_m=cut)
     elif state.area == "outward":
         damage = settings.HEALTH_D * (settings.TOWER_M - state.hair_m)
         state = state._replace(health_n=max(0, state.health_n - max(0, damage)))
@@ -77,7 +77,7 @@ def apply_rules(
             return {}
     elif state.area == "stylist":
         state = state._replace(
-            coins_n=state.coins_n + settings.HAIR_C * state.cut_m
+            lock_m=0, coins_n=state.coins_n + settings.HAIR_C * state.lock_m
         )
     elif state.area == "chemist":
         cost = min(
@@ -104,7 +104,7 @@ def apply_rules(
             hair_d=state.hair_d + cost * settings.HAIR_D_C
         )
     elif state.area == "inbound":
-        # Game will check it's possible to get back up.
+        # TODO: check it's possible to get back up.
         pass
 
     state = state._replace(hair_m=state.hair_m + state.hair_m * state.hair_d)

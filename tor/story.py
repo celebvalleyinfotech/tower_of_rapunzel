@@ -83,6 +83,7 @@ ensemble = [
             tor.rules.Settings.HAIR_M,
             tor.rules.Settings.HAIR_D,
             tor.rules.Settings.CUT_M,
+            0,
             tor.rules.Settings.COINS_N,
             tor.rules.Settings.HEALTH_MAX
         ),

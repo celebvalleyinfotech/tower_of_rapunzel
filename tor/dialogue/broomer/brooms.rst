@@ -87,7 +87,7 @@ Chat 5
     Even so, it has a Bronze name tag on the handle. We can engrave that
     for you for a small extra charge.
 
-    Only 25 coins.
+    Only 10 coins.
 
 Chat 6
 ------
@@ -102,7 +102,7 @@ Chat 6
 
     Traditional construction. It's a classic. Sturdy and reliable.
 
-    And we have it on sale at 30 coins. That's the best price anywhere.
+    And we have it on sale at 20 coins. That's the best price anywhere.
 
 Chat 7
 ------
@@ -126,7 +126,7 @@ Chat 8
     If you're considering a purchase of the Excelsior, I recommend
     you speak to my colleague in finance.
 
-    For a cash sale, we'd be looking north of 40 coins I think.
+    For a cash sale, we'd be looking north of 30 coins I think.
 
     Depending on the options of course.
 

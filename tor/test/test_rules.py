@@ -55,6 +55,7 @@ class RulesTests(unittest.TestCase):
             self.settings.HAIR_M,
             self.settings.HAIR_D,
             self.settings.CUT_M,
+            0,
             self.settings.COINS_N,
             self.settings.HEALTH_MAX
         )

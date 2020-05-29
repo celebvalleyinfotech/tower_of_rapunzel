@@ -19,6 +19,7 @@
 from collections import deque
 from collections import namedtuple
 import copy
+import sys
 
 from turberfield.dialogue.matcher import Matcher
 from turberfield.dialogue.model import Model
@@ -109,9 +110,9 @@ class Presenter:
 
     def next_frame(self, entities, dwell=0.3, pause=1):
         while not self.frames:
-            location = self.narrator.state.area
             matcher = Matcher(tor.story.folders)
-            folders = list(matcher.options({"area": location}))
+            selector = {"area": self.narrator.state.area}
+            folders = list(matcher.options(selector))
             performer = Performer(folders, entities)
             try:
                 folder, index, script, selection, interlude = performer.next(
