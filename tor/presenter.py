@@ -18,6 +18,7 @@
 
 from collections import deque
 from collections import namedtuple
+import copy
 
 from turberfield.dialogue.matcher import Matcher
 from turberfield.dialogue.model import Model
@@ -25,6 +26,7 @@ from turberfield.dialogue.performer import Performer
 
 import tor
 import tor.story
+from tor.story import Narrator
 
 
 class Presenter:
@@ -76,7 +78,7 @@ class Presenter:
                 yield frame
 
     @staticmethod
-    def react(game, frame):
+    def react(frame):
         for element in frame:
             event = element.dialogue
             if (
@@ -97,19 +99,26 @@ class Presenter:
         except ValueError:
             return None
 
-    def __init__(self, game, frames=None):
-        self.game = game
+    def __init__(self, ensemble, frames=None):
+        self.ensemble = copy.deepcopy(ensemble)
         self.frames = frames if frames is not None else deque([])
+
+    @property
+    def narrator(self):
+        return next((i for i in self.ensemble if isinstance(i, Narrator)), None)
 
     def next_frame(self, entities, dwell=0.3, pause=1):
         while not self.frames:
-            location = self.game["state"].area
+            location = self.narrator.state.area
             matcher = Matcher(tor.story.folders)
-            folders = list(matcher.options(self.game["metadata"]))
+            folders = list(matcher.options({"area": location}))
             performer = Performer(folders, entities)
-            folder, index, script, selection, interlude = performer.next(
-                folders, entities
-            )
+            try:
+                folder, index, script, selection, interlude = performer.next(
+                    folders, entities
+                )
+            except TypeError:
+                raise
             scene = performer.run(react=False)
             frames = list(Presenter.build_frames(
                 folder.paths[index], scene,

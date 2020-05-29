@@ -76,7 +76,17 @@ class Character(Stateful, Persona):
 
 
 ensemble = [
-    Narrator(settings=tor.rules.Settings),
+    Narrator(
+        settings=tor.rules.Settings,
+        state=tor.rules.State(
+            "balcony",
+            tor.rules.Settings.HAIR_M,
+            tor.rules.Settings.HAIR_D,
+            tor.rules.Settings.CUT_M,
+            tor.rules.Settings.COINS_N,
+            tor.rules.Settings.HEALTH_MAX
+        ),
+    ),
     Character(name="Rapunzel").set_state(Occupation.teenager, Hanging.crib),
     Character(name="Hickory McFly").set_state(Occupation.broomer),
     Character(name="Ricky Butcher").set_state(Occupation.butcher),
