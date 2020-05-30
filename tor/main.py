@@ -77,14 +77,13 @@ async def get_frame(request):
         buys = []
     cuts = ["Cut less", "Cut same", "Cut more"] if location == "chamber" else []
     hops = tor.rules.topology[location]
-    #elements = list(Presenter.react(frame))
+    pending = presenter.pending
     return web.Response(
         text = tor.rendor.body_html(
-            #refresh=math.ceil(Presenter.refresh(frame))
-            refresh=None
+            refresh=Presenter.refresh_animations(frame) if pending else None,
         ).format(
             "",
-            tor.rendor.frame_to_html(presenter.narrator.state, frame=frame).format(
+            tor.rendor.frame_to_html(presenter.narrator.state, frame=frame, final=not pending).format(
                 "\n".join(
                     tor.rendor.option_as_list_item(n, option, path="/hop/")
                     for n, option in enumerate(hops)
