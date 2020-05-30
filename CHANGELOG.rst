@@ -12,7 +12,9 @@ Versions
 * Narrator is now the main object for holding game state.
 * Fixed a bug where you could continually revisit the stylist.
 * Swapped out the Presenter for one based on BlueMonday78 0.8.0
-* Swapped out the render functions for those based on BlueMonday78 0.8.0
+* Swapped out the render functions for ones based on BlueMonday78 0.8.0
+* Added a tower graphic based on https://images.unsplash.com/photo-1576237013484-7ce69c40b10a
+* Recorded a chime sample for the win page
 
 0.6.0
 -----

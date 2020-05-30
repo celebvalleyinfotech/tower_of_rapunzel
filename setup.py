@@ -45,7 +45,9 @@ setup(
             "data/*.cfg",
             "dialogue/*/*.rst",
             "static/css/*.css",
+            "static/img/*.jpg",
             "static/img/*.png",
+            "static/mp3/*.mp3",
         ]
     },
     install_requires=[

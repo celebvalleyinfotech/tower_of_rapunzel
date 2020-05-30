@@ -1,4 +1,6 @@
 include COPYING
 recursive-include . *.css
+recursive-include . *.jpg
+recursive-include . *.mp3
 recursive-include . *.png
 recursive-include . *.rst
