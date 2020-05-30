@@ -21,6 +21,7 @@ import functools
 from turberfield.dialogue.model import Model
 
 from tor.presenter import Presenter
+import tor.rules
 
 
 def animated_line_to_html(anim):
@@ -84,6 +85,15 @@ def frame_to_html(state, frame, final=False):
         "outward": "Foot of the Tower",
         "stylist": "At the Stylist",
     }
+    location = state.area
+    if location == "butcher":
+        buys = ["Spend 1c", "Spend 2c", "Spend 3c"]
+    elif location == "broomer":
+        buys = ["Spend 10c", "Spend 20c", "Spend 30c"]
+    else:
+        buys = []
+    cuts = ["Cut less", "Cut same", "Cut more"] if location == "chamber" else []
+    hops = tor.rules.topology[location]
     narrator = None
     ts = datetime.datetime.now()
     #spot = narrator.get_state(Spot) if narrator else None
@@ -115,7 +125,20 @@ def frame_to_html(state, frame, final=False):
 {{2}}
 </ul>
 </nav>
-</div>"""
+</div>""".format(
+    "\n".join(
+        option_as_list_item(n, option, path="/hop/")
+        for n, option in enumerate(hops)
+    ),
+    "\n".join(
+        option_as_list_item(n + 1, option, path="/buy/")
+        for n, option in enumerate(buys)
+    ),
+    "\n".join(
+        option_as_list_item(n, option, path="/cut/")
+        for n, option in enumerate(cuts)
+    ),
+)
 
 
 def titles_to_html(config=None, url_pattern=Presenter.validation["url"].pattern):

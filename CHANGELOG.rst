@@ -146,3 +146,5 @@ Objectives:
     * Fold in fixes and practices from Blue Monday 78
     * Rework the rendering and styling
     * Add audio FX
+
+.. _not well received: https://pyweek.org/e/prorogue/ratings/
