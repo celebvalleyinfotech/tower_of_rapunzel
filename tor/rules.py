@@ -42,6 +42,17 @@ class Settings:
     HEALTH_D = fractions.Fraction(HEALTH_MAX / TOWER_M)
 
 
+labels = {
+    "balcony": "On the Balcony",
+    "broomer": "At the Broom shop",
+    "butcher": "In the Butcher's",
+    "chamber": "The Chamber",
+    "chemist": "The Chemist",
+    "inbound": "Foot of the Tower",
+    "outward": "Foot of the Tower",
+    "stylist": "At the Stylist",
+}
+
 topology = {
     "balcony": ("chamber", "outward"),
     "broomer": ("butcher", "chemist", "inbound", "stylist"),
@@ -53,6 +64,14 @@ topology = {
     "stylist": ("broomer", "butcher", "chemist", "inbound"),
 }
 
+offers = {
+    "butcher": ["Spend 1c", "Spend 2c", "Spend 3c"],
+    "broomer": ["Spend 10c", "Spend 20c", "Spend 30c"],
+}
+
+actions = {
+    "chamber": ["Cut less", "Cut same", "Cut more"],
+}
 
 State = namedtuple(
     "State",

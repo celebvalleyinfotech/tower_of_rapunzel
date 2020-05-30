@@ -57,50 +57,34 @@ def location_to_html(locn, path="/"):
     <button type="submit">{locn.label}</button>
 </form>"""
 
+
 def option_as_list_item(n, option, path="/"):
-    labels = {
-        "balcony": "Onto the Balcony",
-        "broomer": "Broom shop",
-        "butcher": "Go round the Butcher's",
-        "chamber": "Into the Chamber",
-        "chemist": "Pop to the Chemist",
-        "inbound": "Foot of the Tower",
-        "outward": "Climb down",
-        "stylist": "Visit the Stylist",
-    }
+    labels = tor.rules.labels
     return f"""
-<form role="form" action="{path}{n}" method="post" name="choice" >
+<li><form role="form" action="{path}{n}" method="post" name="choice" >
     <button type="submit">{labels.get(option, option)}</button>
-</form>"""
+</form></li>"""
 
 
 def frame_to_html(state, frame, final=False):
-    labels = {
-        "balcony": "On the Balcony",
-        "broomer": "At the Broom shop",
-        "butcher": "In the Butcher's",
-        "chamber": "The Chamber",
-        "chemist": "The Chemist",
-        "inbound": "Foot of the Tower",
-        "outward": "Foot of the Tower",
-        "stylist": "At the Stylist",
-    }
-    location = state.area
-    if location == "butcher":
-        buys = ["Spend 1c", "Spend 2c", "Spend 3c"]
-    elif location == "broomer":
-        buys = ["Spend 10c", "Spend 20c", "Spend 30c"]
-    else:
-        buys = []
-    cuts = ["Cut less", "Cut same", "Cut more"] if location == "chamber" else []
-    hops = tor.rules.topology[location]
-    narrator = None
     ts = datetime.datetime.now()
-    #spot = narrator.get_state(Spot) if narrator else None
-    spot = None
+    labels = tor.rules.labels
+    location = state.area
     dialogue = "\n".join(animated_line_to_html(i) for i in frame[Model.Line])
     stills = "\n".join(animated_still_to_html(i) for i in frame[Model.Still])
     audio = "\n".join(audio_to_html(i) for i in frame[Model.Audio])
+    hops = "\n".join(
+        option_as_list_item(n, option, path="/hop/")
+        for n, option in enumerate(tor.rules.topology[location])
+    )
+    buys = "\n".join(
+        option_as_list_item(n + 1, option, path="/buy/")
+        for n, option in enumerate(tor.rules.offers.get(location, []))
+    )
+    cuts = "\n".join(
+        option_as_list_item(n, option, path="/cut/")
+        for n, option in enumerate(tor.rules.actions.get(location, []))
+    )
     return f"""
 {audio}
 <section class="fit-banner">
@@ -120,59 +104,9 @@ def frame_to_html(state, frame, final=False):
 </main>
 <nav>
 <ul>
-{{0}}
-{{1}}
-{{2}}
-</ul>
-</nav>
-</div>""".format(
-    "\n".join(
-        option_as_list_item(n, option, path="/hop/")
-        for n, option in enumerate(hops)
-    ),
-    "\n".join(
-        option_as_list_item(n + 1, option, path="/buy/")
-        for n, option in enumerate(buys)
-    ),
-    "\n".join(
-        option_as_list_item(n, option, path="/cut/")
-        for n, option in enumerate(cuts)
-    ),
-)
-
-
-def titles_to_html(config=None, url_pattern=Presenter.validation["url"].pattern):
-    assembly_widget = f"""
-    <label for="input-assembly-url" id="tip-assembly-url">Assembly URL</label>
-    <input
-    name="assembly_url"
-    type="url"
-    id="input-assembly-url"
-    aria-describedby="tip-assembly-url"
-    placeholder="http://"
-    pattern="{ url_pattern }"
-    title="This server can import JSON data from a URL endpoint. If correctly formatted, that data will be used to initialise your story."
-    >""" if config and config.getboolean("assembly", "enable_user", fallback=False) else ""
-
-    return f"""
-<section class="fit-banner">
-<h1><span>Blue</span><span>Monday</span><span>78</span></h1>
-<h2>An Tower of Rapunzel episode</h2>
-</section>
-<div class="fit-speech">
-<main>
-<h1>Start a new story.</h1>
-<p class="obj-speech">You can get the code for this story from
-<a href="https://github.com/tundish/blue_monday_78">GitHub</a>.</p>
-</main>
-<nav>
-<ul>
-<li><form role="form" action="/" method="POST" name="titles" class="grid-flash mod-titles">
-    <fieldset>
-    { assembly_widget }
-    <button type="submit">Go</button>
-    </fieldset>
-</form></li>
+{hops}
+{buys}
+{cuts}
 </ul>
 </nav>
 </div>"""
