@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# encoding: utf-8
+# encoding: UTF-8
 
 # This file is part of Tower of Rapunzel.
 #
@@ -16,33 +16,45 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with Tower of Rapunzel.  If not, see <http://www.gnu.org/licenses/>.
 
+import datetime
 import functools
+from turberfield.dialogue.model import Model
+
+from tor.presenter import Presenter
 
 
-def element_as_list_item(element):
-    if hasattr(element.dialogue, "persona"):
-        return f"""
-<li style="animation-duration: {element.duration}s; animation-delay: {element.offset}s">
-<blockquote class="line">
-<header class="{'persona' if hasattr(element.dialogue.persona, '_name') else ''}">
-{ element.dialogue.persona._name if hasattr(element.dialogue.persona, '_name') else ''}
+def animated_line_to_html(anim):
+    return f"""
+<li style="animation-delay: {anim.delay:.2f}s; animation-duration: {anim.duration:.2f}s">
+<blockquote class="obj-line">
+<header class="{'obj-persona' if hasattr(anim.element.persona, '_name') else 'obj-entity'}">
+{ '{0.firstname} {0.surname}'.format(anim.element.persona.name) if hasattr(anim.element.persona, 'name') else ''}
 </header>
-<p class="speech">{ element.dialogue.text }</p>
+<p class="obj-speech">{ anim.element.text }</p>
 </blockquote>
-</li>
-        """
-    elif hasattr(element.dialogue, "loop"):
-        return """
-<li>
-<audio
-    src="/audio/{0.dialogue.resource}"
-    autoplay="autoplay" preload="auto"
->
-</audio>
-</li>""".format(element)
-    else:
-        return ""
+</li>"""
 
+
+def animated_still_to_html(anim):
+    return f"""
+<div style="animation-duration: {anim.duration}s; animation-delay: {anim.delay}s">
+<img src="/img/{anim.element.resource}" alt="{anim.element.package} {anim.element.resource}" />
+</div>"""
+
+
+def audio_to_html(elem):
+    return f"""<div>
+<audio src="/audio/{elem.resource}" autoplay="autoplay" preload="auto" >
+</audio>
+</div>"""
+
+
+def location_to_html(locn, path="/"):
+    return f"""
+<form role="form" action="{path}hop" method="post" name="{locn.id.hex}" >
+    <input id="hop-{locn.id.hex}" name="location_id" type="hidden" value="{locn.id.hex}" />
+    <button type="submit">{locn.label}</button>
+</form>"""
 
 def option_as_list_item(n, option, path="/"):
     labels = {
@@ -61,7 +73,7 @@ def option_as_list_item(n, option, path="/"):
 </form>"""
 
 
-def body_to_html(state, frame=[], options=[]):
+def frame_to_html(state, frame, final=False):
     labels = {
         "balcony": "On the Balcony",
         "broomer": "At the Broom shop",
@@ -72,30 +84,87 @@ def body_to_html(state, frame=[], options=[]):
         "outward": "Foot of the Tower",
         "stylist": "At the Stylist",
     }
+    narrator = None
+    ts = datetime.datetime.now()
+    #spot = narrator.get_state(Spot) if narrator else None
+    spot = None
+    dialogue = "\n".join(animated_line_to_html(i) for i in frame[Model.Line])
+    stills = "\n".join(animated_still_to_html(i) for i in frame[Model.Still])
+    audio = "\n".join(audio_to_html(i) for i in frame[Model.Audio])
     return f"""
-<main class="grid-front">
+{audio}
+<section class="fit-banner">
+<h1>Tower of Rapunzel</h1>
+<h2>{ts.strftime("%H:%M:%S %p") if ts else ""}</h2>
+<h2>{ts.strftime("%a %d %b") if ts else ""}</h2>
+</section>
+<aside class="fit-photos">
+{stills}
+</aside>
+<div class="fit-speech">
+<main>
 <h1>{labels[state.area]}</h1>
-<ul class="mod-dialogue">
-{{0}}
+<ul class="obj-dialogue">
+{dialogue}
 </ul>
 </main>
-<nav class="grid-steer">
+<nav>
+<ul>
+{{0}}
 {{1}}
 {{2}}
-{{3}}
+</ul>
 </nav>
-<section class="grid-dash">
-<dl class="mod-stats">
-<dt>Health</dt>
-<dd>{int(state.health_n)}</dd>
-<dt>Coins</dt>
-<dd>{state.coins_n}</dd>
-</dl>
-</section>"""
+</div>"""
+
+
+def titles_to_html(config=None, url_pattern=Presenter.validation["url"].pattern):
+    assembly_widget = f"""
+    <label for="input-assembly-url" id="tip-assembly-url">Assembly URL</label>
+    <input
+    name="assembly_url"
+    type="url"
+    id="input-assembly-url"
+    aria-describedby="tip-assembly-url"
+    placeholder="http://"
+    pattern="{ url_pattern }"
+    title="This server can import JSON data from a URL endpoint. If correctly formatted, that data will be used to initialise your story."
+    >""" if config and config.getboolean("assembly", "enable_user", fallback=False) else ""
+
+    return f"""
+<section class="fit-banner">
+<h1><span>Blue</span><span>Monday</span><span>78</span></h1>
+<h2>An Tower of Rapunzel episode</h2>
+</section>
+<div class="fit-speech">
+<main>
+<h1>Start a new story.</h1>
+<p class="obj-speech">You can get the code for this story from
+<a href="https://github.com/tundish/blue_monday_78">GitHub</a>.</p>
+</main>
+<nav>
+<ul>
+<li><form role="form" action="/" method="POST" name="titles" class="grid-flash mod-titles">
+    <fieldset>
+    { assembly_widget }
+    <button type="submit">Go</button>
+    </fieldset>
+</form></li>
+</ul>
+</nav>
+</div>"""
+
+
+def dict_to_css(mapping=None, tag=":root"):
+    mapping = mapping or {}
+    entries = "\n".join("--{0}: {1};".format(k, v) for k, v in mapping.items())
+    return f"""{tag} {{
+{entries}
+}}"""
 
 
 @functools.lru_cache()
-def base_to_html(refresh=None):
+def body_html(refresh=None):
     return f"""<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -103,9 +172,13 @@ def base_to_html(refresh=None):
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 {'<meta http-equiv="refresh" content="{0}">'.format(refresh) if refresh is not None else ''}
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
-<link rel="stylesheet" href="/css/blmst.css" />
+<title>Tower of Rapunzel</title>
+<link rel="stylesheet" href="/css/bfost.css" />
 </head>
 <body>
+<style type="text/css">
 {{0}}
+</style>
+{{1}}
 </body>
 </html>"""

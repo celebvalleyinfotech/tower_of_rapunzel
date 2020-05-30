@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# encoding: utf-8
+# encoding: UTF-8
 
 # This file is part of Tower of Rapunzel.
 #
@@ -16,115 +16,186 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with Tower of Rapunzel.  If not, see <http://www.gnu.org/licenses/>.
 
+from collections import defaultdict
 from collections import deque
 from collections import namedtuple
 import copy
+from datetime import datetime
+import itertools
+import logging
+import math
+import re
 import sys
 
-from turberfield.dialogue.matcher import Matcher
 from turberfield.dialogue.model import Model
+from turberfield.dialogue.model import SceneScript
 from turberfield.dialogue.performer import Performer
+import turberfield.utils
 
 import tor
-import tor.story
 from tor.story import Narrator
 
 
 class Presenter:
 
-    Element = namedtuple(
-        "Element",
-        ["source", "dialogue", "shot", "offset", "duration"]
-    )
+    Animation = namedtuple("Animation", ["delay", "duration", "element"])
+
+    validation = {
+        "email": re.compile(
+            "[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]"
+            "+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\\.[a-zA-Z0-9]"
+            "(?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)+"
+            # http://www.w3.org/TR/html5/forms.html#valid-e-mail-address
+        ),
+        "url": re.compile("(https?|ftp)://(-\.)?([^\s/?\.#-]+\.?)+(/[^\s]*)?$"),
+        "location": re.compile("[0-9a-f]{32}"),
+        "name": re.compile("[A-Z a-z]{2,42}"),
+        "session": re.compile("[0-9a-f]{32}"),
+    }
+
+    definitions = {
+        "creamy": "hsl(50, 0%, 100%, 1.0)",
+        "pebble": "hsl(13, 0%, 30%, 1.0)",
+        "claret": "hsl(13, 80%, 55%, 1.0)",
+        "banana": "hsl(50, 80%, 55%, 1.0)",
+        "collie": "hsl(76, 80%, 35%, 1.0)",
+        "titles": '"AA Paro", sans-serif',
+        "detail": '"Inknut Antiqua", sans-serif',
+        "system": ", ".join([
+            "BlinkMacSystemFont", '"Segoe UI"', "Roboto", '"Helvetica Neue"',
+            '"Apple Color Emoji"', '"Segoe UI Emoji"', '"Segoe UI Symbol"',
+            "Arial", "sans-serif"
+        ]),
+    }
 
     @staticmethod
-    def build_frames(source, seq, dwell, pause):
-        """Generate a new Frame on each Shot and FX item"""
-        shot = None
-        frame = []
+    def animate_lines(seq, dwell, pause):
+        """ Generate animations for lines of dialogue."""
         offset = 0
-        for item in seq:
-            if isinstance(item, (Model.Audio, Model.Shot)):
-                if frame and shot and shot != item:
-                    yield frame
-                    frame = []
-                    offset = 0
-
-                if isinstance(item, Model.Shot):
-                    shot = item
-                else:
-                    frame.append(Presenter.Element(
-                        source, item, shot,
-                        item.offset / 1000,
-                        item.duration / 1000
-                    ))
-
-            elif isinstance(item, Model.Line):
-                durn = pause + dwell * item.text.count(" ")
-                frame.append(Presenter.Element(
-                    source, item, shot, offset, durn
-                ))
-                offset += durn
-            elif not isinstance(item, Model.Condition):
-                frame.append(Presenter.Element(
-                    source, item, shot, offset, 0
-                ))
-        else:
-            if any(
-                isinstance(
-                    i.dialogue, (Model.Audio, Model.Line)
-                )
-                for i in frame
-            ):
-                yield frame
+        for line in seq:
+            duration = pause + dwell * line.text.count(" ")
+            yield Presenter.Animation(offset, duration, line)
+            offset += duration
 
     @staticmethod
-    def react(frame):
-        for element in frame:
-            event = element.dialogue
-            if (
-                isinstance(event, Model.Property) and
-                event.object is not None
-            ):
-                setattr(event.object, event.attr, event.val)
-
-            yield element
+    def animate_stills(seq):
+        """ Generate animations for still images."""
+        yield from (
+            Presenter.Animation(still.offset / 1000, still.duration / 1000, still)
+            for still in seq
+        )
 
     @staticmethod
-    def refresh(frame, min_val=8):
-        try:
-            return max(
-                [min_val] +
-                [i.offset + i.duration for i in frame if i.duration]
-            )
-        except ValueError:
-            return None
+    def refresh_animations(frame, min_val=8):
+        rv = min_val
+        for typ in (Model.Line, Model.Still, Model.Audio):
+            try:
+                last_anim = frame[typ][-1]
+                rv = max(rv, math.ceil(last_anim.delay + last_anim.duration))
+            except IndexError:
+                continue
+        return rv
 
-    def __init__(self, ensemble, frames=None):
-        self.ensemble = copy.deepcopy(ensemble)
-        self.frames = frames if frames is not None else deque([])
+    def __init__(self, dialogue, ensemble=None):
+        self.frames = [
+            defaultdict(list, dict(
+                {k: list(v) for k, v in itertools.groupby(i.items, key=type)},
+                name=i.name, scene=i.scene
+            ))
+            for i in getattr(dialogue, "shots", [])
+        ]
+        self.ensemble = ensemble
+        self.log = logging.getLogger(str(getattr(ensemble[-1], "id", "")) if ensemble else "")
+        self.ts = datetime.utcnow()
+
+    @property
+    def pending(self) -> int:
+        return len([
+            frame for frame in self.frames
+            if all([Performer.allows(i) for i in frame[Model.Condition]])
+        ])
 
     @property
     def narrator(self):
         return next((i for i in self.ensemble if isinstance(i, Narrator)), None)
 
-    def next_frame(self, entities, dwell=0.3, pause=1):
-        while not self.frames:
-            matcher = Matcher(tor.story.folders)
-            selector = {"area": self.narrator.state.area}
-            folders = list(matcher.options(selector))
-            performer = Performer(folders, entities)
-            try:
-                folder, index, script, selection, interlude = performer.next(
-                    folders, entities
+    @property
+    def assembly(self):
+        ensemble = [copy.copy(i) for i in self.ensemble]
+        for obj in ensemble:
+            if hasattr(obj, "memories"):
+                obj.memories = [
+                    i._replace(
+                        subject=getattr(i.subject, "id", None),
+                        object=getattr(i.object, "id", None)
+                    )
+                    for i in obj.memories
+                ]
+        return {
+            "tooling": {
+                i.__name__: i.__version__
+                for i in (
+                    turberfield.utils, turberfield.dialogue, tor
                 )
-            except TypeError:
-                raise
-            scene = performer.run(react=False)
-            frames = list(Presenter.build_frames(
-                folder.paths[index], scene,
-                dwell=dwell, pause=pause
-            ))
-            self.frames.extend(frames)
+            },
+            "history": {
+                "incept": self.ts,
+                "extract": datetime.utcnow(),
+            },
+            "ensemble": ensemble,
+        }
 
-        return self.frames.popleft()
+    def dialogue(self, folders, ensemble, strict=True, roles=2):
+        """ Return the next selected scene script as compiled dialogue."""
+        for folder in folders:
+            for script in SceneScript.scripts(**folder._asdict()):
+                with script as dialogue:
+                    try:
+                        selection = dialogue.select(ensemble, roles=roles)
+                    except Exception as e:
+                        self.log.error("Unable to process {0.fP}".format(script))
+                        self.log.exception(e)
+                        continue
+
+                    if selection and all(selection.values()):
+                        self.log.debug("Selection made strictly")
+                    elif not strict and any(selection.values()):
+                        self.log.debug("Selection made")
+                    else:
+                        continue
+
+                    try:
+                        return dialogue.cast(selection).run()
+                    except Exception as e:
+                        self.log.error("Unable to run {0.fP}".format(script))
+                        self.log.exception(e)
+                        continue
+
+    def frame(self, dwell=0.3, pause=1, react=True):
+        """ Return the next shot of dialogue as an animated frame."""
+        while True:
+            try:
+                frame = self.frames.pop(0)
+            except IndexError:
+                self.log.debug("No more frames.")
+                raise
+
+            if all([Performer.allows(i) for i in frame[Model.Condition]]):
+                frame[Model.Line] = list(
+                    self.animate_lines(frame[Model.Line], dwell, pause)
+                )
+                frame[Model.Still] = list(self.animate_stills(frame[Model.Still]))
+                for p in frame[Model.Property]:
+                    if react and p.object is not None:
+                        setattr(p.object, p.attr, p.val)
+                for m in frame[Model.Memory]:
+                    if react and m.object is None:
+                        m.subject.set_state(m.state)
+                    try:
+                        if m.subject.memories[-1].state != m.state:
+                            m.subject.memories.append(m)
+                    except AttributeError:
+                        m.subject.memories = deque([m], maxlen=6)
+                    except IndexError:
+                        m.subject.memories.append(m)
+                return frame

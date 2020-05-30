@@ -38,8 +38,8 @@ from turberfield.dialogue.performer import Performer
 
 import tor
 #from tor.presenter import Presenter
-from tor.presentor import Presenter
-import tor.rendor
+from tor.presenter import Presenter
+import tor.render
 import tor.rules
 import tor.story
 from tor.story import Character
@@ -79,21 +79,21 @@ async def get_frame(request):
     hops = tor.rules.topology[location]
     pending = presenter.pending
     return web.Response(
-        text = tor.rendor.body_html(
+        text = tor.render.body_html(
             refresh=Presenter.refresh_animations(frame) if pending else None,
         ).format(
             "",
-            tor.rendor.frame_to_html(presenter.narrator.state, frame=frame, final=not pending).format(
+            tor.render.frame_to_html(presenter.narrator.state, frame=frame, final=not pending).format(
                 "\n".join(
-                    tor.rendor.option_as_list_item(n, option, path="/hop/")
+                    tor.render.option_as_list_item(n, option, path="/hop/")
                     for n, option in enumerate(hops)
                 ),
                 "\n".join(
-                    tor.rendor.option_as_list_item(n + 1, option, path="/buy/")
+                    tor.render.option_as_list_item(n + 1, option, path="/buy/")
                     for n, option in enumerate(buys)
                 ),
                 "\n".join(
-                    tor.rendor.option_as_list_item(n, option, path="/cut/")
+                    tor.render.option_as_list_item(n, option, path="/cut/")
                     for n, option in enumerate(cuts)
                 ),
             )
