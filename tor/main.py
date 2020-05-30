@@ -37,7 +37,8 @@ from turberfield.dialogue.model import Model
 from turberfield.dialogue.performer import Performer
 
 import tor
-from tor.presenter import Presenter
+#from tor.presenter import Presenter
+from tor.presentor import Presenter
 import tor.render
 import tor.rules
 import tor.story
@@ -57,7 +58,17 @@ async def get_frame(request):
     for character in (i for i in entities if isinstance(i, Character)):
         character.set_state(random.randrange(10))
 
-    frame = presenter.next_frame(entities)
+    try:
+        frame = presenter.frame(react=True)
+    except IndexError:
+        matcher = Matcher(tor.story.folders)
+        selector = {"area": location}
+        folders = list(matcher.options(selector))
+        dialogue = presenter.dialogue(folders, presenter.ensemble)
+        request.app["presenter"] = presenter = Presenter(dialogue, presenter.ensemble)
+        frame = presenter.frame(react=True)
+
+    #frame = presenter.next_frame(entities)
     if location == "butcher":
         buys = ["Spend 1c", "Spend 2c", "Spend 3c"]
     elif location == "broomer":
@@ -66,7 +77,7 @@ async def get_frame(request):
         buys = []
     cuts = ["Cut less", "Cut same", "Cut more"] if location == "chamber" else []
     hops = tor.rules.topology[location]
-    elements = list(Presenter.react(frame))
+    #elements = list(Presenter.react(frame))
     return web.Response(
         text = tor.render.base_to_html(
             #refresh=math.ceil(Presenter.refresh(frame))
@@ -178,7 +189,7 @@ def build_app(args):
         "/css/",
         pkg_resources.resource_filename("tor", "static/css")
     )
-    app["presenter"] = Presenter(tor.story.ensemble)
+    app["presenter"] = Presenter(None, tor.story.ensemble)
     return app
 
 
