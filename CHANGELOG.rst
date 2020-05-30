@@ -9,8 +9,10 @@ Versions
 
 * Moved away from one special class for each character.
   Now using Occupation states to select entities.
-* Presenter is now the main object for holding game state.
+* Narrator is now the main object for holding game state.
 * Fixed a bug where you could continually revisit the stylist.
+* Swapped out the Presenter for one based on BlueMonday78 0.8.0
+* Swapped out the render functions for those based on BlueMonday78 0.8.0
 
 0.6.0
 -----

@@ -37,7 +37,6 @@ from turberfield.dialogue.model import Model
 from turberfield.dialogue.performer import Performer
 
 import tor
-#from tor.presenter import Presenter
 from tor.presenter import Presenter
 import tor.render
 import tor.rules
@@ -49,7 +48,7 @@ from tor.story import Occupation
 
 
 async def get_frame(request):
-    presenter = request.app["presenter"]
+    presenter = request.app["presenter"][0]
     location = presenter.narrator.state.area
     entities = [
         i for i in presenter.ensemble
@@ -61,14 +60,14 @@ async def get_frame(request):
     try:
         frame = presenter.frame(react=True)
     except IndexError:
-        matcher = Matcher(tor.story.folders)
         selector = {"area": location}
+        matcher = Matcher(tor.story.folders)
         folders = list(matcher.options(selector))
         dialogue = presenter.dialogue(folders, presenter.ensemble)
-        request.app["presenter"] = presenter = Presenter(dialogue, presenter.ensemble)
+        presenter = Presenter(dialogue, presenter.ensemble)
+        request.app["presenter"].append(presenter)
         frame = presenter.frame(react=True)
 
-    #frame = presenter.next_frame(entities)
     if location == "butcher":
         buys = ["Spend 1c", "Spend 2c", "Spend 3c"]
     elif location == "broomer":
@@ -107,7 +106,7 @@ async def post_buy(request):
     if not tor.rules.choice_validator.match(buy):
         raise web.HTTPUnauthorized(reason="User sent invalid buy code.")
 
-    presenter = request.app["presenter"]
+    presenter = request.app["presenter"][0]
     presenter.frames.clear()
 
     if presenter.narrator.state.area == "broomer":
@@ -132,7 +131,7 @@ async def post_cut(request):
     if not tor.rules.choice_validator.match(cut):
         raise web.HTTPUnauthorized(reason="User sent invalid cut code.")
     else:
-        presenter = request.app["presenter"]
+        presenter = request.app["presenter"][0]
         presenter.frames.clear()
         cut_d = {
             0: -tor.rules.Settings.CUT_D,
@@ -153,7 +152,7 @@ async def post_hop(request):
         raise web.HTTPUnauthorized(reason="User sent invalid hop.")
     else:
         index = int(hop)
-        presenter = request.app["presenter"]
+        presenter = request.app["presenter"][0]
         location = presenter.narrator.state.area
         destination = tor.rules.topology[location][index]
         presenter.narrator.state = presenter.narrator.state._replace(area=destination)
@@ -185,7 +184,7 @@ def build_app(args):
         "/css/",
         pkg_resources.resource_filename("tor", "static/css")
     )
-    app["presenter"] = Presenter(None, tor.story.ensemble)
+    app["presenter"] = deque([Presenter(None, tor.story.ensemble)], maxlen=1)
     return app
 
 
