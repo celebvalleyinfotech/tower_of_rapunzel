@@ -89,10 +89,10 @@ ensemble = [
         ),
     ),
     Character(name="Rapunzel").set_state(Occupation.teenager, Hanging.crib),
-    Character(name="Hickory McFly").set_state(Occupation.broomer),
-    Character(name="Ricky Butcher").set_state(Occupation.butcher),
-    Character(name="Poppy Pills").set_state(Occupation.chemist),
-    Character(name="Wigmore Watkins").set_state(Occupation.stylist),
+    Character(name="Mr Hickory McFly").set_state(Occupation.broomer),
+    Character(name="Mr Ricky Butcher").set_state(Occupation.butcher),
+    Character(name="Ms Poppy Pills").set_state(Occupation.chemist),
+    Character(name="Mr Wigmore Watkins").set_state(Occupation.stylist),
 ]
 
 

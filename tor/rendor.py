@@ -1,20 +1,20 @@
 #!/usr/bin/env python3
 # encoding: UTF-8
 
-# This file is part of Addison Arches.
+# This file is part of Tower of Rapunzel.
 #
-# Addison Arches is free software: you can redistribute it and/or modify it
+# Tower of Rapunzel is free software: you can redistribute it and/or modify it
 # under the terms of the GNU Affero General Public License as published
 # by the Free Software Foundation, either version 3 of the License, or
 # (at your option) any later version.
 #
-# Addison Arches is distributed in the hope that it will be useful, but
+# Tower of Rapunzel is distributed in the hope that it will be useful, but
 # WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU Affero General Public License for more details.
 #
 # You should have received a copy of the GNU Affero General Public License
-# along with Addison Arches.  If not, see <http://www.gnu.org/licenses/>.
+# along with Tower of Rapunzel.  If not, see <http://www.gnu.org/licenses/>.
 
 import datetime
 import functools
@@ -74,6 +74,16 @@ def option_as_list_item(n, option, path="/"):
 
 
 def frame_to_html(state, frame, final=False):
+    labels = {
+        "balcony": "On the Balcony",
+        "broomer": "At the Broom shop",
+        "butcher": "In the Butcher's",
+        "chamber": "The Chamber",
+        "chemist": "The Chemist",
+        "inbound": "Foot of the Tower",
+        "outward": "Foot of the Tower",
+        "stylist": "At the Stylist",
+    }
     narrator = None
     ts = datetime.datetime.now()
     #spot = narrator.get_state(Spot) if narrator else None
@@ -84,7 +94,7 @@ def frame_to_html(state, frame, final=False):
     return f"""
 {audio}
 <section class="fit-banner">
-<h1><span>Blue</span><span>Monday</span><span>78</span></h1>
+<h1>Tower of Rapunzel</h1>
 <h2>{ts.strftime("%H:%M:%S %p") if ts else ""}</h2>
 <h2>{ts.strftime("%a %d %b") if ts else ""}</h2>
 </section>
@@ -93,7 +103,7 @@ def frame_to_html(state, frame, final=False):
 </aside>
 <div class="fit-speech">
 <main>
-{'<h1>{0}</h1>'.format(spot.value[-1].capitalize().replace("_", " ")) if spot is not None else ''}
+<h1>{labels[state.area]}</h1>
 <ul class="obj-dialogue">
 {dialogue}
 </ul>
@@ -101,6 +111,8 @@ def frame_to_html(state, frame, final=False):
 <nav>
 <ul>
 {{0}}
+{{1}}
+{{2}}
 </ul>
 </nav>
 </div>"""
@@ -122,7 +134,7 @@ def titles_to_html(config=None, url_pattern=Presenter.validation["url"].pattern)
     return f"""
 <section class="fit-banner">
 <h1><span>Blue</span><span>Monday</span><span>78</span></h1>
-<h2>An Addison Arches episode</h2>
+<h2>An Tower of Rapunzel episode</h2>
 </section>
 <div class="fit-speech">
 <main>
@@ -160,7 +172,7 @@ def body_html(refresh=None):
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 {'<meta http-equiv="refresh" content="{0}">'.format(refresh) if refresh is not None else ''}
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
-<title>Blue Monday 78: Pilot episode</title>
+<title>Tower of Rapunzel</title>
 <link rel="stylesheet" href="/css/bfost.css" />
 </head>
 <body>
