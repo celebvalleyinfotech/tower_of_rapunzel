@@ -28,3 +28,13 @@ You should see this message::
 Point your browser to that address::
 
     firefox http://127.0.0.1:8080
+
+Tech
+----
+
+Tower of Rapunzel is Free software. It is designed as a web-native text adventure, built entirely of:
+
+    * Python 3.7+
+    * HTML5
+    * CSS3
+
