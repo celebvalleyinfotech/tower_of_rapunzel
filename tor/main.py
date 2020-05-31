@@ -67,7 +67,7 @@ async def get_frame(request):
         text = tor.render.body_html(
             refresh=Presenter.refresh_animations(frame) if pending else None,
         ).format(
-            "",
+            tor.render.dict_to_css(presenter.definitions),
             tor.render.frame_to_html(presenter.narrator.state, frame=frame, final=not pending)
         ),
         content_type="text/html"
@@ -170,6 +170,10 @@ def build_app(args):
     app.router.add_static(
         "/audio/",
         pkg_resources.resource_filename("tor", "static/audio")
+    )
+    app.router.add_static(
+        "/fonts/",
+        pkg_resources.resource_filename("tor", "static/fonts")
     )
     app["presenter"] = deque([Presenter(None, tor.story.ensemble)], maxlen=1)
     return app

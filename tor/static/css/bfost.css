@@ -19,7 +19,9 @@ vertical-align: baseline;
 @font-face {
 font-family: "AA Paro";
 src: local("AA Paro"), local("AAParo-Regular"),
-    url(/fonts/AAParo-Regular.otf) format("opentype");
+    url(/fonts/AAParo-Regular.otf) format("opentype"),
+    url(/fonts/aaparo-regular-webfont.woff2) format("woff2"),
+    url(/fonts/aaparo-regular-webfont.woff) format("woff");
 font-weight: 100 950;
 }
 
