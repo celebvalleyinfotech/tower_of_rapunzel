@@ -53,6 +53,17 @@ labels = {
     "stylist": "At the Stylist",
 }
 
+motion = {
+    "balcony": "Onto the Balcony",
+    "broomer": "Broom shop",
+    "butcher": "Go round the Butcher's",
+    "chamber": "Into the Chamber",
+    "chemist": "Pop to the Chemist",
+    "inbound": "Foot of the Tower",
+    "outward": "Climb down",
+    "stylist": "Visit the Stylist",
+}
+
 topology = {
     "balcony": ("chamber", "outward"),
     "broomer": ("butcher", "chemist", "inbound", "stylist"),

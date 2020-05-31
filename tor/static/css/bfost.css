@@ -31,25 +31,25 @@ body {
 display: grid;
 grid-template-columns: 3fr 5fr 1fr;
 grid-template-areas:
-"banner  speech  photos";
+"vista  speech  control";
 height: 100vh;
 }
 
-.fit-banner {
+.fit-vista {
 background-color: var(--creamy, white);
 border-left: 0.25rem solid var(--pebble, grey);
 font-family: var(--titles);
-grid-area: banner;
+grid-area: vista;
 padding-left: 1.0rem;
 }
 
-.fit-photos {
+.fit-control {
 align-items: center;
 background-color: var(--pebble, grey);
 border-left: 1rem solid var(--creamy, white);
 display: flex;
 flex-direction: column;
-grid-area: photos;
+grid-area: control;
 min-width: 128px;
 }
 
@@ -66,10 +66,10 @@ body {
 display: grid;
 grid-template-columns: 5fr 1fr;
 grid-template-areas:
-"speech  photos"
+"speech  control"
 }
 
-.fit-banner {
+.fit-vista {
 display: none;
 }
 
@@ -78,12 +78,6 @@ display: none;
 main {
 flex-grow: 1;
 padding: 0.5rem;
-}
-
-nav ul {
-display: flex;
-flex-direction: row;
-justify-content: flex-end;
 }
 
 /*  Objects  */
@@ -236,25 +230,25 @@ button:hover {
 border: 2px solid var(--creamy, white);
 }
 
-.fit-banner h1 {
+.fit-vista h1 {
 display: flex inline;
 flex-direction: column;
 font-size: 7rem;
 }
 
-.fit-banner h1 span:nth-child(1) {
+.fit-vista h1 span:nth-child(1) {
 color: var(--pebble, grey);
 }
 
-.fit-banner h1 span:nth-child(2) {
+.fit-vista h1 span:nth-child(2) {
 color: var(--claret, crimson);
 }
 
-.fit-banner h1 span:nth-child(3) {
+.fit-vista h1 span:nth-child(3) {
 color: var(--collie, limegreen);
 }
 
-.fit-banner h2 {
+.fit-vista h2 {
 color: var(--banana, gold);
 letter-spacing: 0.225rem;
 text-shadow: var(--pebble, grey) 0rem 0.1rem 0.05rem, var(--pebble, grey) 0rem -0.1rem 0.05rem,

@@ -60,7 +60,7 @@ def location_to_html(locn, path="/"):
 
 
 def option_as_list_item(n, option, path="/"):
-    labels = tor.rules.labels
+    labels = tor.rules.motion
     return f"""
 <li><form role="form" action="{path}{n}" method="post" name="choice" >
     <button type="submit">{labels.get(option, option)}</button>
@@ -88,14 +88,11 @@ def frame_to_html(state, frame, final=False):
     )
     return f"""
 {audio}
-<section class="fit-banner">
+<section class="fit-vista">
 <h1>Tower of Rapunzel</h1>
 <h2>{ts.strftime("%H:%M:%S %p") if ts else ""}</h2>
 <h2>{ts.strftime("%a %d %b") if ts else ""}</h2>
 </section>
-<aside class="fit-photos">
-{stills}
-</aside>
 <div class="fit-speech">
 <main>
 <h1>{labels[state.area]}</h1>
@@ -103,6 +100,8 @@ def frame_to_html(state, frame, final=False):
 {dialogue}
 </ul>
 </main>
+</div>
+<div class="fit-control">
 <nav>
 <ul>
 {hops}
