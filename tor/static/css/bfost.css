@@ -25,63 +25,6 @@ src: local("AA Paro"), local("AAParo-Regular"),
 font-weight: 100 950;
 }
 
-@font-face {
-font-family: "Inknut Antiqua";
-src: local("Inknut Antiqua Light"), local("InknutAntiqua-Light"),
-    url(/fonts/InknutAntiqua-Light.woff2) format("woff2"),
-    url(/fonts/InknutAntiqua-Light.woff) format("woff");
-font-weight: 300;
-}
-
-@font-face {
-font-family: "Inknut Antiqua";
-src: local("Inknut Antiqua"), local("InknutAntiqua-Regular"),
-    url(/fonts/InknutAntiqua-Regular.woff2) format("woff2"),
-    url(/fonts/InknutAntiqua-Regular.woff) format("woff");
-font-weight: 400;
-}
-
-@font-face {
-font-family: "Inknut Antiqua";
-src: local("Inknut Antiqua Medium"), local("InknutAntiqua-Medium"),
-    url(/fonts/InknutAntiqua-Medium.woff2) format("woff2"),
-    url(/fonts/InknutAntiqua-Medium.woff) format("woff");
-font-weight: 500;
-}
-
-@font-face {
-font-family: "Inknut Antiqua";
-src: local("Inknut Antiqua SemiBold"), local("InknutAntiqua-SemiBold"),
-    url(/fonts/InknutAntiqua-SemiBold.woff2) format("woff2"),
-    url(/fonts/InknutAntiqua-SemiBold.woff) format("woff");
-font-weight: 600;
-}
-
-@font-face {
-font-family: "Inknut Antiqua";
-src: local("Inknut Antiqua Bold"), local("InknutAntiqua-Bold"),
-    url(/fonts/InknutAntiqua-Bold.woff2) format("woff2"),
-    url(/fonts/InknutAntiqua-Bold.woff) format("woff");
-font-weight: 700;
-}
-
-@font-face {
-font-family: "Inknut Antiqua";
-src: local("Inknut Antiqua ExtraBold"), local("InknutAntiqua-ExtraBold"),
-    url(/fonts/InknutAntiqua-ExtraBold.woff2) format("woff2"),
-    url(/fonts/InknutAntiqua-ExtraBold.woff) format("woff");
-font-weight: 800;
-}
-
-@font-face {
-font-family: "Inknut Antiqua";
-src: local("Inknut Antiqua Black"), local("InknutAntiqua-Black"),
-    url(/fonts/InknutAntiqua-Black.woff2) format("woff2"),
-    url(/fonts/InknutAntiqua-Black.woff) format("woff");
-font-weight: 900;
-}
-
-
 /*  Fit  */
 
 body {

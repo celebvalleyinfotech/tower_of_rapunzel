@@ -40,19 +40,6 @@ class Presenter:
 
     Animation = namedtuple("Animation", ["delay", "duration", "element"])
 
-    validation = {
-        "email": re.compile(
-            "[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]"
-            "+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\\.[a-zA-Z0-9]"
-            "(?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)+"
-            # http://www.w3.org/TR/html5/forms.html#valid-e-mail-address
-        ),
-        "url": re.compile("(https?|ftp)://(-\.)?([^\s/?\.#-]+\.?)+(/[^\s]*)?$"),
-        "location": re.compile("[0-9a-f]{32}"),
-        "name": re.compile("[A-Z a-z]{2,42}"),
-        "session": re.compile("[0-9a-f]{32}"),
-    }
-
     definitions = {
         "creamy": "hsl(50, 0%, 100%, 1.0)",
         "pebble": "hsl(13, 0%, 30%, 1.0)",
@@ -60,7 +47,7 @@ class Presenter:
         "banana": "hsl(50, 80%, 55%, 1.0)",
         "collie": "hsl(76, 80%, 35%, 1.0)",
         "titles": '"AA Paro", sans-serif',
-        "detail": '"Inknut Antiqua", sans-serif',
+        "detail": '"Times Roman", sans-serif',
         "system": ", ".join([
             "BlinkMacSystemFont", '"Segoe UI"', "Roboto", '"Helvetica Neue"',
             '"Apple Color Emoji"', '"Segoe UI Emoji"', '"Segoe UI Symbol"',
@@ -118,32 +105,6 @@ class Presenter:
     @property
     def narrator(self):
         return next((i for i in self.ensemble if isinstance(i, Narrator)), None)
-
-    @property
-    def assembly(self):
-        ensemble = [copy.copy(i) for i in self.ensemble]
-        for obj in ensemble:
-            if hasattr(obj, "memories"):
-                obj.memories = [
-                    i._replace(
-                        subject=getattr(i.subject, "id", None),
-                        object=getattr(i.object, "id", None)
-                    )
-                    for i in obj.memories
-                ]
-        return {
-            "tooling": {
-                i.__name__: i.__version__
-                for i in (
-                    turberfield.utils, turberfield.dialogue, tor
-                )
-            },
-            "history": {
-                "incept": self.ts,
-                "extract": datetime.utcnow(),
-            },
-            "ensemble": ensemble,
-        }
 
     def dialogue(self, folders, ensemble, strict=True, roles=2):
         """ Return the next selected scene script as compiled dialogue."""
