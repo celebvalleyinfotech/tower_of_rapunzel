@@ -1,0 +1,318 @@
+/* Base : Fit : Objects : State: Theme */
+
+/*  Base    */
+
+* {
+box-sizing: border-box;
+border: 0;
+font: inherit;
+font-size: 100%;
+line-height: 1.2em;
+list-style-type: none;
+margin: 0;
+outline: 0;
+padding: 0;
+text-decoration: none;
+vertical-align: baseline;
+}
+
+@font-face {
+font-family: "AA Paro";
+src: local("AA Paro"), local("AAParo-Regular"),
+    url(/fonts/AAParo-Regular.otf) format("opentype");
+font-weight: 100 950;
+}
+
+@font-face {
+font-family: "Inknut Antiqua";
+src: local("Inknut Antiqua Light"), local("InknutAntiqua-Light"),
+    url(/fonts/InknutAntiqua-Light.woff2) format("woff2"),
+    url(/fonts/InknutAntiqua-Light.woff) format("woff");
+font-weight: 300;
+}
+
+@font-face {
+font-family: "Inknut Antiqua";
+src: local("Inknut Antiqua"), local("InknutAntiqua-Regular"),
+    url(/fonts/InknutAntiqua-Regular.woff2) format("woff2"),
+    url(/fonts/InknutAntiqua-Regular.woff) format("woff");
+font-weight: 400;
+}
+
+@font-face {
+font-family: "Inknut Antiqua";
+src: local("Inknut Antiqua Medium"), local("InknutAntiqua-Medium"),
+    url(/fonts/InknutAntiqua-Medium.woff2) format("woff2"),
+    url(/fonts/InknutAntiqua-Medium.woff) format("woff");
+font-weight: 500;
+}
+
+@font-face {
+font-family: "Inknut Antiqua";
+src: local("Inknut Antiqua SemiBold"), local("InknutAntiqua-SemiBold"),
+    url(/fonts/InknutAntiqua-SemiBold.woff2) format("woff2"),
+    url(/fonts/InknutAntiqua-SemiBold.woff) format("woff");
+font-weight: 600;
+}
+
+@font-face {
+font-family: "Inknut Antiqua";
+src: local("Inknut Antiqua Bold"), local("InknutAntiqua-Bold"),
+    url(/fonts/InknutAntiqua-Bold.woff2) format("woff2"),
+    url(/fonts/InknutAntiqua-Bold.woff) format("woff");
+font-weight: 700;
+}
+
+@font-face {
+font-family: "Inknut Antiqua";
+src: local("Inknut Antiqua ExtraBold"), local("InknutAntiqua-ExtraBold"),
+    url(/fonts/InknutAntiqua-ExtraBold.woff2) format("woff2"),
+    url(/fonts/InknutAntiqua-ExtraBold.woff) format("woff");
+font-weight: 800;
+}
+
+@font-face {
+font-family: "Inknut Antiqua";
+src: local("Inknut Antiqua Black"), local("InknutAntiqua-Black"),
+    url(/fonts/InknutAntiqua-Black.woff2) format("woff2"),
+    url(/fonts/InknutAntiqua-Black.woff) format("woff");
+font-weight: 900;
+}
+
+
+/*  Fit  */
+
+body {
+display: grid;
+grid-template-columns: 3fr 5fr 1fr;
+grid-template-areas:
+"banner  speech  photos";
+height: 100vh;
+}
+
+.fit-banner {
+background-color: var(--creamy, white);
+border-left: 0.25rem solid var(--pebble, grey);
+font-family: var(--titles);
+grid-area: banner;
+padding-left: 1.0rem;
+}
+
+.fit-photos {
+align-items: center;
+background-color: var(--pebble, grey);
+border-left: 1rem solid var(--creamy, white);
+display: flex;
+flex-direction: column;
+grid-area: photos;
+min-width: 128px;
+}
+
+.fit-speech {
+background-color: var(--banana);
+display: flex;
+flex-direction: column;
+grid-area: speech;
+}
+
+@media screen and (max-width: 1024px) {
+
+body {
+display: grid;
+grid-template-columns: 5fr 1fr;
+grid-template-areas:
+"speech  photos"
+}
+
+.fit-banner {
+display: none;
+}
+
+}
+
+main {
+flex-grow: 1;
+padding: 0.5rem;
+}
+
+nav ul {
+display: flex;
+flex-direction: row;
+justify-content: flex-end;
+}
+
+/*  Objects  */
+
+ul.obj-dialogue {
+padding: 0.5em;
+}
+
+ul.obj-dialogue li {
+animation-name: fadeinout;
+animation-fill-mode: both;
+list-style-type: none;
+padding-bottom: 1.3em;
+}
+
+ul.obj-dialogue li:last-of-type {
+animation-name: fadein;
+}
+
+.obj-persona {
+font-family: var(--system);
+font-size: 1.1rem;
+font-weight: lighter;
+margin: 0.25rem 0 0.25rem 0;
+}
+
+.obj-persona:after{
+content: ":";
+}
+
+.obj-speech {
+font-family: var(--detail);
+font-size: 1.3rem;
+}
+
+.obj-entity + .obj-speech {
+font-style: italic;
+}
+
+ul.obj-memory li {
+font-size: 1.2rem;
+padding: 0.5em;
+margin: 0.5rem 0 0.5rem 0;
+}
+
+
+/*  State   */
+
+@keyframes fadein {
+0% {
+opacity: 0;
+}
+12% {
+opacity: 1;
+}
+100% {
+opacity: 1;
+}
+}
+
+@keyframes fadeinout {
+0% {
+opacity: 0;
+}
+12% {
+opacity: 1;
+}
+82% {
+opacity: 1;
+}
+100% {
+opacity: 0.6;
+}
+}
+
+
+/*  Theme   */
+
+body {
+border: 6rem solid var(--creamy, white);
+color: var(--pebble, grey);
+}
+
+h1, h2 {
+letter-spacing: 0.125rem;
+font-family: var(--titles);
+font-size: 3rem;
+margin: 1rem 0 1rem 1rem;
+}
+
+p {
+font-family: var(--detail);
+padding-left: 1rem;
+}
+
+img {
+padding: 0.35rem 0.7rem 0.35rem 0.7rem;
+width: 100%;
+}
+
+input {
+font-family: var(--system);
+font-size: 0.70rem;
+letter-spacing: 0.035rem;
+}
+
+input:invalid {
+color: var(--claret, crimson);
+}
+
+input:valid {
+color: var(--pebble, grey);
+}
+
+#input-assembly-url {
+height: 1.6rem;
+min-width: 24rem;
+margin: 0.6rem;
+padding-left: 0.6rem;
+}
+
+label {
+color: var(--creamy, white);
+font-family: var(--system);
+font-size: 0.9rem;
+font-weight: bolder;
+letter-spacing: 0.025rem;
+margin: 0.2rem;
+padding-left: 0.6rem;
+}
+
+label:after {
+content: ": ";
+}
+
+button {
+background-color: var(--collie, limegreen);
+border: 2px solid var(--pebble, grey);
+color: var(--creamy, white);
+letter-spacing: 0.125rem;
+font-family: var(--titles);
+font-size: 1.6rem;
+margin: 1rem;
+min-width: 6rem;
+padding: 0.6rem;
+width: fit-content(15rem);
+}
+
+button:hover {
+border: 2px solid var(--creamy, white);
+}
+
+.fit-banner h1 {
+display: flex inline;
+flex-direction: column;
+font-size: 7rem;
+}
+
+.fit-banner h1 span:nth-child(1) {
+color: var(--pebble, grey);
+}
+
+.fit-banner h1 span:nth-child(2) {
+color: var(--claret, crimson);
+}
+
+.fit-banner h1 span:nth-child(3) {
+color: var(--collie, limegreen);
+}
+
+.fit-banner h2 {
+color: var(--banana, gold);
+letter-spacing: 0.225rem;
+text-shadow: var(--pebble, grey) 0rem 0.1rem 0.05rem, var(--pebble, grey) 0rem -0.1rem 0.05rem,
+             var(--pebble, grey) 0.1rem 0rem 0.25rem, var(--pebble, grey) -0.1rem 0rem 0.25rem;
+}
+
