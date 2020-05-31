@@ -54,13 +54,6 @@ async def get_frame(request):
         frame = presenter.frame(react=True)
     except IndexError:
         location = presenter.narrator.state.area
-        entities = [
-            i for i in presenter.ensemble
-            if getattr(i, "area", location) == location
-        ]
-        for character in (i for i in entities if isinstance(i, Character)):
-            character.set_state(random.randrange(10))
-
         selector = {"area": location}
         matcher = Matcher(tor.story.folders)
         folders = list(matcher.options(selector))
@@ -91,12 +84,12 @@ async def post_buy(request):
 
     if presenter.narrator.state.area == "broomer":
         # Detect win condition
-        stylist = next(
+        broomer = next(
             i for i in presenter.ensemble
-            if isinstance(i, Character) and i.get_state(Occupation) == Occupation.stylist
+            if isinstance(i, Character) and i.get_state(Occupation) == Occupation.broomer
         )
-        stylist.set_state(int(buy) * 10)
-        print(stylist, file=sys.stderr)
+        broomer.set_state(int(buy) * 10)
+        print("Win achieved.", file=sys.stderr)
     else:
         rv = tor.rules.apply_rules(
             None, None, None, tor.rules.Settings, presenter.narrator.state, buy=int(buy)
@@ -137,6 +130,14 @@ async def post_hop(request):
         destination = tor.rules.topology[location][index]
         presenter.narrator.state = presenter.narrator.state._replace(area=destination)
         presenter.frames.clear()
+
+        entities = [
+            i for i in presenter.ensemble
+            if getattr(i, "area", destination) == destination
+        ]
+        for character in (i for i in entities if isinstance(i, Character)):
+            character.set_state(random.randrange(10))
+
         if destination not in ("butcher", "chamber"):
             rv = tor.rules.apply_rules(
                 None, None, None, tor.rules.Settings, presenter.narrator.state
@@ -149,6 +150,8 @@ async def post_hop(request):
                     if isinstance(i, Character) and i.get_state(Occupation) == Occupation.teenager
                 )
                 rapunzel.set_state(Hanging.club)
+
+
         raise web.HTTPFound("/")
 
 

@@ -45,7 +45,8 @@ def animated_still_to_html(anim):
 
 def audio_to_html(elem):
     return f"""<div>
-<audio src="/audio/{elem.resource}" autoplay="autoplay" preload="auto" >
+<audio src="/audio/{elem.resource}" autoplay="autoplay"
+preload="auto" {'loop="loop"' if elem.loop and int(elem.loop) > 1 else ""}>
 </audio>
 </div>"""
 

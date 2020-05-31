@@ -139,3 +139,57 @@ Chat 9
 
     Do you think you might be ready to buy something?
 
+Bronze
+------
+
+.. condition:: BROOMER.state 10
+
+.. fx:: tor.static.mp3  fly_away.mp3
+   :offset: 0
+   :duration: 8000
+   :loop: 12
+
+[BROOMER]_
+
+    Bronze!
+
+[NARRATOR]_
+
+    Restart the server to have another go!
+
+Silver
+------
+
+.. condition:: BROOMER.state 20
+
+.. fx:: tor.static.mp3  fly_away.mp3
+   :offset: 0
+   :duration: 8000
+   :loop: 12
+
+[BROOMER]_
+
+    Silver!
+
+[NARRATOR]_
+
+    Restart the server to have another go!
+
+Gold
+----
+
+.. condition:: BROOMER.state 30
+
+.. fx:: tor.static.mp3  fly_away.mp3
+   :offset: 0
+   :duration: 8000
+   :loop: 12
+
+[BROOMER]_
+
+    Gold!
+
+[NARRATOR]_
+
+    Restart the server to have another go!
+

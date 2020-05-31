@@ -118,7 +118,6 @@ folders = [
         },
         paths=[
             "dialogue/broomer/brooms.rst",
-            "dialogue/broomer/win.rst",
         ],
         interludes=None
     ),
