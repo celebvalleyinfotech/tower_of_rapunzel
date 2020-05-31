@@ -169,6 +169,11 @@ Rap 9
 Status
 ------
 
+.. fx:: tor.static.mp3  bass_to_fade.mp3
+   :offset: 0
+   :duration: 37000
+   :loop: 1
+
 [NARRATOR]_
 
     You have |COINS_N| coins.

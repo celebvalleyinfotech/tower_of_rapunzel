@@ -47,7 +47,7 @@ setup(
             "static/css/*.css",
             "static/img/*.jpg",
             "static/img/*.png",
-            "static/mp3/*.mp3",
+            "static/audio/*.mp3",
         ]
     },
     install_requires=[

@@ -49,17 +49,18 @@ from tor.story import Occupation
 
 async def get_frame(request):
     presenter = request.app["presenter"][0]
-    location = presenter.narrator.state.area
-    entities = [
-        i for i in presenter.ensemble
-        if getattr(i, "area", location) == location
-    ]
-    for character in (i for i in entities if isinstance(i, Character)):
-        character.set_state(random.randrange(10))
 
     try:
         frame = presenter.frame(react=True)
     except IndexError:
+        location = presenter.narrator.state.area
+        entities = [
+            i for i in presenter.ensemble
+            if getattr(i, "area", location) == location
+        ]
+        for character in (i for i in entities if isinstance(i, Character)):
+            character.set_state(random.randrange(10))
+
         selector = {"area": location}
         matcher = Matcher(tor.story.folders)
         folders = list(matcher.options(selector))
@@ -162,6 +163,10 @@ def build_app(args):
     app.router.add_static(
         "/css/",
         pkg_resources.resource_filename("tor", "static/css")
+    )
+    app.router.add_static(
+        "/audio/",
+        pkg_resources.resource_filename("tor", "static/audio")
     )
     app["presenter"] = deque([Presenter(None, tor.story.ensemble)], maxlen=1)
     return app
