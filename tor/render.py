@@ -16,12 +16,12 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with Tower of Rapunzel.  If not, see <http://www.gnu.org/licenses/>.
 
-import datetime
 import functools
 from turberfield.dialogue.model import Model
 
 from tor.presenter import Presenter
 import tor.rules
+import tor.story
 
 
 def animated_line_to_html(anim):
@@ -68,7 +68,7 @@ def option_as_list_item(n, option, path="/"):
 
 
 def frame_to_html(state, frame, final=False):
-    ts = datetime.datetime.now()
+    version = tor.story.version
     labels = tor.rules.labels
     location = state.area
     dialogue = "\n".join(animated_line_to_html(i) for i in frame[Model.Line])
@@ -90,8 +90,8 @@ def frame_to_html(state, frame, final=False):
 {audio}
 <section class="fit-vista">
 <h1>Tower of Rapunzel</h1>
-<h2>{ts.strftime("%H:%M:%S %p") if ts else ""}</h2>
-<h2>{ts.strftime("%a %d %b") if ts else ""}</h2>
+<h2>{version}</h2>
+{stills}
 </section>
 <div class="fit-speech">
 <main>

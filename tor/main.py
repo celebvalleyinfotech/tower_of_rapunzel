@@ -17,7 +17,7 @@
 # along with Tower of Rapunzel.  If not, see <http://www.gnu.org/licenses/>.
 
 """
-A text-based web game for PyWeek 28.
+A web-native single-puzzle text adventure for PyWeek 28 and NarraScope 2020.
 
 """
 import argparse
@@ -166,6 +166,10 @@ def build_app(args):
     app.router.add_static(
         "/css/",
         pkg_resources.resource_filename("tor", "static/css")
+    )
+    app.router.add_static(
+        "/img/",
+        pkg_resources.resource_filename("tor", "static/img")
     )
     app.router.add_static(
         "/audio/",

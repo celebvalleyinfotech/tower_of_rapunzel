@@ -47,9 +47,14 @@ class Presenter:
         "banana": "hsl(50, 80%, 55%, 1.0)",
         "collie": "hsl(76, 80%, 35%, 1.0)",
         "titles": '"AA Paro", sans-serif',
-        "detail": '"Times Roman", sans-serif',
+        #"detail": '"Times Roman", sans-serif',
+        "mono": ", ".join([
+            "SFMono-Regular", "Menlo", "Monaco",
+            "Consolas", '"Liberation Mono"',
+            '"Courier New"', "monospace"
+        ]),
         "system": ", ".join([
-            "BlinkMacSystemFont", '"Segoe UI"', "Roboto", '"Helvetica Neue"',
+            "BlinkMacSystemFont", '"Segoe UI"', '"Helvetica Neue"',
             '"Apple Color Emoji"', '"Segoe UI Emoji"', '"Segoe UI Symbol"',
             "Arial", "sans-serif"
         ]),
@@ -92,7 +97,7 @@ class Presenter:
             for i in getattr(dialogue, "shots", [])
         ]
         self.ensemble = ensemble
-        self.log = logging.getLogger(str(getattr(ensemble[-1], "id", "")) if ensemble else "")
+        self.log = logging.getLogger(str(getattr(ensemble[0], "id", "")) if ensemble else "")
         self.ts = datetime.utcnow()
 
     @property

@@ -13,7 +13,8 @@ Versions
 * Fixed a bug where you could continually revisit the stylist.
 * Swapped out the Presenter for one based on BlueMonday78 0.8.0
 * Swapped out the render functions for ones based on BlueMonday78 0.8.0
-* Added a tower graphic based on https://images.unsplash.com/photo-1576237013484-7ce69c40b10a
+* Added a tower image based on https://images.unsplash.com/photo-1576237013484-7ce69c40b10a
+* Added a street image based on https://images.unsplash.com/photo-1517606261660-fd72f84596b3
 * Added a win condition
 * Recorded audio for the status and win pages
 * Adopted styles and font from BlueMonday78 0.8.0

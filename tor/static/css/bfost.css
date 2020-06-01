@@ -98,7 +98,7 @@ animation-name: fadein;
 }
 
 .obj-persona {
-font-family: var(--system);
+font-family: var(--mono);
 font-size: 1.1rem;
 font-weight: lighter;
 margin: 0.25rem 0 0.25rem 0;
@@ -109,7 +109,7 @@ content: ":";
 }
 
 .obj-speech {
-font-family: var(--detail);
+font-family: var(--system);
 font-size: 1.3rem;
 }
 
@@ -165,52 +165,21 @@ h1, h2 {
 letter-spacing: 0.125rem;
 font-family: var(--titles);
 font-size: 3rem;
-margin: 1rem 0 1rem 1rem;
+margin: 0.2rem 0 0.2rem 0.2rem;
+}
+
+h2 {
+font-size: 1.6rem;
 }
 
 p {
-font-family: var(--detail);
+font-family: var(--system);
 padding-left: 1rem;
 }
 
 img {
 padding: 0.35rem 0.7rem 0.35rem 0.7rem;
 width: 100%;
-}
-
-input {
-font-family: var(--system);
-font-size: 0.70rem;
-letter-spacing: 0.035rem;
-}
-
-input:invalid {
-color: var(--claret, crimson);
-}
-
-input:valid {
-color: var(--pebble, grey);
-}
-
-#input-assembly-url {
-height: 1.6rem;
-min-width: 24rem;
-margin: 0.6rem;
-padding-left: 0.6rem;
-}
-
-label {
-color: var(--creamy, white);
-font-family: var(--system);
-font-size: 0.9rem;
-font-weight: bolder;
-letter-spacing: 0.025rem;
-margin: 0.2rem;
-padding-left: 0.6rem;
-}
-
-label:after {
-content: ": ";
 }
 
 button {
@@ -221,9 +190,8 @@ letter-spacing: 0.125rem;
 font-family: var(--titles);
 font-size: 1.6rem;
 margin: 1rem;
-min-width: 6rem;
+min-width: 12rem;
 padding: 0.6rem;
-width: fit-content(15rem);
 }
 
 button:hover {
@@ -233,25 +201,6 @@ border: 2px solid var(--creamy, white);
 .fit-vista h1 {
 display: flex inline;
 flex-direction: column;
-font-size: 7rem;
-}
-
-.fit-vista h1 span:nth-child(1) {
-color: var(--pebble, grey);
-}
-
-.fit-vista h1 span:nth-child(2) {
-color: var(--claret, crimson);
-}
-
-.fit-vista h1 span:nth-child(3) {
-color: var(--collie, limegreen);
-}
-
-.fit-vista h2 {
-color: var(--banana, gold);
-letter-spacing: 0.225rem;
-text-shadow: var(--pebble, grey) 0rem 0.1rem 0.05rem, var(--pebble, grey) 0rem -0.1rem 0.05rem,
-             var(--pebble, grey) 0.1rem 0rem 0.25rem, var(--pebble, grey) -0.1rem 0rem 0.25rem;
+font-size: 3rem;
 }
 
