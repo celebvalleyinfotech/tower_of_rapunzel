@@ -151,3 +151,22 @@ Chat 9
 [CHEMIST]_
 
     The suppositories are behind you.
+
+Status
+------
+
+.. fx:: tor.static.img  street.jpg
+   :offset: 0
+   :duration: 20000
+
+[NARRATOR]_
+
+    You have |COINS_N| coins.
+
+[NARRATOR]_
+
+    You have |HEALTH_N| health.
+
+.. |COINS_N| property:: NARRATOR.coins_n
+.. |HEALTH_N| property:: NARRATOR.health_n
+.. |HAIR_M| property:: NARRATOR.hair_m

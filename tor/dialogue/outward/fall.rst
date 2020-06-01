@@ -162,3 +162,16 @@ Splat 9
     One of our shoes has come off.
 
     It still has a foot in it.
+
+Status
+------
+
+.. fx:: tor.static.img  tower.jpg
+   :offset: 0
+   :duration: 20000
+
+[NARRATOR]_
+
+    You have |HEALTH_N| health.
+
+.. |HEALTH_N| property:: NARRATOR.health_n

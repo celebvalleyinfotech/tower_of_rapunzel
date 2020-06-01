@@ -245,3 +245,16 @@ Gold
 
     Restart the server to have another go!
 
+Status
+------
+
+.. fx:: tor.static.img  street.jpg
+   :offset: 0
+   :duration: 20000
+
+[NARRATOR]_
+
+    You have |COINS_N| coins.
+
+.. |COINS_N| property:: NARRATOR.coins_n
+.. |HAIR_M| property:: NARRATOR.hair_m
