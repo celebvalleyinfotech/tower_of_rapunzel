@@ -26,6 +26,10 @@ Splat 0
 
 .. condition:: NARRATOR.damage_bars 0
 
+.. fx:: tor.static.img  tower.jpg
+   :offset: 0
+   :duration: 20000
+
 [NARRATOR]_
 
     That was easy!
@@ -34,6 +38,10 @@ Splat 1
 -------
 
 .. condition:: NARRATOR.damage_bars 1
+
+.. fx:: tor.static.img  tower.jpg
+   :offset: 0
+   :duration: 20000
 
 [NARRATOR]_
 
@@ -44,6 +52,10 @@ Splat 2
 
 .. condition:: NARRATOR.damage_bars 2
 
+.. fx:: tor.static.img  tower.jpg
+   :offset: 0
+   :duration: 20000
+
 [NARRATOR]_
 
     A bit of rope burn. Could be worse.
@@ -52,6 +64,10 @@ Splat 3
 -------
 
 .. condition:: NARRATOR.damage_bars 3
+
+.. fx:: tor.static.img  tower.jpg
+   :offset: 0
+   :duration: 20000
 
 [NARRATOR]_
 
@@ -63,6 +79,10 @@ Splat 4
 
 .. condition:: NARRATOR.damage_bars 4
 
+.. fx:: tor.static.img  tower.jpg
+   :offset: 0
+   :duration: 20000
+
 [NARRATOR]_
 
     That was a fair drop.
@@ -73,6 +93,10 @@ Splat 5
 -------
 
 .. condition:: NARRATOR.damage_bars 5
+
+.. fx:: tor.static.img  tower.jpg
+   :offset: 0
+   :duration: 20000
 
 [NARRATOR]_
 
@@ -87,6 +111,10 @@ Splat 6
 
 .. condition:: NARRATOR.damage_bars 6
 
+.. fx:: tor.static.img  tower.jpg
+   :offset: 0
+   :duration: 20000
+
 [NARRATOR]_
 
     Breathing has become difficult.
@@ -98,6 +126,10 @@ Splat 7
 
 .. condition:: NARRATOR.damage_bars 7
 
+.. fx:: tor.static.img  tower.jpg
+   :offset: 0
+   :duration: 20000
+
 [NARRATOR]_
 
     It has become impossible, despite our natural optimism, to
@@ -108,6 +140,10 @@ Splat 8
 
 .. condition:: NARRATOR.damage_bars 8
 
+.. fx:: tor.static.img  tower.jpg
+   :offset: 0
+   :duration: 20000
+
 [NARRATOR]_
 
     There seems to be a lot of blood.
@@ -116,6 +152,10 @@ Splat 9
 -------
 
 .. condition:: NARRATOR.damage_bars 9
+
+.. fx:: tor.static.img  tower.jpg
+   :offset: 0
+   :duration: 20000
 
 [NARRATOR]_
 

@@ -48,6 +48,8 @@ setup(
             "static/img/*.jpg",
             "static/img/*.png",
             "static/audio/*.mp3",
+            "static/fonts/*.woff",
+            "static/fonts/*.woff2",
         ]
     },
     install_requires=[

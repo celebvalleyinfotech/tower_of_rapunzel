@@ -25,6 +25,10 @@ Chat 0
 
 .. condition:: STYLIST.state 0
 
+.. fx:: tor.static.img  street.jpg
+   :offset: 0
+   :duration: 20000
+
 [STYLIST]_
 
     Ah, lovely to see you again.
@@ -33,6 +37,10 @@ Chat 1
 ------
 
 .. condition:: STYLIST.state 1
+
+.. fx:: tor.static.img  street.jpg
+   :offset: 0
+   :duration: 20000
 
 [STYLIST]_
 
@@ -43,6 +51,10 @@ Chat 2
 
 .. condition:: STYLIST.state 2
 
+.. fx:: tor.static.img  street.jpg
+   :offset: 0
+   :duration: 20000
+
 [STYLIST]_
 
     Come on, you can tell me; what are you feeding her?
@@ -51,6 +63,10 @@ Chat 3
 ------
 
 .. condition:: STYLIST.state 3
+
+.. fx:: tor.static.img  street.jpg
+   :offset: 0
+   :duration: 20000
 
 [STYLIST]_
 
@@ -63,6 +79,10 @@ Chat 4
 
 .. condition:: STYLIST.state 4
 
+.. fx:: tor.static.img  street.jpg
+   :offset: 0
+   :duration: 20000
+
 [STYLIST]_
 
     Rapunzel's hair is quite the finest I've seen.
@@ -71,6 +91,10 @@ Chat 5
 ------
 
 .. condition:: STYLIST.state 5
+
+.. fx:: tor.static.img  street.jpg
+   :offset: 0
+   :duration: 20000
 
 [STYLIST]_
 
@@ -84,6 +108,10 @@ Chat 6
 
 .. condition:: STYLIST.state 6
 
+.. fx:: tor.static.img  street.jpg
+   :offset: 0
+   :duration: 20000
+
 [STYLIST]_
 
     I had that Elton John in last week.
@@ -94,6 +122,10 @@ Chat 7
 ------
 
 .. condition:: STYLIST.state 7
+
+.. fx:: tor.static.img  street.jpg
+   :offset: 0
+   :duration: 20000
 
 [STYLIST]_
 
@@ -106,6 +138,10 @@ Chat 8
 
 .. condition:: STYLIST.state 8
 
+.. fx:: tor.static.img  street.jpg
+   :offset: 0
+   :duration: 20000
+
 [STYLIST]_
 
     Oh, this will be lovely to work with. You know, I never need
@@ -116,7 +152,11 @@ Chat 9
 
 .. condition:: STYLIST.state 9
 
+.. fx:: tor.static.img  street.jpg
+   :offset: 0
+   :duration: 20000
+
 [STYLIST]_
 
-    Candidly, what are you feeding her on?
+    Am I glad to see you! What have you got for me?
 

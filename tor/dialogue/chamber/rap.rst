@@ -25,6 +25,10 @@ Rap 0
 
 .. condition:: RAPUNZEL.state 0
 
+.. fx:: tor.static.img  tower.jpg
+   :offset: 0
+   :duration: 20000
+
 [RAPUNZEL]_
 
     Rapunzel in the house; we are the best in town.
@@ -40,6 +44,10 @@ Rap 1
 
 .. condition:: RAPUNZEL.state 1
 
+.. fx:: tor.static.img  tower.jpg
+   :offset: 0
+   :duration: 20000
+
 [RAPUNZEL]_
 
     You, you, U to the N to Z to the E.
@@ -50,6 +58,10 @@ Rap 2
 -----
 
 .. condition:: RAPUNZEL.state 2
+
+.. fx:: tor.static.img  tower.jpg
+   :offset: 0
+   :duration: 20000
 
 [RAPUNZEL]_
 
@@ -66,6 +78,10 @@ Rap 3
 
 .. condition:: RAPUNZEL.state 3
 
+.. fx:: tor.static.img  tower.jpg
+   :offset: 0
+   :duration: 20000
+
 [RAPUNZEL]_
 
     There ain't nobody fabricate my vibe.
@@ -80,6 +96,10 @@ Rap 4
 -----
 
 .. condition:: RAPUNZEL.state 4
+
+.. fx:: tor.static.img  tower.jpg
+   :offset: 0
+   :duration: 20000
 
 [RAPUNZEL]_
 
@@ -96,6 +116,10 @@ Rap 5
 
 .. condition:: RAPUNZEL.state 5
 
+.. fx:: tor.static.img  tower.jpg
+   :offset: 0
+   :duration: 20000
+
 [RAPUNZEL]_
 
     Did anybody tell you where your best friend went?
@@ -110,6 +134,10 @@ Rap 6
 -----
 
 .. condition:: RAPUNZEL.state 6
+
+.. fx:: tor.static.img  tower.jpg
+   :offset: 0
+   :duration: 20000
 
 [RAPUNZEL]_
 
@@ -126,6 +154,10 @@ Rap 7
 
 .. condition:: RAPUNZEL.state 7
 
+.. fx:: tor.static.img  tower.jpg
+   :offset: 0
+   :duration: 20000
+
 [RAPUNZEL]_
 
     You took all the money.
@@ -140,6 +172,10 @@ Rap 8
 -----
 
 .. condition:: RAPUNZEL.state 8
+
+.. fx:: tor.static.img  tower.jpg
+   :offset: 0
+   :duration: 20000
 
 [RAPUNZEL]_
 
@@ -156,6 +192,10 @@ Rap 9
 
 .. condition:: RAPUNZEL.state 9
 
+.. fx:: tor.static.img  tower.jpg
+   :offset: 0
+   :duration: 20000
+
 [RAPUNZEL]_
 
     Did anybody tell you where your best friend went?
@@ -168,6 +208,10 @@ Rap 9
 
 Status
 ------
+
+.. fx:: tor.static.img  tower.jpg
+   :offset: 0
+   :duration: 20000
 
 .. fx:: tor.static.mp3  bass_to_fade.mp3
    :offset: 0

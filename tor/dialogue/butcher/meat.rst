@@ -25,6 +25,10 @@ Chat 0
 
 .. condition:: BUTCHER.state 0
 
+.. fx:: tor.static.img  street.jpg
+   :offset: 0
+   :duration: 20000
+
 [BUTCHER]_
 
     There's the mince. It's a little bit over.
@@ -34,6 +38,10 @@ Chat 1
 
 .. condition:: BUTCHER.state 1
 
+.. fx:: tor.static.img  street.jpg
+   :offset: 0
+   :duration: 20000
+
 [BUTCHER]_
 
     One Chicken, madam. Shall I leave the giblets?
@@ -42,6 +50,10 @@ Chat 2
 ------
 
 .. condition:: BUTCHER.state 2
+
+.. fx:: tor.static.img  street.jpg
+   :offset: 0
+   :duration: 20000
 
 [BUTCHER]_
 
@@ -54,6 +66,10 @@ Chat 3
 
 .. condition:: BUTCHER.state 3
 
+.. fx:: tor.static.img  street.jpg
+   :offset: 0
+   :duration: 20000
+
 [BUTCHER]_
 
     Chicken fillets. Skin on or off?
@@ -62,6 +78,10 @@ Chat 4
 ------
 
 .. condition:: BUTCHER.state 4
+
+.. fx:: tor.static.img  street.jpg
+   :offset: 0
+   :duration: 20000
 
 [BUTCHER]_
 
@@ -72,6 +92,10 @@ Chat 5
 
 .. condition:: BUTCHER.state 5
 
+.. fx:: tor.static.img  street.jpg
+   :offset: 0
+   :duration: 20000
+
 [BUTCHER]_
 
     I'm doing a great offer on packs of sausages.
@@ -80,6 +104,10 @@ Chat 6
 ------
 
 .. condition:: BUTCHER.state 6
+
+.. fx:: tor.static.img  street.jpg
+   :offset: 0
+   :duration: 20000
 
 [BUTCHER]_
 
@@ -92,6 +120,10 @@ Chat 7
 
 .. condition:: BUTCHER.state 7
 
+.. fx:: tor.static.img  street.jpg
+   :offset: 0
+   :duration: 20000
+
 [BUTCHER]_
 
     Wild boar has come in.
@@ -103,6 +135,10 @@ Chat 8
 
 .. condition:: BUTCHER.state 8
 
+.. fx:: tor.static.img  street.jpg
+   :offset: 0
+   :duration: 20000
+
 [BUTCHER]_
 
     I might have some more in the freezer.
@@ -111,6 +147,10 @@ Chat 9
 ------
 
 .. condition:: BUTCHER.state 9
+
+.. fx:: tor.static.img  street.jpg
+   :offset: 0
+   :duration: 20000
 
 [BUTCHER]_
 

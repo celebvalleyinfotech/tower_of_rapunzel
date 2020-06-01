@@ -25,6 +25,10 @@ Death
 RIP 0
 -----
 
+.. fx:: tor.static.img  tower.jpg
+   :offset: 0
+   :duration: 20000
+
 [NARRATOR]_
 
     You are dead.

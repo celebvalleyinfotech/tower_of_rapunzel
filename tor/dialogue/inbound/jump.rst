@@ -26,6 +26,10 @@ Chat 0
 
 .. condition:: RAPUNZEL.state 0
 
+.. fx:: tor.static.img  tower.jpg
+   :offset: 0
+   :duration: 20000
+
 [NARRATOR]_
 
     It always seems less risky climbing back up
@@ -36,6 +40,10 @@ Chat 1
 
 .. condition:: RAPUNZEL.state 1
 
+.. fx:: tor.static.img  tower.jpg
+   :offset: 0
+   :duration: 20000
+
 [NARRATOR]_
 
     Witchy powers and prescription drugs mean I can
@@ -45,6 +53,10 @@ Chat 2
 ------
 
 .. condition:: RAPUNZEL.state 2
+
+.. fx:: tor.static.img  tower.jpg
+   :offset: 0
+   :duration: 20000
 
 [NARRATOR]_
 
@@ -57,6 +69,10 @@ Chat 3
 
 .. condition:: RAPUNZEL.state 3
 
+.. fx:: tor.static.img  tower.jpg
+   :offset: 0
+   :duration: 20000
+
 [NARRATOR]_
 
     Rapunzel, let down your hair!
@@ -67,6 +83,10 @@ Chat 4
 ------
 
 .. condition:: RAPUNZEL.state 4
+
+.. fx:: tor.static.img  tower.jpg
+   :offset: 0
+   :duration: 20000
 
 [NARRATOR]_
 
@@ -79,6 +99,10 @@ Chat 5
 
 .. condition:: RAPUNZEL.state 5
 
+.. fx:: tor.static.img  tower.jpg
+   :offset: 0
+   :duration: 20000
+
 [NARRATOR]_
 
     Rapunzel, let down your hair!
@@ -89,6 +113,10 @@ Chat 6
 ------
 
 .. condition:: RAPUNZEL.state 6
+
+.. fx:: tor.static.img  tower.jpg
+   :offset: 0
+   :duration: 20000
 
 [NARRATOR]_
 
@@ -102,6 +130,10 @@ Chat 7
 
 .. condition:: RAPUNZEL.state 7
 
+.. fx:: tor.static.img  tower.jpg
+   :offset: 0
+   :duration: 20000
+
 [NARRATOR]_
 
     Rapunzel, let down your hair!
@@ -114,6 +146,10 @@ Chat 8
 
 .. condition:: RAPUNZEL.state 8
 
+.. fx:: tor.static.img  tower.jpg
+   :offset: 0
+   :duration: 20000
+
 [NARRATOR]_
 
     Rapunzel, let down your hair!
@@ -124,6 +160,10 @@ Chat 9
 ------
 
 .. condition:: RAPUNZEL.state 9
+
+.. fx:: tor.static.img  tower.jpg
+   :offset: 0
+   :duration: 20000
 
 [NARRATOR]_
 

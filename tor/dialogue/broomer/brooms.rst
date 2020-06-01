@@ -25,6 +25,10 @@ Chat 0
 
 .. condition:: BROOMER.state 0
 
+.. fx:: tor.static.img  street.jpg
+   :offset: 0
+   :duration: 20000
+
 [BROOMER]_
 
     Ah, hello again, how are we now?
@@ -34,6 +38,10 @@ Chat 1
 
 .. condition:: BROOMER.state 1
 
+.. fx:: tor.static.img  street.jpg
+   :offset: 0
+   :duration: 20000
+
 [BROOMER]_
 
     Do you think you might be ready to buy something?
@@ -42,6 +50,10 @@ Chat 2
 ------
 
 .. condition:: BROOMER.state 2
+
+.. fx:: tor.static.img  street.jpg
+   :offset: 0
+   :duration: 20000
 
 [BROOMER]_
 
@@ -54,6 +66,10 @@ Chat 3
 
 .. condition:: BROOMER.state 3
 
+.. fx:: tor.static.img  street.jpg
+   :offset: 0
+   :duration: 20000
+
 [BROOMER]_
 
     The trouble with selling to witches is they really know how to exploit
@@ -63,6 +79,10 @@ Chat 4
 ------
 
 .. condition:: BROOMER.state 4
+
+.. fx:: tor.static.img  street.jpg
+   :offset: 0
+   :duration: 20000
 
 [BROOMER]_
 
@@ -75,6 +95,10 @@ Chat 5
 ------
 
 .. condition:: BROOMER.state 5
+
+.. fx:: tor.static.img  street.jpg
+   :offset: 0
+   :duration: 20000
 
 [BROOMER]_
 
@@ -94,6 +118,10 @@ Chat 6
 
 .. condition:: BROOMER.state 6
 
+.. fx:: tor.static.img  street.jpg
+   :offset: 0
+   :duration: 20000
+
 [BROOMER]_
 
     I would probably steer you towards our Silver model.
@@ -109,6 +137,10 @@ Chat 7
 
 .. condition:: BROOMER.state 7
 
+.. fx:: tor.static.img  street.jpg
+   :offset: 0
+   :duration: 20000
+
 [BROOMER]_
 
     Ah, I see you are admiring the Excelsior. This is the only model
@@ -120,6 +152,10 @@ Chat 8
 ------
 
 .. condition:: BROOMER.state 8
+
+.. fx:: tor.static.img  street.jpg
+   :offset: 0
+   :duration: 20000
 
 [BROOMER]_
 
@@ -135,6 +171,10 @@ Chat 9
 
 .. condition:: BROOMER.state 9
 
+.. fx:: tor.static.img  street.jpg
+   :offset: 0
+   :duration: 20000
+
 [BROOMER]_
 
     Do you think you might be ready to buy something?
@@ -143,6 +183,10 @@ Bronze
 ------
 
 .. condition:: BROOMER.state 10
+
+.. fx:: tor.static.img  street.jpg
+   :offset: 0
+   :duration: 20000
 
 .. fx:: tor.static.mp3  fly_away.mp3
    :offset: 0
@@ -162,6 +206,10 @@ Silver
 
 .. condition:: BROOMER.state 20
 
+.. fx:: tor.static.img  street.jpg
+   :offset: 0
+   :duration: 20000
+
 .. fx:: tor.static.mp3  fly_away.mp3
    :offset: 0
    :duration: 8000
@@ -179,6 +227,10 @@ Gold
 ----
 
 .. condition:: BROOMER.state 30
+
+.. fx:: tor.static.img  street.jpg
+   :offset: 0
+   :duration: 20000
 
 .. fx:: tor.static.mp3  fly_away.mp3
    :offset: 0

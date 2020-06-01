@@ -4,3 +4,5 @@ recursive-include . *.jpg
 recursive-include . *.mp3
 recursive-include . *.png
 recursive-include . *.rst
+recursive-include . *.woff
+recursive-include . *.woff2
