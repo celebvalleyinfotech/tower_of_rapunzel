@@ -26,6 +26,10 @@ Chat 0
 
 .. condition:: RAPUNZEL.state 0
 
+.. fx:: tor.static.img  tower.jpg
+   :offset: 0
+   :duration: 20000
+
 [NARRATOR]_
 
     Watch your step.
@@ -37,6 +41,10 @@ Chat 1
 
 .. condition:: RAPUNZEL.state 1
 
+.. fx:: tor.static.img  tower.jpg
+   :offset: 0
+   :duration: 20000
+
 [NARRATOR]_
 
     I come out here in the afternoons.
@@ -46,6 +54,10 @@ Chat 2
 ------
 
 .. condition:: RAPUNZEL.state 2
+
+.. fx:: tor.static.img  tower.jpg
+   :offset: 0
+   :duration: 20000
 
 [NARRATOR]_
 
@@ -58,6 +70,10 @@ Chat 3
 
 .. condition:: RAPUNZEL.state 3
 
+.. fx:: tor.static.img  tower.jpg
+   :offset: 0
+   :duration: 20000
+
 [NARRATOR]_
 
     Don't lean on the barbecue.
@@ -66,6 +82,10 @@ Chat 4
 ------
 
 .. condition:: RAPUNZEL.state 4
+
+.. fx:: tor.static.img  tower.jpg
+   :offset: 0
+   :duration: 20000
 
 [NARRATOR]_
 
@@ -76,6 +96,10 @@ Chat 5
 
 .. condition:: RAPUNZEL.state 5
 
+.. fx:: tor.static.img  tower.jpg
+   :offset: 0
+   :duration: 20000
+
 [NARRATOR]_
 
     We've lost the key to the patio doors.
@@ -85,16 +109,28 @@ Chat 6
 
 .. condition:: RAPUNZEL.state 6
 
+.. fx:: tor.static.img  tower.jpg
+   :offset: 0
+   :duration: 20000
+
 [NARRATOR]_
 
     She's got her music on.
 
     You can feel it through your feet.
 
+.. fx:: tor.static.img  tower.jpg
+   :offset: 0
+   :duration: 20000
+
 Chat 7
 ------
 
 .. condition:: RAPUNZEL.state 7
+
+.. fx:: tor.static.img  tower.jpg
+   :offset: 0
+   :duration: 20000
 
 [NARRATOR]_
 
@@ -107,6 +143,10 @@ Chat 8
 
 .. condition:: RAPUNZEL.state 8
 
+.. fx:: tor.static.img  tower.jpg
+   :offset: 0
+   :duration: 20000
+
 [NARRATOR]_
 
     God, I know what I've forgotten.
@@ -117,6 +157,10 @@ Chat 9
 ------
 
 .. condition:: RAPUNZEL.state 9
+
+.. fx:: tor.static.img  tower.jpg
+   :offset: 0
+   :duration: 20000
 
 [NARRATOR]_
 
