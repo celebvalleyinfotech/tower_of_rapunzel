@@ -4,6 +4,13 @@ Change Log
 Versions
 ========
 
+0.8.0
+-----
+
+* Add textures from https://www.transparenttextures.com/
+* Fixed checks at win condition
+* Restyled throughout
+
 0.7.0
 -----
 

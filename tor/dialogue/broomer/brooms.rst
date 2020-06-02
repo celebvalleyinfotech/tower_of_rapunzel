@@ -27,7 +27,7 @@ Chat 0
 
 .. fx:: tor.static.img  street.jpg
    :offset: 0
-   :duration: 20000
+   :duration: 0
 
 [BROOMER]_
 
@@ -40,7 +40,7 @@ Chat 1
 
 .. fx:: tor.static.img  street.jpg
    :offset: 0
-   :duration: 20000
+   :duration: 0
 
 [BROOMER]_
 
@@ -53,7 +53,7 @@ Chat 2
 
 .. fx:: tor.static.img  street.jpg
    :offset: 0
-   :duration: 20000
+   :duration: 0
 
 [BROOMER]_
 
@@ -68,7 +68,7 @@ Chat 3
 
 .. fx:: tor.static.img  street.jpg
    :offset: 0
-   :duration: 20000
+   :duration: 0
 
 [BROOMER]_
 
@@ -82,7 +82,7 @@ Chat 4
 
 .. fx:: tor.static.img  street.jpg
    :offset: 0
-   :duration: 20000
+   :duration: 0
 
 [BROOMER]_
 
@@ -98,7 +98,7 @@ Chat 5
 
 .. fx:: tor.static.img  street.jpg
    :offset: 0
-   :duration: 20000
+   :duration: 0
 
 [BROOMER]_
 
@@ -120,7 +120,7 @@ Chat 6
 
 .. fx:: tor.static.img  street.jpg
    :offset: 0
-   :duration: 20000
+   :duration: 0
 
 [BROOMER]_
 
@@ -139,7 +139,7 @@ Chat 7
 
 .. fx:: tor.static.img  street.jpg
    :offset: 0
-   :duration: 20000
+   :duration: 0
 
 [BROOMER]_
 
@@ -155,7 +155,7 @@ Chat 8
 
 .. fx:: tor.static.img  street.jpg
    :offset: 0
-   :duration: 20000
+   :duration: 0
 
 [BROOMER]_
 
@@ -173,7 +173,7 @@ Chat 9
 
 .. fx:: tor.static.img  street.jpg
    :offset: 0
-   :duration: 20000
+   :duration: 0
 
 [BROOMER]_
 
@@ -186,7 +186,7 @@ Bronze
 
 .. fx:: tor.static.img  street.jpg
    :offset: 0
-   :duration: 20000
+   :duration: 0
 
 .. fx:: tor.static.mp3  fly_away.mp3
    :offset: 0
@@ -208,7 +208,7 @@ Silver
 
 .. fx:: tor.static.img  street.jpg
    :offset: 0
-   :duration: 20000
+   :duration: 0
 
 .. fx:: tor.static.mp3  fly_away.mp3
    :offset: 0
@@ -230,7 +230,7 @@ Gold
 
 .. fx:: tor.static.img  street.jpg
    :offset: 0
-   :duration: 20000
+   :duration: 0
 
 .. fx:: tor.static.mp3  fly_away.mp3
    :offset: 0
@@ -250,7 +250,7 @@ Status
 
 .. fx:: tor.static.img  street.jpg
    :offset: 0
-   :duration: 20000
+   :duration: 0
 
 [NARRATOR]_
 

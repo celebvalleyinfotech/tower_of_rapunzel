@@ -27,7 +27,7 @@ Rap 0
 
 .. fx:: tor.static.img  tower.jpg
    :offset: 0
-   :duration: 20000
+   :duration: 0
 
 [RAPUNZEL]_
 
@@ -46,7 +46,7 @@ Rap 1
 
 .. fx:: tor.static.img  tower.jpg
    :offset: 0
-   :duration: 20000
+   :duration: 0
 
 [RAPUNZEL]_
 
@@ -61,7 +61,7 @@ Rap 2
 
 .. fx:: tor.static.img  tower.jpg
    :offset: 0
-   :duration: 20000
+   :duration: 0
 
 [RAPUNZEL]_
 
@@ -80,7 +80,7 @@ Rap 3
 
 .. fx:: tor.static.img  tower.jpg
    :offset: 0
-   :duration: 20000
+   :duration: 0
 
 [RAPUNZEL]_
 
@@ -99,7 +99,7 @@ Rap 4
 
 .. fx:: tor.static.img  tower.jpg
    :offset: 0
-   :duration: 20000
+   :duration: 0
 
 [RAPUNZEL]_
 
@@ -118,7 +118,7 @@ Rap 5
 
 .. fx:: tor.static.img  tower.jpg
    :offset: 0
-   :duration: 20000
+   :duration: 0
 
 [RAPUNZEL]_
 
@@ -137,7 +137,7 @@ Rap 6
 
 .. fx:: tor.static.img  tower.jpg
    :offset: 0
-   :duration: 20000
+   :duration: 0
 
 [RAPUNZEL]_
 
@@ -156,7 +156,7 @@ Rap 7
 
 .. fx:: tor.static.img  tower.jpg
    :offset: 0
-   :duration: 20000
+   :duration: 0
 
 [RAPUNZEL]_
 
@@ -175,7 +175,7 @@ Rap 8
 
 .. fx:: tor.static.img  tower.jpg
    :offset: 0
-   :duration: 20000
+   :duration: 0
 
 [RAPUNZEL]_
 
@@ -194,7 +194,7 @@ Rap 9
 
 .. fx:: tor.static.img  tower.jpg
    :offset: 0
-   :duration: 20000
+   :duration: 0
 
 [RAPUNZEL]_
 
@@ -211,7 +211,7 @@ Status
 
 .. fx:: tor.static.img  tower.jpg
    :offset: 0
-   :duration: 20000
+   :duration: 0
 
 .. fx:: tor.static.mp3  bass_to_fade.mp3
    :offset: 0

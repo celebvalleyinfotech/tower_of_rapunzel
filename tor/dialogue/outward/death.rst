@@ -27,7 +27,7 @@ RIP 0
 
 .. fx:: tor.static.img  tower.jpg
    :offset: 0
-   :duration: 20000
+   :duration: 0
 
 [NARRATOR]_
 

@@ -43,10 +43,10 @@ def animated_still_to_html(anim):
 </div>"""
 
 
-def audio_to_html(elem):
+def animated_audio_to_html(anim):
     return f"""<div>
-<audio src="/audio/{elem.resource}" autoplay="autoplay"
-preload="auto" {'loop="loop"' if elem.loop and int(elem.loop) > 1 else ""}>
+<audio src="/audio/{anim.element.resource}" autoplay="autoplay"
+preload="auto" {'loop="loop"' if anim.element.loop and int(anim.element.loop) > 1 else ""}>
 </audio>
 </div>"""
 
@@ -73,7 +73,7 @@ def frame_to_html(state, frame, final=False):
     location = state.area
     dialogue = "\n".join(animated_line_to_html(i) for i in frame[Model.Line])
     stills = "\n".join(animated_still_to_html(i) for i in frame[Model.Still])
-    audio = "\n".join(audio_to_html(i) for i in frame[Model.Audio])
+    audio = "\n".join(animated_audio_to_html(i) for i in frame[Model.Audio])
     hops = "\n".join(
         option_as_list_item(n, option, path="/hop/")
         for n, option in enumerate(tor.rules.topology[location])

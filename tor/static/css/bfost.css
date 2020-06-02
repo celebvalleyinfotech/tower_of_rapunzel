@@ -45,7 +45,8 @@ padding-left: 1.0rem;
 
 .fit-control {
 align-items: center;
-background-color: var(--pebble, grey);
+background-color: var(--blonde, grey);
+background-image: url("/img/brushed-alum.png");
 border-left: 1rem solid var(--creamy, white);
 display: flex;
 flex-direction: column;
@@ -54,7 +55,8 @@ min-width: 128px;
 }
 
 .fit-speech {
-background-color: var(--banana);
+background-color: var(--rafter, darkslategrey);
+color: var(--creamy, white);
 display: flex;
 flex-direction: column;
 grid-area: speech;
@@ -77,20 +79,24 @@ display: none;
 
 main {
 flex-grow: 1;
-padding: 0.5rem;
+margin-left: 1.2rem;
 }
 
 /*  Objects  */
 
 ul.obj-dialogue {
 padding: 0.5em;
+margin-left: 1.5rem;
+margin-right: 0.3rem;
+margin-top: 3.6rem;
 }
 
 ul.obj-dialogue li {
 animation-name: fadeinout;
 animation-fill-mode: both;
 list-style-type: none;
-padding-bottom: 1.3em;
+padding-bottom: 1.2rem;
+padding-top: 1.2rem;
 }
 
 ul.obj-dialogue li:last-of-type {
@@ -98,7 +104,7 @@ animation-name: fadein;
 }
 
 .obj-persona {
-font-family: var(--mono);
+font-family: var(--system);
 font-size: 1.1rem;
 font-weight: lighter;
 margin: 0.25rem 0 0.25rem 0;
@@ -116,13 +122,6 @@ font-size: 1.3rem;
 .obj-entity + .obj-speech {
 font-style: italic;
 }
-
-ul.obj-memory li {
-font-size: 1.2rem;
-padding: 0.5em;
-margin: 0.5rem 0 0.5rem 0;
-}
-
 
 /*  State   */
 
@@ -165,7 +164,7 @@ h1, h2 {
 letter-spacing: 0.125rem;
 font-family: var(--titles);
 font-size: 3rem;
-margin: 0.2rem 0 0.2rem 0.2rem;
+margin: 0.2rem 0 0.2rem 1.2rem;
 }
 
 h2 {
@@ -183,24 +182,22 @@ width: 100%;
 }
 
 button {
-background-color: var(--collie, limegreen);
+background-color: var(--bubble, pink);
+background-image: url("/img/my-little-plaid.png");
 border: 2px solid var(--pebble, grey);
+border-radius: 0.4rem;
 color: var(--creamy, white);
 letter-spacing: 0.125rem;
 font-family: var(--titles);
 font-size: 1.6rem;
-margin: 1rem;
-min-width: 12rem;
+margin-bottom: 0.6rem;
+margin-left: -6%;
+margin-top: 0.6rem;
 padding: 0.6rem;
+width: 112%;
 }
 
 button:hover {
 border: 2px solid var(--creamy, white);
-}
-
-.fit-vista h1 {
-display: flex inline;
-flex-direction: column;
-font-size: 3rem;
 }
 

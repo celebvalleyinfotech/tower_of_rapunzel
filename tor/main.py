@@ -81,14 +81,17 @@ async def post_buy(request):
 
     presenter = request.app["presenter"][0]
     presenter.frames.clear()
+    narrator = presenter.narrator
 
-    if presenter.narrator.state.area == "broomer":
+    prize = int(buy) * 10
+    if narrator.state.area == "broomer" and narrator.state.coins_n >= prize:
         # Detect win condition
         broomer = next(
             i for i in presenter.ensemble
             if isinstance(i, Character) and i.get_state(Occupation) == Occupation.broomer
         )
-        broomer.set_state(int(buy) * 10)
+        broomer.set_state(prize)
+        narrator.state = narrator.state._replace(coins_n=narrator.state.coins_n - prize)
         print("Win achieved.", file=sys.stderr)
     else:
         rv = tor.rules.apply_rules(
@@ -142,8 +145,9 @@ async def post_hop(request):
             rv = tor.rules.apply_rules(
                 None, None, None, tor.rules.Settings, presenter.narrator.state
             )
-            presenter.narrator.state = tor.rules.State(**rv)
-            if not rv:
+            if rv:
+                presenter.narrator.state = tor.rules.State(**rv)
+            else:
                 print("Game Over", file=sys.stderr)
                 rapunzel = next(
                     i for i in presenter.ensemble

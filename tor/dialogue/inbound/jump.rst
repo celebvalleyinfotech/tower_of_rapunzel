@@ -28,7 +28,7 @@ Chat 0
 
 .. fx:: tor.static.img  tower.jpg
    :offset: 0
-   :duration: 20000
+   :duration: 0
 
 [NARRATOR]_
 
@@ -42,7 +42,7 @@ Chat 1
 
 .. fx:: tor.static.img  tower.jpg
    :offset: 0
-   :duration: 20000
+   :duration: 0
 
 [NARRATOR]_
 
@@ -56,7 +56,7 @@ Chat 2
 
 .. fx:: tor.static.img  tower.jpg
    :offset: 0
-   :duration: 20000
+   :duration: 0
 
 [NARRATOR]_
 
@@ -71,7 +71,7 @@ Chat 3
 
 .. fx:: tor.static.img  tower.jpg
    :offset: 0
-   :duration: 20000
+   :duration: 0
 
 [NARRATOR]_
 
@@ -86,7 +86,7 @@ Chat 4
 
 .. fx:: tor.static.img  tower.jpg
    :offset: 0
-   :duration: 20000
+   :duration: 0
 
 [NARRATOR]_
 
@@ -101,7 +101,7 @@ Chat 5
 
 .. fx:: tor.static.img  tower.jpg
    :offset: 0
-   :duration: 20000
+   :duration: 0
 
 [NARRATOR]_
 
@@ -116,7 +116,7 @@ Chat 6
 
 .. fx:: tor.static.img  tower.jpg
    :offset: 0
-   :duration: 20000
+   :duration: 0
 
 [NARRATOR]_
 
@@ -132,7 +132,7 @@ Chat 7
 
 .. fx:: tor.static.img  tower.jpg
    :offset: 0
-   :duration: 20000
+   :duration: 0
 
 [NARRATOR]_
 
@@ -148,7 +148,7 @@ Chat 8
 
 .. fx:: tor.static.img  tower.jpg
    :offset: 0
-   :duration: 20000
+   :duration: 0
 
 [NARRATOR]_
 
@@ -163,7 +163,7 @@ Chat 9
 
 .. fx:: tor.static.img  tower.jpg
    :offset: 0
-   :duration: 20000
+   :duration: 0
 
 [NARRATOR]_
 
