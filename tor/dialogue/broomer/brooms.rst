@@ -195,7 +195,15 @@ Bronze
 
 [BROOMER]_
 
-    Bronze!
+    Congratulations on picking our most affordable model.
+
+[BROOMER]_
+
+    And thanks for helping us clear the last of the old stock.
+
+[BROOMER]_
+
+    There's no warranty by the way, before you ask.
 
 [NARRATOR]_
 
@@ -217,7 +225,15 @@ Silver
 
 [BROOMER]_
 
-    Silver!
+    Not a bad choice at all.
+
+    I bought this exact model for my son last year.
+
+[BROOMER]_
+
+    I always felt the Excelsior would suit you better in the longer term.
+
+    Do come in soon for another chat.
 
 [NARRATOR]_
 
@@ -239,11 +255,23 @@ Gold
 
 [BROOMER]_
 
-    Gold!
+    Well.
+
+    Nothing I can say can add to this moment, so I'll just shut up.
+
+[BROOMER]_
+
+    I am so excited.
+
+    And also somewhat wealthier, due to manufacturer incentives.
+
+[BROOMER]_
+
+    We are both now members of the Excelsior Club!
 
 [NARRATOR]_
 
-    Restart the server to have another go!
+    Thanks for playing Tower of Rapunzel.
 
 Status
 ------

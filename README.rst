@@ -29,6 +29,9 @@ Point your browser to that address::
 
     firefox http://127.0.0.1:8080
 
+When you get to Rapunzel's chamber for the first time, you may need to *enable audio* in your browser tab
+if there is no sound to be heard.
+
 Poster
 ======
 
