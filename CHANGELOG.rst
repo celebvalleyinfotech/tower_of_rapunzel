@@ -10,6 +10,7 @@ Versions
 * Add textures from https://www.transparenttextures.com/
 * Fixed checks at win condition
 * Restyled throughout
+* First test release on Itch.io for Narrascope
 
 0.7.0
 -----
