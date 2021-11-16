@@ -38,12 +38,9 @@ from turberfield.dialogue.matcher import Matcher
 from turberfield.dialogue.model import Model
 
 import tor
-#from tor.presenter import Presenter
 from tor.drama import Tower
 from tor.story import Rapunzel
-# import tor.render
 import tor.rules
-import tor.types
 from tor.types import Character
 from tor.types import Hanging
 from tor.types import Narrator
@@ -116,7 +113,6 @@ async def post_buy(request):
         raise web.HTTPUnauthorized(reason="User sent invalid buy code.")
 
     story = request.app["story"][0]
-    story.presenter = story.represent("")
     narrator = story.context.narrator
 
     prize = int(buy) * 10
@@ -135,6 +131,7 @@ async def post_buy(request):
         )
         story.context.narrator.state = tor.rules.State(**rv)
 
+    story.presenter = story.represent("")
     raise web.HTTPFound("/")
 
 
@@ -144,7 +141,6 @@ async def post_cut(request):
         raise web.HTTPUnauthorized(reason="User sent invalid cut code.")
     else:
         story = request.app["story"][0]
-        story.presenter = story.represent("")
         cut_d = {
             0: -tor.rules.Settings.CUT_D,
             1: 0,
@@ -155,6 +151,7 @@ async def post_cut(request):
             None, None, None, tor.rules.Settings, story.context.narrator.state, cut=cut_d
         )
         story.context.narrator.state = tor.rules.State(**rv)
+        story.presenter = story.represent("")
         raise web.HTTPFound("/")
 
 
@@ -168,7 +165,6 @@ async def post_hop(request):
         location = story.context.narrator.state.area
         destination = tor.rules.topology[location][index]
         story.context.narrator.state = story.context.narrator.state._replace(area=destination)
-        story.presenter = story.represent("")
 
         entities = [
             i for i in story.context.ensemble
@@ -191,7 +187,7 @@ async def post_hop(request):
                 )
                 rapunzel.set_state(Hanging.club)
 
-
+        story.presenter = story.represent("")
         raise web.HTTPFound("/")
 
 
@@ -222,7 +218,6 @@ def build_app(args):
     story = Rapunzel(context=Tower())
     story.presenter = story.represent("")
     app["story"] = deque([story], maxlen=1)
-    # app["presenter"] = deque([Presenter(None, tor.types.ensemble)], maxlen=1)
     return app
 
 
