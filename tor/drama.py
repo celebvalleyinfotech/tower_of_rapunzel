@@ -16,11 +16,6 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with Tower of Rapunzel.  If not, see <http://www.gnu.org/licenses/>.
 
-import enum
-import itertools
-import math
-import pprint
-
 from turberfield.dialogue.matcher import Matcher
 
 from balladeer import Drama

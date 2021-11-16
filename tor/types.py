@@ -17,11 +17,7 @@
 # along with Tower of Rapunzel.  If not, see <http://www.gnu.org/licenses/>.
 
 import enum
-import itertools
-import math
-import pprint
 
-from turberfield.dialogue.model import SceneScript
 from turberfield.dialogue.types import DataObject
 from turberfield.dialogue.types import Persona
 from turberfield.dialogue.types import Stateful

@@ -21,21 +21,12 @@ A web-native single-puzzle text adventure for PyWeek 28 and NarraScope 2020.
 
 """
 import argparse
-import asyncio
 from collections import deque
-from collections import namedtuple
-import functools
-import math
 import random
 import sys
 
 from aiohttp import web
 import pkg_resources
-
-from balladeer import Story
-
-from turberfield.dialogue.matcher import Matcher
-from turberfield.dialogue.model import Model
 
 import tor
 from tor.drama import Tower
@@ -43,35 +34,7 @@ from tor.story import Rapunzel
 import tor.rules
 from tor.types import Character
 from tor.types import Hanging
-from tor.types import Narrator
 from tor.types import Occupation
-
-
-async def get_frame(request):
-    presenter = request.app["presenter"][0]
-
-    try:
-        frame = presenter.frame(react=True)
-    except IndexError:
-        location = presenter.narrator.state.area
-        selector = {"area": location}
-        matcher = Matcher(tor.types.folders)
-        folders = list(matcher.options(selector))
-        dialogue = presenter.dialogue(folders, presenter.ensemble)
-        presenter = Presenter(dialogue, presenter.ensemble)
-        request.app["presenter"].append(presenter)
-        frame = presenter.frame(react=True)
-
-    pending = presenter.pending
-    return web.Response(
-        text = tor.render.body_html(
-            refresh=Presenter.refresh_animations(frame) if pending else None,
-        ).format(
-            tor.render.dict_to_css(presenter.definitions),
-            tor.render.frame_to_html(presenter.narrator.state, frame=frame, final=not pending)
-        ),
-        content_type="text/html"
-    )
 
 
 async def get_frame(request):
@@ -92,10 +55,6 @@ async def get_frame(request):
     refresh = story.presenter.pending and story.presenter.refresh_animations(story.animation, min_val=2)
 
     title = story.presenter.metadata.get("project", ["Tower of Rapunzel"])[0]
-    controls = [
-        "\n".join(story.render_action_form(action, autofocus=not n))
-        for n, action in enumerate(story.actions)
-    ]
     rv = story.render_body_html(title=title, next_="/", refresh=refresh).format(
         '<link rel="stylesheet" href="/css/bfost.css" />',
         story.render_dict_to_css(vars(story.settings)),

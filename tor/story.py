@@ -16,30 +16,12 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with Tower of Rapunzel.  If not, see <http://www.gnu.org/licenses/>.
 
-from collections import defaultdict
-from collections import deque
-from collections import namedtuple
-import copy
-from datetime import datetime
-import itertools
-import functools
-import logging
-import math
-import re
-import sys
-
-from balladeer import DataObject
-from balladeer import Renderer
 from balladeer import Settings
 from balladeer import Story
 
 from turberfield.dialogue.model import Model
-from turberfield.dialogue.model import SceneScript
-from turberfield.dialogue.performer import Performer
-import turberfield.utils
 
-import tor
-from tor.types import Narrator
+import tor.rules
 from tor.types import version
 
 
@@ -83,14 +65,12 @@ class Rapunzel(Story):
     </blockquote>
     </li>"""
 
-
     @staticmethod
     def animated_still_to_html(anim):
         return f"""
     <div style="animation-duration: {anim.duration}s; animation-delay: {anim.delay}s">
     <img src="/img/{anim.element.resource}" alt="{anim.element.package} {anim.element.resource}" />
     </div>"""
-
 
     @staticmethod
     def animated_audio_to_html(anim):
@@ -100,7 +80,6 @@ class Rapunzel(Story):
     </audio>
     </div>"""
 
-
     @staticmethod
     def location_to_html(locn, path="/"):
         return f"""
@@ -108,7 +87,6 @@ class Rapunzel(Story):
         <input id="hop-{locn.id.hex}" name="location_id" type="hidden" value="{locn.id.hex}" />
         <button type="submit">{locn.label}</button>
     </form>"""
-
 
     @staticmethod
     def option_as_list_item(n, option, path="/"):
@@ -160,32 +138,3 @@ class Rapunzel(Story):
     </ul>
     </nav>
     </div>"""
-
-
-def dict_to_css(mapping=None, tag=":root"):
-    mapping = mapping or {}
-    entries = "\n".join("--{0}: {1};".format(k, v) for k, v in mapping.items())
-    return f"""{tag} {{
-{entries}
-}}"""
-
-
-@functools.lru_cache()
-def body_html(refresh=None):
-    return f"""<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-{'<meta http-equiv="refresh" content="{0}">'.format(refresh) if refresh is not None else ''}
-<meta http-equiv="X-UA-Compatible" content="ie=edge">
-<title>Tower of Rapunzel</title>
-<link rel="stylesheet" href="/css/bfost.css" />
-</head>
-<body>
-<style type="text/css">
-{{0}}
-</style>
-{{1}}
-</body>
-</html>"""
