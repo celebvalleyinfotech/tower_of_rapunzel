@@ -48,7 +48,7 @@ class Rapunzel(Story):
     def __init__(self, cfg=None, **kwargs):
         super().__init__(**kwargs)
 
-        definitions = {
+        self.definitions = {
             "creamy": "hsl(50, 0%, 100%, 1.0)",
             "pebble": "hsl(13, 0%, 30%, 1.0)",
             "claret": "hsl(13, 80%, 55%, 1.0)",
