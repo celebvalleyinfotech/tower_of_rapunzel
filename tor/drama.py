@@ -21,6 +21,8 @@ import itertools
 import math
 import pprint
 
+from turberfield.dialogue.matcher import Matcher
+
 from balladeer import Drama
 from balladeer import SceneScript
 
@@ -36,98 +38,86 @@ class Tower(Drama):
     folders = [
 
         SceneScript.Folder(
-            pkg="tor",
+            pkg="tor.dialogue.balcony",
             description="Dialogue on the balcony.",
             metadata={
                 "area": "balcony",
             },
-            paths=[
-                "dialogue/balcony/view.rst",
-            ],
+            paths=["view.rst"],
             interludes=None
         ),
 
         SceneScript.Folder(
-            pkg="tor",
+            pkg="tor.dialogue.broomer",
             description="Dialogue at the broomer.",
             metadata={
                 "area": "broomer",
             },
-            paths=[
-                "dialogue/broomer/brooms.rst",
-            ],
+            paths=["brooms.rst"],
             interludes=None
         ),
 
         SceneScript.Folder(
-            pkg="tor",
+            pkg="tor.dialogue.butcher",
             description="Dialogue at the butcher.",
             metadata={
                 "area": "butcher",
             },
-            paths=[
-                "dialogue/butcher/meat.rst",
-            ],
+            paths=["meat.rst"],
             interludes=None
         ),
 
         SceneScript.Folder(
-            pkg="tor",
+            pkg="tor.dialogue.chamber",
             description="Dialogue in the chamber.",
             metadata={
                 "area": "chamber",
             },
-            paths=[
-                "dialogue/chamber/rap.rst",
-            ],
+            paths=["rap.rst"],
             interludes=None
         ),
 
         SceneScript.Folder(
-            pkg="tor",
+            pkg="tor.dialogue.chemist",
             description="Dialogue at the chemist.",
             metadata={
                 "area": "chemist",
             },
-            paths=[
-                "dialogue/chemist/pills.rst",
-            ],
+            paths=["pills.rst"],
             interludes=None
         ),
 
         SceneScript.Folder(
-            pkg="tor",
+            pkg="tor.dialogue.inbound",
             description="Dialogue while inbound.",
             metadata={
                 "area": "inbound",
             },
-            paths=[
-                "dialogue/inbound/jump.rst",
-            ],
+            paths=["jump.rst"],
             interludes=None
         ),
 
         SceneScript.Folder(
-            pkg="tor",
+            pkg="tor.dialogue",
             description="Dialogue on the outward.",
             metadata={
                 "area": "outward",
             },
             paths=[
-                "dialogue/outward/fall.rst",
-                "dialogue/outward/death.rst",
+                "outward/fall.rst",
+                "outward/death.rst",
             ],
             interludes=None
         ),
 
         SceneScript.Folder(
-            pkg="tor",
+            pkg="tor.dialogue",
             description="Dialogue at the stylist.",
             metadata={
                 "area": "stylist",
             },
             paths=[
-                "dialogue/stylist/wigs.rst",
+                "stylist/wigs.rst",
             ],
             interludes=None
         ),
@@ -155,6 +145,16 @@ class Tower(Drama):
             Character(name="Mr Wigmore Watkins").set_state(Occupation.stylist),
         ]
 
+    @property
+    def ensemble(self):
+        return self.population
+
+    @property
+    def folder(self):
+        location = self.narrator.state.area
+        selector = {"area": location}
+        matcher = Matcher(self.folders)
+        return next(matcher.options(selector))
 
     @property
     def narrator(self):

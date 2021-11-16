@@ -233,8 +233,9 @@ def build_app(args):
         "/fonts/",
         pkg_resources.resource_filename("tor", "static/fonts")
     )
-    game = Tower()
-    app["story"] = deque([Story(context=game)], maxlen=1)
+    story = Story(context=Tower())
+    story.presenter = story.represent("")
+    app["story"] = deque([story], maxlen=1)
     # app["presenter"] = deque([Presenter(None, tor.types.ensemble)], maxlen=1)
     return app
 
