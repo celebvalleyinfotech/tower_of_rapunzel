@@ -40,6 +40,7 @@ from turberfield.dialogue.model import Model
 import tor
 #from tor.presenter import Presenter
 from tor.drama import Tower
+from tor.story import Rapunzel
 # import tor.render
 import tor.rules
 import tor.types
@@ -98,9 +99,12 @@ async def get_frame(request):
         for n, action in enumerate(story.actions)
     ]
     rv = story.render_body_html(title=title, refresh=refresh).format(
-        '',
+        '<link rel="stylesheet" href="/css/bfost.css" />',
         story.render_dict_to_css(vars(story.settings)),
-        story.render_animated_frame_to_html(story.animation, controls)
+        #story.render_animated_frame_to_html(story.animation, controls)
+        story.render_animated_frame_to_html(
+            story.context.narrator.state, story.animation, final=not story.presenter.pending
+        )
     )
 
     return web.Response(text=rv, content_type="text/html")
@@ -215,7 +219,7 @@ def build_app(args):
         "/fonts/",
         pkg_resources.resource_filename("tor", "static/fonts")
     )
-    story = Story(context=Tower())
+    story = Rapunzel(context=Tower())
     story.presenter = story.represent("")
     app["story"] = deque([story], maxlen=1)
     # app["presenter"] = deque([Presenter(None, tor.types.ensemble)], maxlen=1)
