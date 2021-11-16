@@ -90,35 +90,17 @@ async def get_frame(request):
             story.animation = animation
             break
 
-    refresh = Presenter.refresh_animations(story.animation, min_val=2)
+    refresh = story.presenter.refresh_animations(story.animation, min_val=2)
 
     title = story.presenter.metadata.get("project", ["Tower of Rapunzel"])[0]
     controls = [
         "\n".join(story.render_action_form(action, autofocus=not n))
         for n, action in enumerate(story.actions)
-        if story.context.get_state(Operation) not in (Operation.finish, Operation.frames)
     ]
     rv = story.render_body_html(title=title, refresh=refresh).format(
         '',
         story.render_dict_to_css(vars(story.settings)),
         story.render_animated_frame_to_html(story.animation, controls)
-    )
-
-    return web.Response(text=rv, content_type="text/html")
-    animation = next(filter(None, (story.presenter.animate(
-        frame, dwell=story.presenter.dwell, pause=story.presenter.pause
-    ) for frame in story.presenter.frames)))
-
-    title = story.presenter.metadata.get("project")[0]
-    controls = [
-        "\n".join(story.render_action_form(action, autofocus=not n))
-        for n, action in enumerate(story.actions)
-        if story.context.count
-    ]
-    rv = story.render_body_html(title=title).format(
-        "<!-- Extra head links go here -->",
-        story.render_dict_to_css(vars(story.settings)),
-        story.render_animated_frame_to_html(animation, controls)
     )
 
     return web.Response(text=rv, content_type="text/html")
