@@ -3,6 +3,7 @@
 
 import ast
 from setuptools import setup
+from setuptools import find_packages
 import os.path
 
 __doc__ = open(
@@ -39,7 +40,7 @@ setup(
         "License :: OSI Approved :: GNU Affero General Public License v3"
         " or later (AGPLv3+)"
     ],
-    packages=["tor", "tor.test"],
+    packages=find_packages(),
     package_data={
         "tor": [
             "data/*.cfg",

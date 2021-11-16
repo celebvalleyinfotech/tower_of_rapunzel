@@ -4,6 +4,11 @@ Change Log
 Versions
 ========
 
+0.10.0
+-----
+
+* Fix packaging issues.
+
 0.9.0
 -----
 
