@@ -32,18 +32,21 @@ import sys
 from aiohttp import web
 import pkg_resources
 
+from balladeer import Story
+
 from turberfield.dialogue.matcher import Matcher
 from turberfield.dialogue.model import Model
 
 import tor
-from tor.presenter import Presenter
-import tor.render
+#from tor.presenter import Presenter
+from tor.drama import Tower
+# import tor.render
 import tor.rules
-import tor.story
-from tor.story import Character
-from tor.story import Hanging
-from tor.story import Narrator
-from tor.story import Occupation
+import tor.types
+from tor.types import Character
+from tor.types import Hanging
+from tor.types import Narrator
+from tor.types import Occupation
 
 
 async def get_frame(request):
@@ -54,7 +57,7 @@ async def get_frame(request):
     except IndexError:
         location = presenter.narrator.state.area
         selector = {"area": location}
-        matcher = Matcher(tor.story.folders)
+        matcher = Matcher(tor.types.folders)
         folders = list(matcher.options(selector))
         dialogue = presenter.dialogue(folders, presenter.ensemble)
         presenter = Presenter(dialogue, presenter.ensemble)
@@ -230,8 +233,9 @@ def build_app(args):
         "/fonts/",
         pkg_resources.resource_filename("tor", "static/fonts")
     )
-    app["story"] = deque([Presenter(None, tor.story.ensemble)], maxlen=1)
-    app["presenter"] = deque([Presenter(None, tor.story.ensemble)], maxlen=1)
+    game = Tower()
+    app["story"] = deque([Story(context=game)], maxlen=1)
+    # app["presenter"] = deque([Presenter(None, tor.types.ensemble)], maxlen=1)
     return app
 
 

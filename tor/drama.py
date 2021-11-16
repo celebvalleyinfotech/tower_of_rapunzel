@@ -24,8 +24,11 @@ import pprint
 from balladeer import Drama
 from balladeer import SceneScript
 
+import tor.rules
 from tor.types import Character
+from tor.types import Hanging
 from tor.types import Narrator
+from tor.types import Occupation
 
 
 class Tower(Drama):
@@ -152,4 +155,8 @@ class Tower(Drama):
             Character(name="Mr Wigmore Watkins").set_state(Occupation.stylist),
         ]
 
+
+    @property
+    def narrator(self):
+        return next((i for i in self.ensemble if isinstance(i, Narrator)), None)
 

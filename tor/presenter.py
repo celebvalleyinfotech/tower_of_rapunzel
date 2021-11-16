@@ -27,39 +27,51 @@ import math
 import re
 import sys
 
+from balladeer import DataObject
+from balladeer import Renderer
+from balladeer import Story
+
 from turberfield.dialogue.model import Model
 from turberfield.dialogue.model import SceneScript
 from turberfield.dialogue.performer import Performer
 import turberfield.utils
 
 import tor
-from tor.story import Narrator
+from tor.types import Narrator
+
+
+class Rapunzel(Story):
+
+    def __init__(self, cfg=None, **kwargs):
+        super().__init__(**kwargs)
+
+        definitions = {
+            "creamy": "hsl(50, 0%, 100%, 1.0)",
+            "pebble": "hsl(13, 0%, 30%, 1.0)",
+            "claret": "hsl(13, 80%, 55%, 1.0)",
+            "blonde": "hsl(50, 80%, 35%, 1.0)",
+            "bubble": "hsl(320, 100%, 50%, 1.0)",
+            "forest": "hsl(76, 80%, 35%, 1.0)",
+            "rafter": "hsl(36, 20%, 18%, 1.0)",
+            "titles": '"AA Paro", sans-serif',
+            "mono": ", ".join([
+                "SFMono-Regular", "Menlo", "Monaco",
+                "Consolas", '"Liberation Mono"',
+                '"Courier New"', "monospace"
+            ]),
+            "system": ", ".join([
+                "BlinkMacSystemFont", '"Segoe UI"', '"Helvetica Neue"',
+                '"Apple Color Emoji"', '"Segoe UI Emoji"', '"Segoe UI Symbol"',
+                "Arial", "sans-serif"
+            ]),
+        }
+        self.settings = Settings(**self.definitions)
+        self.context = kwargs.get("context", None)
 
 
 class Presenter:
 
     Animation = namedtuple("Animation", ["delay", "duration", "element"])
-
-    definitions = {
-        "creamy": "hsl(50, 0%, 100%, 1.0)",
-        "pebble": "hsl(13, 0%, 30%, 1.0)",
-        "claret": "hsl(13, 80%, 55%, 1.0)",
-        "blonde": "hsl(50, 80%, 35%, 1.0)",
-        "bubble": "hsl(320, 100%, 50%, 1.0)",
-        "forest": "hsl(76, 80%, 35%, 1.0)",
-        "rafter": "hsl(36, 20%, 18%, 1.0)",
-        "titles": '"AA Paro", sans-serif',
-        "mono": ", ".join([
-            "SFMono-Regular", "Menlo", "Monaco",
-            "Consolas", '"Liberation Mono"',
-            '"Courier New"', "monospace"
-        ]),
-        "system": ", ".join([
-            "BlinkMacSystemFont", '"Segoe UI"', '"Helvetica Neue"',
-            '"Apple Color Emoji"', '"Segoe UI Emoji"', '"Segoe UI Symbol"',
-            "Arial", "sans-serif"
-        ]),
-    }
 
     @staticmethod
     def animate_audio(seq):

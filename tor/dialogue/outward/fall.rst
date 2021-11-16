@@ -3,7 +3,7 @@
     Scene ~~
     Shot --
 
-.. |VERSION| property:: tor.story.version
+.. |VERSION| property:: tor.types.version
 
 :author: D Haynes
 :date: 2019-09-24
@@ -11,12 +11,12 @@
 :version: |VERSION|
 
 .. entity:: NARRATOR
-   :types: tor.story.Narrator
+   :types: tor.types.Narrator
 
 .. entity:: RAPUNZEL
-   :types:  tor.story.Character
-   :states: tor.story.Occupation.teenager
-            tor.story.Hanging.crib
+   :types:  tor.types.Character
+   :states: tor.types.Occupation.teenager
+            tor.types.Hanging.crib
 
 Fall
 ~~~~
