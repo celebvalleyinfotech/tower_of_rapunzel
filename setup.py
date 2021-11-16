@@ -54,7 +54,7 @@ setup(
     },
     install_requires=[
         "aiohttp>=3.6.1",
-        "turberfield-dialogue>=0.24.0",
+        "balladeer>=0.14.0",
     ],
     extras_require={
         "dev": [

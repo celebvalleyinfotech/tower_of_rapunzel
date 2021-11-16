@@ -4,6 +4,11 @@ Change Log
 Versions
 ========
 
+0.9.0
+-----
+
+* Refactor to use Balladeer as much as possible.
+
 0.8.0
 -----
 
