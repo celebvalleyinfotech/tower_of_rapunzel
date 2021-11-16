@@ -34,7 +34,6 @@ import pkg_resources
 
 from turberfield.dialogue.matcher import Matcher
 from turberfield.dialogue.model import Model
-from turberfield.dialogue.performer import Performer
 
 import tor
 from tor.presenter import Presenter
@@ -72,6 +71,54 @@ async def get_frame(request):
         ),
         content_type="text/html"
     )
+
+
+async def get_frame(request):
+    story = request.app["story"][0]
+
+    while story.presenter.frames:
+        frame = story.presenter.frames.pop(0)
+        animation = story.presenter.animate(
+            frame,
+            dwell=story.presenter.dwell,
+            pause=story.presenter.pause
+        )
+        if animation:
+            story.animation = animation
+            break
+
+    refresh = Presenter.refresh_animations(story.animation, min_val=2)
+
+    title = story.presenter.metadata.get("project", ["Tower of Rapunzel"])[0]
+    controls = [
+        "\n".join(story.render_action_form(action, autofocus=not n))
+        for n, action in enumerate(story.actions)
+        if story.context.get_state(Operation) not in (Operation.finish, Operation.frames)
+    ]
+    rv = story.render_body_html(title=title, refresh=refresh).format(
+        '',
+        story.render_dict_to_css(vars(story.settings)),
+        story.render_animated_frame_to_html(story.animation, controls)
+    )
+
+    return web.Response(text=rv, content_type="text/html")
+    animation = next(filter(None, (story.presenter.animate(
+        frame, dwell=story.presenter.dwell, pause=story.presenter.pause
+    ) for frame in story.presenter.frames)))
+
+    title = story.presenter.metadata.get("project")[0]
+    controls = [
+        "\n".join(story.render_action_form(action, autofocus=not n))
+        for n, action in enumerate(story.actions)
+        if story.context.count
+    ]
+    rv = story.render_body_html(title=title).format(
+        "<!-- Extra head links go here -->",
+        story.render_dict_to_css(vars(story.settings)),
+        story.render_animated_frame_to_html(animation, controls)
+    )
+
+    return web.Response(text=rv, content_type="text/html")
 
 
 async def post_buy(request):
@@ -183,6 +230,7 @@ def build_app(args):
         "/fonts/",
         pkg_resources.resource_filename("tor", "static/fonts")
     )
+    app["story"] = deque([Presenter(None, tor.story.ensemble)], maxlen=1)
     app["presenter"] = deque([Presenter(None, tor.story.ensemble)], maxlen=1)
     return app
 

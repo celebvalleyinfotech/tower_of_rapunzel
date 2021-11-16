@@ -19,18 +19,21 @@
 import itertools
 import unittest
 
+from balladeer import Story
+
 from turberfield.dialogue.matcher import Matcher
 from turberfield.dialogue.model import SceneScript
 
+from tor.drama import Tower
 import tor.rules
-import tor.story
+import tor.types
 
 
 class RulesTests(unittest.TestCase):
 
     folders = [
         next(
-            i for i in tor.story.folders
+            i for i in Tower.folders
             if i.metadata["area"] == a
         )
         for a in (
