@@ -98,27 +98,25 @@ class Tower(Drama):
         ),
 
         SceneScript.Folder(
-            pkg="tor.dialogue",
+            pkg="tor.dialogue.outward",
             description="Dialogue on the outward.",
             metadata={
                 "area": "outward",
             },
             paths=[
-                "outward/fall.rst",
-                "outward/death.rst",
+                "fall.rst",
+                "death.rst",
             ],
             interludes=None
         ),
 
         SceneScript.Folder(
-            pkg="tor.dialogue",
+            pkg="tor.dialogue.stylist",
             description="Dialogue at the stylist.",
             metadata={
                 "area": "stylist",
             },
-            paths=[
-                "stylist/wigs.rst",
-            ],
+            paths=["wigs.rst"],
             interludes=None
         ),
     ]

@@ -21,9 +21,6 @@ import fractions
 import math
 import random
 import re
-import sys
-
-from turberfield.dialogue.model import SceneScript
 
 choice_validator = re.compile("\d+$")
 
@@ -96,7 +93,7 @@ def apply_rules(
     if state.area == "chamber":
         choice = (
             cut if cut is not None
-            else random.choice([settings.CUT_D, 0 , -settings.CUT_D])
+            else random.choice([settings.CUT_D, 0, -settings.CUT_D])
         )
         cut = max(0, state.cut_m + choice)
         state = state._replace(cut_m=cut, hair_m=max(0, state.hair_m - cut), lock_m=cut)
@@ -117,7 +114,7 @@ def apply_rules(
         state = state._replace(
             coins_n=state.coins_n - cost,
             health_n=min((
-                settings.HEALTH_MAX ,
+                settings.HEALTH_MAX,
                 int(state.health_n + cost / settings.HEALTH_C)
             )),
         )

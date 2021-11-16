@@ -92,7 +92,7 @@ async def get_frame(request):
     else:
         story.animation = animation
 
-    refresh = story.presenter.refresh_animations(story.animation, min_val=2)
+    refresh = story.presenter.pending and story.presenter.refresh_animations(story.animation, min_val=2)
 
     title = story.presenter.metadata.get("project", ["Tower of Rapunzel"])[0]
     controls = [
@@ -102,7 +102,6 @@ async def get_frame(request):
     rv = story.render_body_html(title=title, next_="/", refresh=refresh).format(
         '<link rel="stylesheet" href="/css/bfost.css" />',
         story.render_dict_to_css(vars(story.settings)),
-        #story.render_animated_frame_to_html(story.animation, controls)
         story.render_animated_frame_to_html(
             story.context.narrator.state, story.animation, final=not story.presenter.pending
         )

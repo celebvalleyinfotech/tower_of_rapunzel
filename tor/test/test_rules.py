@@ -19,10 +19,7 @@
 import itertools
 import unittest
 
-from balladeer import Story
-
 from turberfield.dialogue.matcher import Matcher
-from turberfield.dialogue.model import SceneScript
 
 from tor.drama import Tower
 import tor.rules
